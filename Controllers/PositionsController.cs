@@ -19,11 +19,50 @@ namespace SecurityClean3.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            string sortOrder, 
+            string searchString,
+            string currentFilter,
+            int? pageNumber
+            )
         {
-              return _context.Positions != null ? 
-                          View(await _context.Positions.ToListAsync()) :
-                          Problem("Entity set 'SecurityContext.Positions'  is null.");
+            ViewData["CurrentSort"]= sortOrder;
+            ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["WageSortParm"]= sortOrder=="Wage"? "wage_desc":"Wage";
+            if (searchString!=null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString=currentFilter;
+            }
+            ViewData["CurrentFilter"]= searchString;
+            var positions = from p in _context.Positions select p;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                positions = positions.Where(p => 
+                    p.Name.Contains(searchString) ||
+                    p.Wage.ToString().Contains(searchString)
+                );
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    positions = positions.OrderByDescending(p => p.Name);
+                    break;
+                case "wage_desc":
+                    positions = positions.OrderByDescending(p => p.Wage);
+                    break;
+                case "Wage":
+                    positions = positions.OrderBy(p => p.Wage);
+                    break;
+                default:
+                    positions.OrderBy(p => p.Name);
+                    break;
+            }
+            int pageSize = 3;
+            return View(await PaginatedList<Position>.CreateAsync(positions.AsNoTracking(),pageNumber ?? 1,pageSize));
         }
 
 
@@ -34,7 +73,9 @@ namespace SecurityClean3.Controllers
                 return NotFound();
             }
 
-            var position = await _context.Positions.Include(p=>p.Employees)
+            var position = await _context.Positions
+                .Include(p=>p.Employees)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (position == null)
             {
@@ -119,7 +160,7 @@ namespace SecurityClean3.Controllers
         }
 
 
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null || _context.Positions == null)
             {
@@ -127,12 +168,18 @@ namespace SecurityClean3.Controllers
             }
 
             var position = await _context.Positions
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (position == null)
             {
                 return NotFound();
             }
-
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewData["ErrorMessage"] = "Не удалось запись. " +
+                    "Попробуйте снова, если проблема сохраняется, " +
+                    "обратитесь к системному администратору.";
+            }
             return View(position);
         }
 
@@ -141,18 +188,21 @@ namespace SecurityClean3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Positions == null)
-            {
-                return Problem("Entity set 'SecurityContext.Positions'  is null.");
-            }
             var position = await _context.Positions.FindAsync(id);
-            if (position != null)
+            if (position == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            try
             {
                 _context.Positions.Remove(position);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            catch (DbUpdateException)
+            {
+                return RedirectToAction(nameof(Delete), new { id = id, saveChangesError = true });
+            }
         }
 
         private bool PositionExists(int id)

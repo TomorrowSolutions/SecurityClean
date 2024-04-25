@@ -10,6 +10,7 @@ namespace SecurityClean3.Data
         }
         public DbSet<Position> Positions { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Service> Services { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

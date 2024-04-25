@@ -26,6 +26,7 @@ namespace SecurityClean3.Models
         [Display(Name = "Должность")]
         public int PositionId { get; set; }
         [ForeignKey("PositionId")]
+        [Display(Name = "Должность")]
         public Position? Position { get; set; }
     }
 }

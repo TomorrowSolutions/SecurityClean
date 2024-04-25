@@ -10,7 +10,7 @@ namespace SecurityClean3.Models
         [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
         public string Name { get; set; } = "";
         [Range(0, 3000000.00)]
-        [Display(Name = "Заработная плата")]
+        [Display(Name = "Оклад")]
         [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
         public double Wage { get; set; }
         public ICollection<Employee>? Employees { get; set; }
