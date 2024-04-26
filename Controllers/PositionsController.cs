@@ -61,7 +61,7 @@ namespace SecurityClean3.Controllers
                     positions.OrderBy(p => p.Name);
                     break;
             }
-            int pageSize = 3;
+            int pageSize = 5;
             return View(await PaginatedList<Position>.CreateAsync(positions.AsNoTracking(),pageNumber ?? 1,pageSize));
         }
 

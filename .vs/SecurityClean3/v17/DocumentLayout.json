@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Instityt\\Diplom\\SecurityClean3\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|c:\\instityt\\diplom\\securityclean3\\views\\positions\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|solutionrelative:views\\positions\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Instityt\\Diplom\\SecurityClean3\\Migrations\\20240426081417_AddServices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20240426081417_AddServices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|c:\\instityt\\diplom\\securityclean3\\data\\securitycontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|solutionrelative:data\\securitycontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|c:\\instityt\\diplom\\securityclean3\\models\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|solutionrelative:models\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|c:\\instityt\\diplom\\securityclean3\\controllers\\positionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|solutionrelative:controllers\\positionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|c:\\instityt\\diplom\\securityclean3\\models\\position.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|solutionrelative:models\\position.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|c:\\instityt\\diplom\\securityclean3\\paginatedlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|solutionrelative:paginatedlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,54 +34,54 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Position.cs",
-              "DocumentMoniker": "C:\\Instityt\\Diplom\\SecurityClean3\\Models\\Position.cs",
-              "RelativeDocumentMoniker": "Models\\Position.cs",
-              "ToolTip": "C:\\Instityt\\Diplom\\SecurityClean3\\Models\\Position.cs",
-              "RelativeToolTip": "Models\\Position.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAeAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-25T08:42:38.654Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "PaginatedList.cs",
-              "DocumentMoniker": "C:\\Instityt\\Diplom\\SecurityClean3\\PaginatedList.cs",
-              "RelativeDocumentMoniker": "PaginatedList.cs",
-              "ToolTip": "C:\\Instityt\\Diplom\\SecurityClean3\\PaginatedList.cs",
-              "RelativeToolTip": "PaginatedList.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAABIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-25T08:17:37.638Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Instityt\\Diplom\\SecurityClean3\\Views\\Positions\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Positions\\Index.cshtml",
-              "ToolTip": "C:\\Instityt\\Diplom\\SecurityClean3\\Views\\Positions\\Index.cshtml",
-              "RelativeToolTip": "Views\\Positions\\Index.cshtml",
-              "ViewState": "AQIAADYAAAAAAAAAAAAwwEkAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-04-24T15:37:10.547Z",
+              "Title": "20240426081417_AddServices.cs",
+              "DocumentMoniker": "C:\\Instityt\\Diplom\\SecurityClean3\\Migrations\\20240426081417_AddServices.cs",
+              "RelativeDocumentMoniker": "Migrations\\20240426081417_AddServices.cs",
+              "ToolTip": "C:\\Instityt\\Diplom\\SecurityClean3\\Migrations\\20240426081417_AddServices.cs",
+              "RelativeToolTip": "Migrations\\20240426081417_AddServices.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACAAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-26T08:14:17.61Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "SecurityContext.cs",
+              "DocumentMoniker": "C:\\Instityt\\Diplom\\SecurityClean3\\Data\\SecurityContext.cs",
+              "RelativeDocumentMoniker": "Data\\SecurityContext.cs",
+              "ToolTip": "C:\\Instityt\\Diplom\\SecurityClean3\\Data\\SecurityContext.cs",
+              "RelativeToolTip": "Data\\SecurityContext.cs",
+              "ViewState": "AQIAAEMAAAAAAAAAAAAcwF8AAABBAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-26T08:04:31.12Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Service.cs",
+              "DocumentMoniker": "C:\\Instityt\\Diplom\\SecurityClean3\\Models\\Service.cs",
+              "RelativeDocumentMoniker": "Models\\Service.cs",
+              "ToolTip": "C:\\Instityt\\Diplom\\SecurityClean3\\Models\\Service.cs",
+              "RelativeToolTip": "Models\\Service.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-26T08:03:43.186Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "PositionsController.cs",
               "DocumentMoniker": "C:\\Instityt\\Diplom\\SecurityClean3\\Controllers\\PositionsController.cs",
               "RelativeDocumentMoniker": "Controllers\\PositionsController.cs",
               "ToolTip": "C:\\Instityt\\Diplom\\SecurityClean3\\Controllers\\PositionsController.cs",
               "RelativeToolTip": "Controllers\\PositionsController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEAAAABzAAAA",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAABoAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-24T14:47:00.136Z",
+              "WhenOpened": "2024-04-26T07:44:33.797Z",
               "EditorCaption": ""
             }
           ]

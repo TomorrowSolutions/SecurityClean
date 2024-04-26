@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using SecurityClean3.Data;
 using SecurityClean3.Models;
@@ -15,10 +16,44 @@ namespace SecurityClean3.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            string sortOrder,
+            string searchString,
+            string currentFilter,
+            int? pageNumber
+            )
         {
-            var securityContext = _context.Employees.Include(e => e.Position);
-            return View(await securityContext.AsNoTracking().ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["PositionSortParm"] = string.IsNullOrEmpty(sortOrder) ? "position_desc" : "";
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewData["CurrentFilter"] = searchString;
+            var tmp = _context.Employees.Include(e => e.Position);
+            var employees = from p in tmp select p;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                employees = employees.Where(e =>
+                    e.FullName.Contains(searchString) ||
+                    e.Position.Name.Contains(searchString)
+                );
+            }
+            switch (sortOrder)
+            {
+                case "position_desc":
+                    employees = employees.OrderByDescending(e => e.Position.Name);
+                    break;
+                default:
+                    employees = employees.OrderBy(e => e.Position.Name);
+                    break;
+            }
+            int pageSize = 5;
+            return View(await PaginatedList<Employee>.CreateAsync(employees.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
 

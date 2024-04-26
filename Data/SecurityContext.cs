@@ -88,6 +88,13 @@ namespace SecurityClean3.Data
                         PositionId = 2
                     }
                 );
+            modelBuilder.Entity<Service>().HasData(
+               new Service { Id = 1, Name = "Установка видеонаблюдения", Price = 50000.00 },
+                new Service { Id = 2, Name = "Установка системы контроля доступа", Price = 70000.00 },
+                new Service { Id = 3, Name = "Установка системы обнаружения взлома", Price = 60000.00 },
+                new Service { Id = 4, Name = "Охрана объектов", Price = 30000.00 },
+                new Service { Id = 5, Name = "Персональная охрана", Price = 80000.00 }
+                );
         }
     }
 }
