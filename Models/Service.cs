@@ -9,6 +9,7 @@ namespace SecurityClean3.Models
         public int Id { get; set; }
         [Display(Name = "Наименование")]
         [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
+        [StringLength(50, ErrorMessage = "Поле {0} не должно превышать {1} символов.")]
         public string Name { get; set; } = "";
         [Range(0, 3000000.00)]
         [Display(Name = "Стоимость")]
