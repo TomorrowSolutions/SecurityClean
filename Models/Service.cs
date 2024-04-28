@@ -15,5 +15,11 @@ namespace SecurityClean3.Models
         [Display(Name = "Стоимость")]
         [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
         public double Price { get; set; }
+        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
+        [Display(Name = "Должность")]
+        public int PositionId { get; set; }
+        [ForeignKey("PositionId")]
+        [Display(Name = "Должность")]
+        public Position? Position { get; set; }
     }
 }

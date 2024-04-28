@@ -66,6 +66,7 @@ namespace SecurityClean3.Controllers
 
             var employee = await _context.Employees
                 .Include(e => e.Position)
+                .ThenInclude(p=>p.Services)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (employee == null)

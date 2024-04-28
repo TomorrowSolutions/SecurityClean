@@ -23,9 +23,36 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Price)
         </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Position)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Position.Name)
+        </dd>
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+<h4>Сотрудники, имеющие полномочия выполнения этой услуги</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ФИО
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Position.Employees)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

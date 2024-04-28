@@ -15,5 +15,6 @@ namespace SecurityClean3.Models
         [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
         public double Wage { get; set; }
         public ICollection<Employee>? Employees { get; set; }
+        public ICollection<Service>? Services { get; set; }
     }
 }

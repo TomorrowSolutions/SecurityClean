@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SecurityClean3.Models.Service>
+﻿@model PaginatedList<SecurityClean3.Models.Service>
 
 @{
     ViewData["Title"] = "Index";
@@ -10,14 +10,35 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-action="Index" method="get">
+    <div class="form-group">
+        <p>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Поиск(наименование или стоимость) :</p>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" value="Поиск" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-outline-primary">Отмена</a>
+                </div>
+            </div>
+        </p>
+    </div>
+</form>
+
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                 <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Наименование</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Стоимость</a>
             </th>
             <th></th>
         </tr>
@@ -40,3 +61,22 @@
 }
     </tbody>
 </table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex-1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-outline-primary @prevDisabled">
+    Назад
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex+1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-outline-primary @nextDisabled">
+    Вперед
+</a>

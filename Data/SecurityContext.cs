@@ -24,19 +24,19 @@ namespace SecurityClean3.Data
                     new Position
                     {
                         Id = 2,
-                        Name = "Охранник без лицензии на оружие",
+                        Name = "Охранник",
                         Wage = 35000
                     },
                     new Position
                     {
                         Id = 3,
-                        Name = "Охранник c лицензией на оружие",
+                        Name = "Телохранитель",
                         Wage = 75000
                     },
                     new Position
                     {
                         Id = 4,
-                        Name = "Менеджер по связям с общественностью",
+                        Name = "Водитель",
                         Wage = 30000
                     },
                     new Position
@@ -89,11 +89,11 @@ namespace SecurityClean3.Data
                     }
                 );
             modelBuilder.Entity<Service>().HasData(
-               new Service { Id = 1, Name = "Установка видеонаблюдения", Price = 50000.00 },
-                new Service { Id = 2, Name = "Установка системы контроля доступа", Price = 70000.00 },
-                new Service { Id = 3, Name = "Установка системы обнаружения взлома", Price = 60000.00 },
-                new Service { Id = 4, Name = "Охрана объектов", Price = 30000.00 },
-                new Service { Id = 5, Name = "Персональная охрана", Price = 80000.00 }
+               new Service { Id = 1, Name = "Установка видеонаблюдения", Price = 50000.00, PositionId=1 },
+                new Service { Id = 2, Name = "Обслуживание системы видеонаблюдения", Price = 70000.00, PositionId=5 },
+                new Service { Id = 3, Name = "Перевозка грузов", Price = 60000.00, PositionId=4 },
+                new Service { Id = 4, Name = "Охрана объектов", Price = 30000.00 ,PositionId=2},
+                new Service { Id = 5, Name = "Персональная охрана", Price = 80000.00,PositionId=3 }
                 );
         }
     }
