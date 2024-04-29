@@ -14,6 +14,7 @@ namespace SecurityClean3.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Position>().Property(p => p.RowVersion).IsConcurrencyToken();
             modelBuilder.Entity<Position>().HasData(
                     new Position
                     {

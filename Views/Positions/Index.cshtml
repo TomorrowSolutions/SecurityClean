@@ -22,10 +22,10 @@
                     <input type="text" class="form-control" name="SearchString" value="@ViewData["CurrentFilter"]" />
                 </div>
                 <div class="col-md-2">
-                    <input type="submit" value="Поиск" class="btn btn-primary" /> 
+                    <input type="submit" value="Поиск" class="btn btn-primary" />
                     <a asp-action="Index" class="btn btn-outline-primary">Отмена</a>
                 </div>
-            </div>           
+            </div>
         </p>
     </div>
 </form>
@@ -43,21 +43,22 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Wage)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Wage)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
@@ -65,16 +66,17 @@
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
-<a 
-    asp-action="Index" 
-    asp-route-sortOrder="@ViewData["CurrentSort"]"
-    asp-route-pageNumber="@(Model.PageIndex-1)"
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex-1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
    class="btn btn-outline-primary @prevDisabled">
-Назад</a>
+    Назад
+</a>
 <a asp-action="Index"
    asp-route-sortOrder="@ViewData["CurrentSort"]"
    asp-route-pageNumber="@(Model.PageIndex+1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
    class="btn btn-outline-primary @nextDisabled">
-Вперед</a>
+    Вперед
+</a>

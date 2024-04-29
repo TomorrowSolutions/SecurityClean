@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace SecurityClean3.Models
 {
@@ -16,5 +17,8 @@ namespace SecurityClean3.Models
         public double Wage { get; set; }
         public ICollection<Employee>? Employees { get; set; }
         public ICollection<Service>? Services { get; set; }
+        [Timestamp]
+        [ValidateNever]
+        public byte[] RowVersion { get; set; }
     }
 }
