@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SecurityClean3.Models;
 
 namespace SecurityClean3.Data
 {
-    public class SecurityContext : DbContext
+    public class SecurityContext : IdentityDbContext<ApplicationUser>
     {
         public SecurityContext(DbContextOptions<SecurityContext> options) : base(options)
         {
@@ -14,6 +16,7 @@ namespace SecurityClean3.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Position>().Property(p => p.RowVersion).IsConcurrencyToken();
             modelBuilder.Entity<Position>().HasData(
                     new Position
@@ -96,6 +99,10 @@ namespace SecurityClean3.Data
                 new Service { Id = 4, Name = "Охрана объектов", Price = 30000.00 ,PositionId=2},
                 new Service { Id = 5, Name = "Персональная охрана", Price = 80000.00,PositionId=3 }
                 );
+            var admin = new IdentityRole("admin") { NormalizedName="admin"};
+            var manager = new IdentityRole("manager") { NormalizedName="manager"};
+            modelBuilder.Entity<IdentityRole>().HasData(admin, manager); 
+            
         }
     }
 }

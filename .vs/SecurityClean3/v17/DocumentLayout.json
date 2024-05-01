@@ -3,32 +3,12 @@
   "WorkspaceRootPath": "C:\\Instityt\\Diplom\\SecurityClean3\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|c:\\instityt\\diplom\\securityclean3\\views\\positions\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|solutionrelative:views\\positions\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|c:\\instityt\\diplom\\securityclean3\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|c:\\instityt\\diplom\\securityclean3\\views\\positions\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|solutionrelative:views\\positions\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|c:\\instityt\\diplom\\securityclean3\\views\\positions\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|solutionrelative:views\\positions\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|c:\\instityt\\diplom\\securityclean3\\views\\positions\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|solutionrelative:views\\positions\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|c:\\instityt\\diplom\\securityclean3\\controllers\\positionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|solutionrelative:controllers\\positionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|c:\\instityt\\diplom\\securityclean3\\models\\position.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|solutionrelative:models\\position.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|c:\\instityt\\diplom\\securityclean3\\views\\positions\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|solutionrelative:views\\positions\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|c:\\instityt\\diplom\\securityclean3\\views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|solutionrelative:views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,92 +26,29 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Details.cshtml",
-              "DocumentMoniker": "C:\\Instityt\\Diplom\\SecurityClean3\\Views\\Positions\\Details.cshtml",
-              "RelativeDocumentMoniker": "Views\\Positions\\Details.cshtml",
-              "ToolTip": "C:\\Instityt\\Diplom\\SecurityClean3\\Views\\Positions\\Details.cshtml",
-              "RelativeToolTip": "Views\\Positions\\Details.cshtml",
-              "ViewState": "AQIAAB4AAAAAAAAAAADwvz8AAAAMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-04-29T16:44:11.74Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Instityt\\Diplom\\SecurityClean3\\Views\\Positions\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Positions\\Index.cshtml",
-              "ToolTip": "C:\\Instityt\\Diplom\\SecurityClean3\\Views\\Positions\\Index.cshtml",
-              "RelativeToolTip": "Views\\Positions\\Index.cshtml",
-              "ViewState": "AQIAACcAAAAAAAAAAAAwwFEAAAAEAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-04-29T16:43:18.155Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Create.cshtml",
-              "DocumentMoniker": "C:\\Instityt\\Diplom\\SecurityClean3\\Views\\Positions\\Create.cshtml",
-              "RelativeDocumentMoniker": "Views\\Positions\\Create.cshtml",
-              "ToolTip": "C:\\Instityt\\Diplom\\SecurityClean3\\Views\\Positions\\Create.cshtml",
-              "RelativeToolTip": "Views\\Positions\\Create.cshtml",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAA4AAAA4AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-04-29T10:44:26.341Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Delete.cshtml",
-              "DocumentMoniker": "C:\\Instityt\\Diplom\\SecurityClean3\\Views\\Positions\\Delete.cshtml",
-              "RelativeDocumentMoniker": "Views\\Positions\\Delete.cshtml",
-              "ToolTip": "C:\\Instityt\\Diplom\\SecurityClean3\\Views\\Positions\\Delete.cshtml",
-              "RelativeToolTip": "Views\\Positions\\Delete.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAANAAAA",
+              "Title": "Privacy.cshtml",
+              "DocumentMoniker": "C:\\Instityt\\Diplom\\SecurityClean3\\Views\\Home\\Privacy.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Privacy.cshtml",
+              "ToolTip": "C:\\Instityt\\Diplom\\SecurityClean3\\Views\\Home\\Privacy.cshtml",
+              "RelativeToolTip": "Views\\Home\\Privacy.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-04-29T10:30:12.918Z",
+              "WhenOpened": "2024-05-01T07:09:19.479Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Edit.cshtml",
-              "DocumentMoniker": "C:\\Instityt\\Diplom\\SecurityClean3\\Views\\Positions\\Edit.cshtml",
-              "RelativeDocumentMoniker": "Views\\Positions\\Edit.cshtml",
-              "ToolTip": "C:\\Instityt\\Diplom\\SecurityClean3\\Views\\Positions\\Edit.cshtml",
-              "RelativeToolTip": "Views\\Positions\\Edit.cshtml",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAABAAAAAMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-04-29T08:56:20.883Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "PositionsController.cs",
-              "DocumentMoniker": "C:\\Instityt\\Diplom\\SecurityClean3\\Controllers\\PositionsController.cs",
-              "RelativeDocumentMoniker": "Controllers\\PositionsController.cs",
-              "ToolTip": "C:\\Instityt\\Diplom\\SecurityClean3\\Controllers\\PositionsController.cs",
-              "RelativeToolTip": "Controllers\\PositionsController.cs",
-              "ViewState": "AQIAANcAAAAAAAAAAAAgwKAAAAARAAAA",
+              "DocumentIndex": 0,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Instityt\\Diplom\\SecurityClean3\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Instityt\\Diplom\\SecurityClean3\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Controllers\\HomeController.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAQwBoAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-29T07:18:50.369Z",
+              "WhenOpened": "2024-05-01T07:01:10.176Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Position.cs",
-              "DocumentMoniker": "C:\\Instityt\\Diplom\\SecurityClean3\\Models\\Position.cs",
-              "RelativeDocumentMoniker": "Models\\Position.cs",
-              "ToolTip": "C:\\Instityt\\Diplom\\SecurityClean3\\Models\\Position.cs",
-              "RelativeToolTip": "Models\\Position.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAWAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-29T07:12:27.035Z"
             }
           ]
         }
