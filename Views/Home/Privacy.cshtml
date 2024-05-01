@@ -1,14 +1,6 @@
-﻿@model ApplicationUser?
-@{
+﻿@{
     ViewData["Title"] = "Privacy Policy";
 }
 <h1>@ViewData["Title"]</h1>
 
-@if (ViewBag.UserNotExists != null)
-{
-    <p>@ViewBag.UserNotExists;</p>
-}
-else{
-    <p>@Model?.FullName</p>
-}
-
+<h2>Только для админа</h2>

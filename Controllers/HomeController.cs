@@ -22,14 +22,9 @@ namespace SecurityClean3.Controllers
         {
             return View();
         }
-        [Authorize]
+        [Authorize(Roles ="admin")]
         public async Task<IActionResult> Privacy()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user != null) {
-                return View(user);
-            }
-            ViewBag["UserNotExists"] = "Пользователь не существует или что-то пошло не так.";
             return View();
         }
 

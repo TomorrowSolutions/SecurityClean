@@ -19,7 +19,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireDigit = false;
     options.Password.RequireUppercase = false;
-}).AddEntityFrameworkStores<SecurityContext>();
+}).AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<SecurityContext>();
 
 
 

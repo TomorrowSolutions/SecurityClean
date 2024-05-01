@@ -35,7 +35,7 @@
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.AdminKey" class="form-control"  value="@Guid.NewGuid().ToString()" aria-required="true" placeholder="password" />
+                    <input asp-for="Input.AdminKey" class="form-control"  aria-required="true" placeholder="password" />
                     <label asp-for="Input.AdminKey">Ключ администратора</label>
                     <span asp-validation-for="Input.AdminKey" class="text-danger"></span>
                 </div>
