@@ -93,16 +93,49 @@ namespace SecurityClean3.Data
                     }
                 );
             modelBuilder.Entity<Service>().HasData(
-               new Service { Id = 1, Name = "Установка видеонаблюдения", Price = 50000.00, PositionId=1 },
-                new Service { Id = 2, Name = "Обслуживание системы видеонаблюдения", Price = 70000.00, PositionId=5 },
-                new Service { Id = 3, Name = "Перевозка грузов", Price = 60000.00, PositionId=4 },
-                new Service { Id = 4, Name = "Охрана объектов", Price = 30000.00 ,PositionId=2},
-                new Service { Id = 5, Name = "Персональная охрана", Price = 80000.00,PositionId=3 }
+               new Service { Id = 1, Name = "Установка видеонаблюдения", Price = 50000.00, PositionId = 1 },
+                new Service { Id = 2, Name = "Обслуживание системы видеонаблюдения", Price = 70000.00, PositionId = 5 },
+                new Service { Id = 3, Name = "Перевозка грузов", Price = 60000.00, PositionId = 4 },
+                new Service { Id = 4, Name = "Охрана объектов", Price = 30000.00, PositionId = 2 },
+                new Service { Id = 5, Name = "Персональная охрана", Price = 80000.00, PositionId = 3 }
                 );
-            var admin = new IdentityRole("admin") { NormalizedName="admin"};
-            var manager = new IdentityRole("manager") { NormalizedName="manager"};
-            modelBuilder.Entity<IdentityRole>().HasData(admin, manager); 
-            
+            string AdminGuid = Guid.NewGuid().ToString();
+            string ManagerGuid = Guid.NewGuid().ToString();
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole { Id = AdminGuid, Name = "admin", NormalizedName = "admin" },
+                new IdentityRole { Id = ManagerGuid, Name = "manager", NormalizedName = "manager" }
+                );
+            var hasher = new PasswordHasher<ApplicationUser>();
+            modelBuilder.Entity<ApplicationUser>().HasData(
+                new ApplicationUser
+                {
+                    Id = AdminGuid,
+                    UserName = "admin@mail.com",
+                    NormalizedUserName = "admin@mail.com",
+                    Email = "admin@mail.com",
+                    NormalizedEmail = "admin@mail.com",
+                    FullName = "admin",
+                    AdminKey = Guid.NewGuid().ToString(),
+                    PasswordHash = hasher.HashPassword(null, "masterkey"),
+                    SecurityStamp = string.Empty
+                },
+                 new ApplicationUser
+                 {
+                     Id = ManagerGuid,
+                     UserName = "manager@mail.com",
+                     NormalizedUserName = "manager@mail.com",
+                     Email = "manager@mail.com",
+                     NormalizedEmail = "manager@mail.com",
+                     FullName = "manager",
+                     AdminKey = null,
+                     PasswordHash = hasher.HashPassword(null, "masterkey"),
+                     SecurityStamp = string.Empty
+                 }
+                );
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string>{  RoleId = AdminGuid,  UserId = AdminGuid },
+                new IdentityUserRole<string>{  RoleId = ManagerGuid,  UserId = ManagerGuid }
+            );
         }
     }
 }
