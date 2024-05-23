@@ -51,13 +51,13 @@ namespace SecurityClean3.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "425decee-d0b3-44ec-9198-970857068e37",
+                            Id = "0ef073a5-8f79-490d-89ed-ef6d0a5e308c",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "9fbdfde7-35ef-44f0-950e-497530515938",
+                            Id = "fa587644-bda6-42bc-ab17-d4d127e8aad7",
                             Name = "manager",
                             NormalizedName = "manager"
                         });
@@ -154,13 +154,13 @@ namespace SecurityClean3.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "425decee-d0b3-44ec-9198-970857068e37",
-                            RoleId = "425decee-d0b3-44ec-9198-970857068e37"
+                            UserId = "0ef073a5-8f79-490d-89ed-ef6d0a5e308c",
+                            RoleId = "0ef073a5-8f79-490d-89ed-ef6d0a5e308c"
                         },
                         new
                         {
-                            UserId = "9fbdfde7-35ef-44f0-950e-497530515938",
-                            RoleId = "9fbdfde7-35ef-44f0-950e-497530515938"
+                            UserId = "fa587644-bda6-42bc-ab17-d4d127e8aad7",
+                            RoleId = "fa587644-bda6-42bc-ab17-d4d127e8aad7"
                         });
                 });
 
@@ -258,17 +258,17 @@ namespace SecurityClean3.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "425decee-d0b3-44ec-9198-970857068e37",
+                            Id = "0ef073a5-8f79-490d-89ed-ef6d0a5e308c",
                             AccessFailedCount = 0,
-                            AdminKey = "605a5681-2f3a-484c-b47c-7760e328e740",
-                            ConcurrencyStamp = "a26ca762-2807-4470-8a9c-ee9ee558066f",
+                            AdminKey = "4811e8e9-3429-48c7-a8c8-01d635c969d1",
+                            ConcurrencyStamp = "562dd8ca-c604-4d57-b545-7d811be390be",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             FullName = "admin",
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@mail.com",
                             NormalizedUserName = "admin@mail.com",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBRkzuJXVnzWA31kKEMFMN8vP7SGlbhuqXSph2LPNtdfSX8Exku6kkz3+kPFiR+3mA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECDoCzhUdjesRfj/RrwSvKGdfPL4gqsY+xtFD3fB1qArBbcq5c4Az9R9iS2wus3ing==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -276,20 +276,235 @@ namespace SecurityClean3.Migrations
                         },
                         new
                         {
-                            Id = "9fbdfde7-35ef-44f0-950e-497530515938",
+                            Id = "fa587644-bda6-42bc-ab17-d4d127e8aad7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "632620c9-b00f-481d-bc6f-f32b151c64d0",
+                            ConcurrencyStamp = "02d578af-efc0-42ad-a176-575509dcef08",
                             Email = "manager@mail.com",
                             EmailConfirmed = false,
                             FullName = "manager",
                             LockoutEnabled = false,
                             NormalizedEmail = "manager@mail.com",
                             NormalizedUserName = "manager@mail.com",
-                            PasswordHash = "AQAAAAIAAYagAAAAENsovHdNxZA89W0gWp6iX8GmXqVHr9ps+iu0qB441FP9OTKkmVUFKDg/ssFa6X5BjA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOejxVzQvCE1BA5KgPJHAiHscqcu+wBLhx4P9rxmau0MXj2pfHzPxFeJRcl2zR6J8g==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
                             UserName = "manager@mail.com"
+                        });
+                });
+
+            modelBuilder.Entity("SecurityClean3.Models.Contract", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("SignDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Contracts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CustomerId = 1,
+                            EndDate = new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            SignDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
+                });
+
+            modelBuilder.Entity("SecurityClean3.Models.ContractSecuredItem", b =>
+                {
+                    b.Property<int>("ContractId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SecuredItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ContractId", "SecuredItemId");
+
+                    b.HasIndex("SecuredItemId");
+
+                    b.ToTable("ContractSecuredItems");
+
+                    b.HasData(
+                        new
+                        {
+                            ContractId = 1,
+                            SecuredItemId = 1
+                        },
+                        new
+                        {
+                            ContractId = 1,
+                            SecuredItemId = 2
+                        },
+                        new
+                        {
+                            ContractId = 1,
+                            SecuredItemId = 3
+                        });
+                });
+
+            modelBuilder.Entity("SecurityClean3.Models.ContractService", b =>
+                {
+                    b.Property<int>("ContractId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ContractId", "ServiceId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("ContractServices");
+
+                    b.HasData(
+                        new
+                        {
+                            ContractId = 1,
+                            ServiceId = 1
+                        },
+                        new
+                        {
+                            ContractId = 1,
+                            ServiceId = 2
+                        },
+                        new
+                        {
+                            ContractId = 1,
+                            ServiceId = 4
+                        });
+                });
+
+            modelBuilder.Entity("SecurityClean3.Models.Customer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AccountNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Bank")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Bik")
+                        .IsRequired()
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ContactPerson")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("CorrespondentAccount")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Inn")
+                        .IsRequired()
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
+
+                    b.Property<string>("LegalAddress")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Customers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccountNumber = "40702810100000000001",
+                            Bank = "ПАО Сбербанк",
+                            Bik = "044525225",
+                            CompanyName = "ООО Рога и копыта",
+                            ContactPerson = "Иванов Иван Иванович",
+                            CorrespondentAccount = "30101810200000000225",
+                            Inn = "770101001",
+                            LegalAddress = "123000, г. Москва, ул. Ромашковая, д. 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccountNumber = "40702810100000000002",
+                            Bank = "ПАО Сбербанк",
+                            Bik = "044525225",
+                            CompanyName = "ПАО ЖЭК",
+                            ContactPerson = "Петров Петр Петрович",
+                            CorrespondentAccount = "30101810200000000225",
+                            Inn = "770202001",
+                            LegalAddress = "123000, г. Москва, ул. Клавишная, д. 2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AccountNumber = "40702810100000000003",
+                            Bank = "ПАО Сбербанк",
+                            Bik = "044525225",
+                            CompanyName = "ООО МикроАванс",
+                            ContactPerson = "Сидоров Сидр Сидрович",
+                            CorrespondentAccount = "30101810200000000225",
+                            Inn = "770303001",
+                            LegalAddress = "123000, г. Москва, ул. Ладожская, д. 3"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AccountNumber = "40702810100000000004",
+                            Bank = "ПАО Сбербанк",
+                            Bik = "044525225",
+                            CompanyName = "ОАО Гофры",
+                            ContactPerson = "Кузнецов Кузьма Кузьмич",
+                            CorrespondentAccount = "30101810200000000225",
+                            Inn = "770404001",
+                            LegalAddress = "123000, г. Москва, ул. Букетиров, д. 4"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AccountNumber = "40702810100000000005",
+                            Bank = "ПАО Сбербанк",
+                            Bik = "044525225",
+                            CompanyName = "ООО БК Всех и каждого",
+                            ContactPerson = "Лебедев Лев Лебедевич",
+                            CorrespondentAccount = "30101810200000000225",
+                            Inn = "770505001",
+                            LegalAddress = "123000, г. Москва, ул. Галошная, д. 5"
                         });
                 });
 
@@ -425,6 +640,61 @@ namespace SecurityClean3.Migrations
                         });
                 });
 
+            modelBuilder.Entity("SecurityClean3.Models.SecuredItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SecuredItems");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "ул. Тверская, 1, Москва, Россия",
+                            Name = "Банк"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "пр. Независимости, 15, Минск, Беларусь",
+                            Name = "Ювелирный салон"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Address = "ул. Большая Спасская, 24, Санкт-Петербург, Россия",
+                            Name = "Автоцентр"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Address = "пр. Победителей, 50, Минск, Беларусь",
+                            Name = "Музей"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Address = "ул. Театральная, 10, Москва, Россия",
+                            Name = "Театр"
+                        });
+                });
+
             modelBuilder.Entity("SecurityClean3.Models.Service", b =>
                 {
                     b.Property<int>("Id")
@@ -539,6 +809,55 @@ namespace SecurityClean3.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SecurityClean3.Models.Contract", b =>
+                {
+                    b.HasOne("SecurityClean3.Models.Customer", "Customer")
+                        .WithMany("contracts")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("SecurityClean3.Models.ContractSecuredItem", b =>
+                {
+                    b.HasOne("SecurityClean3.Models.Contract", "Contract")
+                        .WithMany("ContractSecuredItems")
+                        .HasForeignKey("ContractId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SecurityClean3.Models.SecuredItem", "SecuredItem")
+                        .WithMany("ContractSecuredItems")
+                        .HasForeignKey("SecuredItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Contract");
+
+                    b.Navigation("SecuredItem");
+                });
+
+            modelBuilder.Entity("SecurityClean3.Models.ContractService", b =>
+                {
+                    b.HasOne("SecurityClean3.Models.Contract", "Contract")
+                        .WithMany("ContractServices")
+                        .HasForeignKey("ContractId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SecurityClean3.Models.Service", "Service")
+                        .WithMany("ContractServices")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Contract");
+
+                    b.Navigation("Service");
+                });
+
             modelBuilder.Entity("SecurityClean3.Models.Employee", b =>
                 {
                     b.HasOne("SecurityClean3.Models.Position", "Position")
@@ -561,11 +880,33 @@ namespace SecurityClean3.Migrations
                     b.Navigation("Position");
                 });
 
+            modelBuilder.Entity("SecurityClean3.Models.Contract", b =>
+                {
+                    b.Navigation("ContractSecuredItems");
+
+                    b.Navigation("ContractServices");
+                });
+
+            modelBuilder.Entity("SecurityClean3.Models.Customer", b =>
+                {
+                    b.Navigation("contracts");
+                });
+
             modelBuilder.Entity("SecurityClean3.Models.Position", b =>
                 {
                     b.Navigation("Employees");
 
                     b.Navigation("Services");
+                });
+
+            modelBuilder.Entity("SecurityClean3.Models.SecuredItem", b =>
+                {
+                    b.Navigation("ContractSecuredItems");
+                });
+
+            modelBuilder.Entity("SecurityClean3.Models.Service", b =>
+                {
+                    b.Navigation("ContractServices");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Azure;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using SecurityClean3.Models;
 
 namespace SecurityClean3.Data
@@ -13,6 +15,12 @@ namespace SecurityClean3.Data
         public DbSet<Position> Positions { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Service> Services { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Contract> Contracts { get; set; }
+        public DbSet<SecuredItem> SecuredItems { get; set; }
+
+        public DbSet<ContractSecuredItem> ContractSecuredItems { get; set; }
+        public DbSet<ContractService> ContractServices { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -119,23 +127,145 @@ namespace SecurityClean3.Data
                     PasswordHash = hasher.HashPassword(null, "masterkey"),
                     SecurityStamp = string.Empty
                 },
-                 new ApplicationUser
-                 {
-                     Id = ManagerGuid,
-                     UserName = "manager@mail.com",
-                     NormalizedUserName = "manager@mail.com",
-                     Email = "manager@mail.com",
-                     NormalizedEmail = "manager@mail.com",
-                     FullName = "manager",
-                     AdminKey = null,
-                     PasswordHash = hasher.HashPassword(null, "masterkey"),
-                     SecurityStamp = string.Empty
-                 }
+                new ApplicationUser
+                {
+                    Id = ManagerGuid,
+                    UserName = "manager@mail.com",
+                    NormalizedUserName = "manager@mail.com",
+                    Email = "manager@mail.com",
+                    NormalizedEmail = "manager@mail.com",
+                    FullName = "manager",
+                    AdminKey = null,
+                    PasswordHash = hasher.HashPassword(null, "masterkey"),
+                    SecurityStamp = string.Empty
+                }
                 );
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(
-                new IdentityUserRole<string>{  RoleId = AdminGuid,  UserId = AdminGuid },
-                new IdentityUserRole<string>{  RoleId = ManagerGuid,  UserId = ManagerGuid }
-            );
+                new IdentityUserRole<string> { RoleId = AdminGuid, UserId = AdminGuid },
+                new IdentityUserRole<string> { RoleId = ManagerGuid, UserId = ManagerGuid }
+                );
+            modelBuilder.Entity<Customer>().HasData(
+                new Customer
+                {
+                    Id = 1,
+                    CompanyName = "ООО Рога и копыта",
+                    LegalAddress = "123000, г. Москва, ул. Ромашковая, д. 1",
+                    Inn = "770101001",
+                    AccountNumber = "40702810100000000001",
+                    Bank = "ПАО Сбербанк",
+                    Bik = "044525225",
+                    CorrespondentAccount = "30101810200000000225",
+                    ContactPerson = "Иванов Иван Иванович"
+                },
+                new Customer
+                {
+                    Id = 2,
+                    CompanyName = "ПАО ЖЭК",
+                    LegalAddress = "123000, г. Москва, ул. Клавишная, д. 2",
+                    Inn = "770202001",
+                    AccountNumber = "40702810100000000002",
+                    Bank = "ПАО Сбербанк",
+                    Bik = "044525225",
+                    CorrespondentAccount = "30101810200000000225",
+                    ContactPerson = "Петров Петр Петрович"
+                },
+                new Customer
+                {
+                    Id = 3,
+                    CompanyName = "ООО МикроАванс",
+                    LegalAddress = "123000, г. Москва, ул. Ладожская, д. 3",
+                    Inn = "770303001",
+                    AccountNumber = "40702810100000000003",
+                    Bank = "ПАО Сбербанк",
+                    Bik = "044525225",
+                    CorrespondentAccount = "30101810200000000225",
+                    ContactPerson = "Сидоров Сидр Сидрович"
+                },
+
+                new Customer
+                {
+                    Id = 4,
+                    CompanyName = "ОАО Гофры",
+                    LegalAddress = "123000, г. Москва, ул. Букетиров, д. 4",
+                    Inn = "770404001",
+                    AccountNumber = "40702810100000000004",
+                    Bank = "ПАО Сбербанк",
+                    Bik = "044525225",
+                    CorrespondentAccount = "30101810200000000225",
+                    ContactPerson = "Кузнецов Кузьма Кузьмич"
+                },
+                new Customer
+                {
+                    Id = 5,
+                    CompanyName = "ООО БК Всех и каждого",
+                    LegalAddress = "123000, г. Москва, ул. Галошная, д. 5",
+                    Inn = "770505001",
+                    AccountNumber = "40702810100000000005",
+                    Bank = "ПАО Сбербанк",
+                    Bik = "044525225",
+                    CorrespondentAccount = "30101810200000000225",
+                    ContactPerson = "Лебедев Лев Лебедевич"
+                }
+                );
+            modelBuilder.Entity<Contract>().HasData(
+                new Contract
+                {
+                    Id = 1,
+                    CustomerId = 1,
+                    SignDate = new DateTime(2022, 1, 1),
+                    StartDate = new DateTime(2022, 1, 1),
+                    EndDate = new DateTime(2022, 12, 31)
+                }
+                );
+            modelBuilder.Entity<SecuredItem>().HasData(
+                new SecuredItem { Id = 1, Name = "Банк", Address = "ул. Тверская, 1, Москва, Россия" },
+                new SecuredItem { Id = 2, Name = "Ювелирный салон", Address = "пр. Независимости, 15, Минск, Беларусь" },
+                new SecuredItem { Id = 3, Name = "Автоцентр", Address = "ул. Большая Спасская, 24, Санкт-Петербург, Россия" },
+                new SecuredItem { Id = 4, Name = "Музей", Address = "пр. Победителей, 50, Минск, Беларусь" },
+                new SecuredItem { Id = 5, Name = "Театр", Address = "ул. Театральная, 10, Москва, Россия" }
+                );
+            modelBuilder.Entity<ContractSecuredItem>(e =>
+            {
+                e.HasKey(x => new { x.ContractId, x.SecuredItemId });
+
+                e.HasOne(x => x.Contract)
+                .WithMany(y => y.ContractSecuredItems)
+                .HasForeignKey(x => x.ContractId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+                e.HasOne(x => x.SecuredItem)
+                .WithMany(y => y.ContractSecuredItems)
+                .HasForeignKey(x => x.SecuredItemId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                e.HasData(
+                    new ContractSecuredItem { ContractId = 1, SecuredItemId = 1 },
+                    new ContractSecuredItem { ContractId = 1, SecuredItemId = 2 },
+                    new ContractSecuredItem { ContractId = 1, SecuredItemId = 3 }
+                    );
+            });
+            modelBuilder.Entity<ContractService>(e =>
+            {
+                e.HasKey(x => new { x.ContractId, x.ServiceId });
+
+                e.HasOne(x => x.Contract)
+                .WithMany(y => y.ContractServices)
+                .HasForeignKey(x => x.ContractId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+                e.HasOne(x => x.Service)
+                .WithMany(y => y.ContractServices)
+                .HasForeignKey(x => x.ServiceId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                e.HasData(
+                    new ContractService { ContractId = 1, ServiceId = 1 },
+                    new ContractService { ContractId = 1, ServiceId = 2 },
+                    new ContractService { ContractId = 1, ServiceId = 4 }
+                    );
+            });
         }
     }
 }

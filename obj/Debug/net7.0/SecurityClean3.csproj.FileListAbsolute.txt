@@ -289,3 +289,4 @@ C:\Instityt\Diplom\SecurityClean3\bin\Debug\net7.0\runtimes\win-arm64\native\e_s
 C:\Instityt\Diplom\SecurityClean3\bin\Debug\net7.0\runtimes\win-x64\native\e_sqlite3.dll
 C:\Instityt\Diplom\SecurityClean3\bin\Debug\net7.0\runtimes\win-x86\native\e_sqlite3.dll
 C:\Instityt\Diplom\SecurityClean3\obj\Debug\net7.0\SecurityClean3.MvcApplicationPartsAssemblyInfo.cs
+C:\Instityt\Diplom\SecurityClean3\obj\Debug\net7.0\SecurityClean3.sourcelink.json

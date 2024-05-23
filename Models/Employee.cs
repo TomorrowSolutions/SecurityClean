@@ -10,7 +10,7 @@ namespace SecurityClean3.Models
         [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
         [Display(Name = "ФИО")]
         [StringLength(100, ErrorMessage = "Поле {0} не должно превышать {1} символов.")]
-        public string FullName { get; set; } = "";
+        public string FullName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
         [Display(Name = "Дата поступления на работу")]
@@ -21,7 +21,7 @@ namespace SecurityClean3.Models
         [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
         [Display(Name = "Образование")]
         [StringLength(100, ErrorMessage = "Поле {0} не должно превышать {1} символов.")]
-        public string Education { get; set; } = "";
+        public string Education { get; set; } = string.Empty;
         [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
         [Display(Name = "Должность")]
         public int PositionId { get; set; }

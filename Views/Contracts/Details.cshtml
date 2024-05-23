@@ -1,0 +1,95 @@
+﻿@model SecurityClean3.Models.Contract
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Contract</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Customer.AccountNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SignDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SignDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+<h4>Услуги</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ContractServices.First().Service.Name)
+            </th>
+            <th>
+                Стоимость
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ContractServices)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Service.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Service.Price)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<h4>Услуги</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ContractSecuredItems.First().SecuredItem.Name)
+            </th>
+            <th>
+                Стоимость
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ContractSecuredItems)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SecuredItem.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SecuredItem.Address)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

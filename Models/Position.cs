@@ -10,7 +10,7 @@ namespace SecurityClean3.Models
         [Display(Name = "Название")]
         [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
         [StringLength(50, ErrorMessage = "Поле {0} не должно превышать {1} символов.")]
-        public string Name { get; set; } = "";
+        public string Name { get; set; } = string.Empty;
         [Range(0, 3000000.00)]
         [Display(Name = "Оклад")]
         [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
