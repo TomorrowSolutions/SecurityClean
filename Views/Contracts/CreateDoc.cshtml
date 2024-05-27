@@ -1,0 +1,118 @@
+﻿@model SecurityClean3.Models.Contract
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Создание документа</h1>
+
+<h4>Внимание! После создания документа, последующее редактирование договора будет невозможно.</h4>
+<div>
+    <h4>Договор</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer.ContactPerson)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Customer.ContactPerson)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SignDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SignDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsLocked)
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.IsLocked)
+            {
+                <p>Заблокировано(записано в pdf)</p>
+            }
+            else
+            {
+                <p>Незаблокировано(не записано в pdf)</p>
+            }
+        </dd>
+    </dl>
+
+    <div class="row pt-3">
+        <div class="col-6">
+            <h4>Услуги</h4>
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ContractServices.First().Service.Name)
+                        </th>
+                        <th>
+                            Стоимость
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ContractServices)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Service.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Service.Price)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-6">
+            <h4>Объекты</h4>
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ContractSecuredItems.First().SecuredItem.Name)
+                        </th>
+                        <th>
+                            Стоимость
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ContractSecuredItems)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SecuredItem.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SecuredItem.Address)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <form asp-action="CreateDoc">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Создать документ" class="btn btn-success" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

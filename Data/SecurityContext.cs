@@ -123,7 +123,6 @@ namespace SecurityClean3.Data
                     Email = "admin@mail.com",
                     NormalizedEmail = "admin@mail.com",
                     FullName = "admin",
-                    AdminKey = Guid.NewGuid().ToString(),
                     PasswordHash = hasher.HashPassword(null, "masterkey"),
                     SecurityStamp = string.Empty
                 },
@@ -135,7 +134,6 @@ namespace SecurityClean3.Data
                     Email = "manager@mail.com",
                     NormalizedEmail = "manager@mail.com",
                     FullName = "manager",
-                    AdminKey = null,
                     PasswordHash = hasher.HashPassword(null, "masterkey"),
                     SecurityStamp = string.Empty
                 }
@@ -214,7 +212,8 @@ namespace SecurityClean3.Data
                     CustomerId = 1,
                     SignDate = new DateTime(2022, 1, 1),
                     StartDate = new DateTime(2022, 1, 1),
-                    EndDate = new DateTime(2022, 12, 31)
+                    EndDate = new DateTime(2022, 12, 31),
+                    IsLocked=false
                 }
                 );
             modelBuilder.Entity<SecuredItem>().HasData(

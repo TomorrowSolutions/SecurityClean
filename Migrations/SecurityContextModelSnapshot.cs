@@ -51,13 +51,13 @@ namespace SecurityClean3.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0ef073a5-8f79-490d-89ed-ef6d0a5e308c",
+                            Id = "a26a9e76-a06d-40a6-b84a-4fec3a741ca2",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "fa587644-bda6-42bc-ab17-d4d127e8aad7",
+                            Id = "dc4ccf47-776f-4cc0-99cb-01572e53efd7",
                             Name = "manager",
                             NormalizedName = "manager"
                         });
@@ -154,13 +154,13 @@ namespace SecurityClean3.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "0ef073a5-8f79-490d-89ed-ef6d0a5e308c",
-                            RoleId = "0ef073a5-8f79-490d-89ed-ef6d0a5e308c"
+                            UserId = "a26a9e76-a06d-40a6-b84a-4fec3a741ca2",
+                            RoleId = "a26a9e76-a06d-40a6-b84a-4fec3a741ca2"
                         },
                         new
                         {
-                            UserId = "fa587644-bda6-42bc-ab17-d4d127e8aad7",
-                            RoleId = "fa587644-bda6-42bc-ab17-d4d127e8aad7"
+                            UserId = "dc4ccf47-776f-4cc0-99cb-01572e53efd7",
+                            RoleId = "dc4ccf47-776f-4cc0-99cb-01572e53efd7"
                         });
                 });
 
@@ -192,9 +192,6 @@ namespace SecurityClean3.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
-
-                    b.Property<string>("AdminKey")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -258,17 +255,16 @@ namespace SecurityClean3.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0ef073a5-8f79-490d-89ed-ef6d0a5e308c",
+                            Id = "a26a9e76-a06d-40a6-b84a-4fec3a741ca2",
                             AccessFailedCount = 0,
-                            AdminKey = "4811e8e9-3429-48c7-a8c8-01d635c969d1",
-                            ConcurrencyStamp = "562dd8ca-c604-4d57-b545-7d811be390be",
+                            ConcurrencyStamp = "88f4e83b-ee62-43fd-92eb-2c379e16bec3",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             FullName = "admin",
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@mail.com",
                             NormalizedUserName = "admin@mail.com",
-                            PasswordHash = "AQAAAAIAAYagAAAAECDoCzhUdjesRfj/RrwSvKGdfPL4gqsY+xtFD3fB1qArBbcq5c4Az9R9iS2wus3ing==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEInyeBPwUk3TB9EoPknAqnrQonyYs2wwi+UcPzCMRPj1NOj4d0kl6kBZ5czS2ayAKQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -276,16 +272,16 @@ namespace SecurityClean3.Migrations
                         },
                         new
                         {
-                            Id = "fa587644-bda6-42bc-ab17-d4d127e8aad7",
+                            Id = "dc4ccf47-776f-4cc0-99cb-01572e53efd7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "02d578af-efc0-42ad-a176-575509dcef08",
+                            ConcurrencyStamp = "0e72f3a2-9582-4070-8bf1-f5916d8cb3f0",
                             Email = "manager@mail.com",
                             EmailConfirmed = false,
                             FullName = "manager",
                             LockoutEnabled = false,
                             NormalizedEmail = "manager@mail.com",
                             NormalizedUserName = "manager@mail.com",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOejxVzQvCE1BA5KgPJHAiHscqcu+wBLhx4P9rxmau0MXj2pfHzPxFeJRcl2zR6J8g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEO8G2wqlCNpWITdZMYTjta2VV1TmhQRDmXW1zmTOqs5alrlvD5q+kTt7WKmFgwvv2g==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -307,6 +303,12 @@ namespace SecurityClean3.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsLocked")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("SignDate")
                         .HasColumnType("datetime2");
 
@@ -325,6 +327,7 @@ namespace SecurityClean3.Migrations
                             Id = 1,
                             CustomerId = 1,
                             EndDate = new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsLocked = false,
                             SignDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StartDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });

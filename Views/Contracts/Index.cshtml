@@ -14,10 +14,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Customer)
+                @Html.DisplayNameFor(model => model.Customer.ContactPerson)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.SignDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsLocked)
             </th>
             <th></th>
         </tr>
@@ -32,12 +35,32 @@
                 @Html.DisplayFor(modelItem => item.SignDate)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @if (item.IsLocked)
+                {
+                    <p>Заблокировано</p>
+                }
+                else
+                {
+                    <p>Незаблокировано</p>
+                }
             </td>
-        </tr>}
+            <td>
+                @if (item.IsLocked)
+                {
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="DownloadDoc" asp-route-id="@item.Id">Загрузить документ</a>
+                    <a asp-action="ClearDoc" asp-route-id="@item.Id">Очистка</a>
+                }
+                else
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="CreateDoc" asp-route-id="@item.Id">Создать документ</a>
+                }
+            </td>
+        </tr>
+}
     </tbody>
 </table>
-
-

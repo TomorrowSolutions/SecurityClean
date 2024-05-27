@@ -78,6 +78,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[7.0.12, )"
+            },
+            "NPOI": {
+              "target": "Package",
+              "version": "[2.7.0, )"
             }
           },
           "imports": [

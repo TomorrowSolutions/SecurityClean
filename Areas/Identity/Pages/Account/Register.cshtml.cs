@@ -104,7 +104,6 @@ namespace SecurityClean3.Areas.Identity.Pages.Account
                 }
                 var user = new ApplicationUser() {
                     FullName=Input.FullName,
-                    AdminKey= string.IsNullOrEmpty(Input.AdminKey) ? null : Input.AdminKey,
                     UserName= Input.Email,
                     Email=Input.Email
                 };
@@ -165,5 +164,6 @@ namespace SecurityClean3.Areas.Identity.Pages.Account
             }
             return (IUserEmailStore<ApplicationUser>)_userStore;
         }
+        
     }
 }
