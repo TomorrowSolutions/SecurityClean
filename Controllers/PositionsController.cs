@@ -76,6 +76,7 @@ namespace SecurityClean3.Controllers
             }
 
             var position = await _context.Positions
+                .Include(p=>p.Employees)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (position == null)
@@ -123,7 +124,7 @@ namespace SecurityClean3.Controllers
                 return NotFound();
             }
 
-            var position = await _context.Positions.AsNoTracking().FirstOrDefaultAsync(p=>p.Id==id);
+            var position = await _context.Positions.Include(p => p.Employees).AsNoTracking().FirstOrDefaultAsync(p=>p.Id==id);
             if (position == null)
             {
                 return NotFound();
@@ -198,7 +199,7 @@ namespace SecurityClean3.Controllers
                 return NotFound();
             }
 
-            var position = await _context.Positions
+            var position = await _context.Positions.Include(p => p.Employees)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (position == null)

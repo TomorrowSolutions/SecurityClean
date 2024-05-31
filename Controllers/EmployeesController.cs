@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using SecurityClean3.Data;
 using SecurityClean3.Models;
+using System.Diagnostics.Contracts;
 
 namespace SecurityClean3.Controllers
 {
@@ -99,6 +100,7 @@ namespace SecurityClean3.Controllers
             }
             catch (DbUpdateException)
             {
+
                 ModelState.AddModelError("", "Не удалось сохранить изменения. " +
                     "Попробуйте снова, если проблема сохраняется, " +
                     "обратитесь к системному администратору.");
@@ -115,7 +117,10 @@ namespace SecurityClean3.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.Employees.FindAsync(id);
+            var employee = await _context.Employees
+                                        .Include(e=>e.Position)
+                                        .AsNoTracking()
+                                        .FirstOrDefaultAsync(e=>e.Id==id);
             if (employee == null)
             {
                 return NotFound();
@@ -126,14 +131,23 @@ namespace SecurityClean3.Controllers
 
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditPost(int? id)
+        public async Task<IActionResult> EditPost(int? id, byte[] rowVersion)
         {
             if (id == null)
             {
                 return NotFound();
             }
             var employeeToUpdate = await _context.Employees.FirstOrDefaultAsync(e => e.Id==id);
-            if(await TryUpdateModelAsync<Employee>(
+            if (employeeToUpdate==null)
+            {
+                Employee deletedEmployee = new Employee();
+                await TryUpdateModelAsync(deletedEmployee);
+                ModelState.AddModelError(string.Empty, "Не удалось сохранить изменения. Запись удалена другим пользователем");
+                ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Name", employeeToUpdate.PositionId);
+                return View(deletedEmployee);
+            }
+            _context.Entry(employeeToUpdate).Property("RowVersion").OriginalValue = rowVersion;
+            if (await TryUpdateModelAsync<Employee>(
                     employeeToUpdate,
                     "",
                     e=>e.FullName,e=>e.HireDate,e=>e.Education, e => e.PositionId))
@@ -143,18 +157,51 @@ namespace SecurityClean3.Controllers
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateException)
+                catch (DbUpdateConcurrencyException ex)
                 {
-                    ModelState.AddModelError("", "Не удалось сохранить изменения. " +
-                        "Попробуйте снова, если проблема сохраняется, " +
-                        "обратитесь к системному администратору.");
+                    var exceptionEntry = ex.Entries.Single();
+                    var clientValues = (Employee)exceptionEntry.Entity;
+                    var databaseEntry = exceptionEntry.GetDatabaseValues();
+                    if (databaseEntry == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "Не удалось сохранить изменения. Запись удалена другим пользователем");
+                    }
+                    else
+                    {
+                        var databaseValues = (Employee)databaseEntry.ToObject();
+                        if (databaseValues.FullName != clientValues.FullName)
+                        {
+                            ModelState.AddModelError("FullName", $"Актуальное значение: {databaseValues.FullName}");
+                        }
+
+                        if (databaseValues.HireDate != clientValues.HireDate)
+                        {
+                            ModelState.AddModelError("HireDate", $"Актуальное значение: {databaseValues.HireDate:d}");
+                        }
+
+                        if (databaseValues.Education != clientValues.Education)
+                        {
+                            ModelState.AddModelError("Education", $"Актуальное значение: {databaseValues.Education}");
+                        }
+
+                        if (databaseValues.PositionId != clientValues.PositionId)
+                        {
+                            var positionFromDb = await _context.Positions.FirstOrDefaultAsync(x => x.Id == databaseValues.PositionId);
+                            ModelState.AddModelError("PositionId", $"Актуальное значение: {positionFromDb?.Name}");
+                        }
+                        ModelState.AddModelError("", "Запись, которую вы хотели изменить, была модифицирована другим пользователем. " +
+                        "Операция была отменена и теперь вы сможете видеть поля которые были изменены. " +
+                        "Если вы все еще хотите внести измененные значения то нажмите 'Отправить' или можете вернуться назад к списку всех записей.");
+                        employeeToUpdate.RowVersion = (byte[])databaseValues.RowVersion;
+                        ModelState.Remove("RowVersion");
+                    }
                 }
             }
             ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Name", employeeToUpdate.PositionId);
             return View(employeeToUpdate);
         }
 
-        public async Task<IActionResult> Delete(int? id,bool? saveChangesError = false)
+        public async Task<IActionResult> Delete(int? id, bool? concurrencyError)
         {
             if (id == null || _context.Employees == null)
             {
@@ -167,36 +214,38 @@ namespace SecurityClean3.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (employee == null)
             {
+                if (concurrencyError.GetValueOrDefault())
+                {
+                    return RedirectToAction(nameof(Index));
+                }
                 return NotFound();
             }
-            if (saveChangesError.GetValueOrDefault())
+            if (concurrencyError.GetValueOrDefault())
             {
-                ViewData["ErrorMessage"] ="Не удалось запись. " +
-                    "Попробуйте снова, если проблема сохраняется, " +
-                    "обратитесь к системному администратору.";
+                ViewData["ConcurrencyErrorMessage"] = "Запись, которую вы хотели изменить, была модифицирована другим пользователем. " +
+                        "Операция была отменена и теперь вы сможете видеть поля которые были изменены. " +
+                        "Если вы все еще хотите удалить то нажмите 'Удалить' или можете вернуться назад к списку всех записей.";
             }
 
             return View(employee);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(Employee employee)
         {
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee == null)
-            {
-                return RedirectToAction(nameof(Index));
-            }
             try
             {
-                _context.Employees.Remove(employee);
-                await _context.SaveChangesAsync();
+                if (await _context.Employees.AnyAsync(e=>e.Id==employee.Id))
+                {
+                    _context.Employees.Remove(employee);
+                    await _context.SaveChangesAsync();
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch (DbUpdateException )
+            catch (DbUpdateConcurrencyException)
             {
-                return RedirectToAction(nameof(Delete), new { id = id, saveChangesError = true });
+                return RedirectToAction(nameof(Delete), new { concurrencyError = true, id = employee.Id });
             }
         }
 

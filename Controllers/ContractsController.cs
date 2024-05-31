@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using NPOI.HPSF;
 using NPOI.XWPF.UserModel;
 using SecurityClean3.Data;
 using SecurityClean3.Models;
 using SecurityClean3.Utils;
+
 using System.Text;
 
 namespace SecurityClean3.Controllers
@@ -22,10 +24,53 @@ namespace SecurityClean3.Controllers
         }
 
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            string sortOrder,
+            string searchString,
+            string currentFilter,
+            int? pageNumber
+            )
         {
-            var securityContext = _context.Contracts.Include(c => c.Customer).AsNoTracking();
-            return View(await securityContext.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["LockedSortParm"] = string.IsNullOrEmpty(sortOrder) ? "locked_desc" : "";
+            ViewData["SignDateSortParm"] = sortOrder == "SignDate" ? "signDate_desc" : "SignDate";
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewData["CurrentFilter"] = searchString;
+            var tmp = _context.Contracts
+                .Include(c => c.Customer)
+                .Include(c => c.ContractServices)
+                .ThenInclude(cs => cs.Service)
+                .Include(c => c.ContractSecuredItems)
+                .ThenInclude(c => c.SecuredItem);
+            var contracts = from c in tmp select c;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                contracts=contracts.Where(c => c.Customer.ContactPerson.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "locked_desc":
+                    contracts = contracts.OrderByDescending(c => c.IsLocked);
+                    break;
+                case "SignDate":
+                    contracts = contracts.OrderBy(c => c.SignDate);
+                    break;
+                case "signDate_desc":
+                    contracts = contracts.OrderByDescending(c => c.SignDate);
+                    break;
+                default:
+                    contracts = contracts.OrderBy(c => c.IsLocked);
+                    break;
+            }
+            int pageSize = 5;
+            return View(await PaginatedList<Contract>.CreateAsync(contracts.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
 
@@ -64,12 +109,22 @@ namespace SecurityClean3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,CustomerId,SignDate,StartDate,EndDate,IsLocked")] Contract contract)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(contract);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(contract);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
+            catch (DbUpdateException)
+            {
+                ModelState.AddModelError("", "Не удалось сохранить изменения. " +
+                   "Попробуйте снова, если проблема сохраняется, " +
+                   "обратитесь к системному администратору.");
+            }
+            
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "ContactPerson", contract.CustomerId);
             return View(contract);
         }
@@ -82,14 +137,14 @@ namespace SecurityClean3.Controllers
                 return NotFound();
             }
 
-            var contract = await _context.Contracts.FindAsync(id);
+            var contract = await _context.Contracts.Include(c=>c.Customer).AsNoTracking().FirstOrDefaultAsync(x=>x.Id==id);
             if (contract == null)
             {
                 return NotFound();
             }
             if (contract.IsLocked)
             {
-                return Problem("Договор заблокирован(не может быть изменен)");
+                return RedirectToAction("SimpleError", "Error", new { errorMessage = "Договор заблокирован(не может быть изменен)" });
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "ContactPerson", contract.CustomerId);
             return View(contract);
@@ -98,38 +153,84 @@ namespace SecurityClean3.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerId,SignDate,StartDate,EndDate,IsLocked")] Contract contract)
+        public async Task<IActionResult> Edit(int? id, byte[] rowVersion)
         {
-            if (id != contract.Id)
+            if (id == null)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            var contractToUpdate = await _context.Contracts.Include(c => c.Customer).AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            if (contractToUpdate == null)
+            {
+                Contract deletedContract = new Contract();
+                await TryUpdateModelAsync(deletedContract);
+                ModelState.AddModelError(string.Empty, "Не удалось сохранить изменения. Запись удалена другим пользователем");
+                ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "ContactPerson", deletedContract.CustomerId);
+                return View(deletedContract);
+            }
+            _context.Entry(contractToUpdate).Property("RowVersion").OriginalValue=  rowVersion;
+            if (await TryUpdateModelAsync<Contract>(
+                contractToUpdate,
+                "",
+                c=>c.SignDate,c=>c.StartDate,c=>c.EndDate,c=>c.CustomerId,c=>c.IsLocked
+                ))
             {
                 try
                 {
-                    _context.Update(contract);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException ex)
                 {
-                    if (!ContractExists(contract.Id))
+                    var exceptionEntry = ex.Entries.Single();
+                    var clientValues = (Contract)exceptionEntry.Entity;
+                    var databaseEntry = exceptionEntry.GetDatabaseValues();
+                    if(databaseEntry == null)
                     {
-                        return NotFound();
+                        ModelState.AddModelError(string.Empty, "Не удалось сохранить изменения. Запись удалена другим пользователем");
                     }
                     else
                     {
-                        throw;
+                        
+                        var databaseValues = (Contract)databaseEntry.ToObject();
+                        if (databaseValues.CustomerId != clientValues.CustomerId)
+                        {
+                            Customer customerFromDb = await _context.Customers.FirstOrDefaultAsync(c => c.Id == databaseValues.CustomerId);
+                            ModelState.AddModelError("CustomerId", $"Актуальное значение: {customerFromDb?.ContactPerson}");
+                        }
+
+                        if (databaseValues.SignDate != clientValues.SignDate)
+                        {
+                            ModelState.AddModelError("SignDate", $"Актуальное значение: {databaseValues.SignDate:d}");
+                        }
+
+                        if (databaseValues.StartDate != clientValues.StartDate)
+                        {
+                            ModelState.AddModelError("StartDate", $"Актуальное значение: {databaseValues.StartDate:d}");
+                        }
+
+                        if (databaseValues.EndDate != clientValues.EndDate)
+                        {
+                            ModelState.AddModelError("EndDate", $"Актуальное значение: {databaseValues.EndDate:d}");
+                        }
+
+                        if (databaseValues.IsLocked != clientValues.IsLocked)
+                        {
+                            ModelState.AddModelError("IsLocked", $"Актуальное значение: {databaseValues.IsLocked}");
+                        }
+                        ModelState.AddModelError("", "Запись, которую вы хотели изменить, была модифицирована другим пользователем. " +
+                      "Операция была отменена и теперь вы сможете видеть поля которые были изменены. " +
+                      "Если вы все еще хотите внести измененные значения то нажмите 'Отправить' или можете вернуться назад к списку всех записей.");
+                        contractToUpdate.RowVersion = (byte[]) databaseValues.RowVersion;
+                        ModelState.Remove("RowVersion");
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "ContactPerson", contract.CustomerId);
-            return View(contract);
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "ContactPerson", contractToUpdate.CustomerId);
+            return View(contractToUpdate);
         }
 
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, bool? concurrencyError)
         {
             if (id == null || _context.Contracts == null)
             {
@@ -138,44 +239,50 @@ namespace SecurityClean3.Controllers
 
             var contract = await _context.Contracts
                 .Include(c => c.Customer)
-                .Include(c => c.ContractServices)
-                .ThenInclude(cs => cs.Service)
-                .Include(c => c.ContractSecuredItems)
-                .ThenInclude(c => c.SecuredItem)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (contract == null)
             {
+                if (concurrencyError.GetValueOrDefault())
+                {
+                    return RedirectToAction(nameof(Index));
+                }
                 return NotFound();
             }
-
+            if (concurrencyError.GetValueOrDefault())
+            {
+                ViewData["ConcurrencyErrorMessage"] = "Запись, которую вы хотели изменить, была модифицирована другим пользователем. " +
+                        "Операция была отменена и теперь вы сможете видеть поля которые были изменены. " +
+                        "Если вы все еще хотите удалить то нажмите 'Удалить' или можете вернуться назад к списку всех записей.";
+            }
             return View(contract);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Contract contract)
         {
-            if (_context.Contracts == null)
+            try
             {
-                return Problem("Entity set 'SecurityContext.Contracts'  is null.");
-            }
-            var contract = await _context.Contracts.FindAsync(id);
-            if (contract != null)
-            {
-                try
-                {                    
-                    System.IO.File.Delete(DocFiller.GetOutputPath(_env, contract.FileName));
-                }
-                catch (Exception ex)
+                if (await _context.Contracts.AnyAsync(c=>c.Id==contract.Id))
                 {
-                    await Console.Out.WriteLineAsync(ex.Message);
+                    try
+                    {
+                        System.IO.File.Delete(DocFiller.GetOutputPath(_env, contract.FileName));
+                    }
+                    catch (Exception ex)
+                    {
+                        await Console.Out.WriteLineAsync(ex.Message);
+                    }
+                    _context.Contracts.Remove(contract);
+                    await _context.SaveChangesAsync();
                 }
-                _context.Contracts.Remove(contract);
+                return RedirectToAction(nameof(Index));
             }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            catch (DbUpdateConcurrencyException)
+            {
+                return RedirectToAction(nameof(Delete), new { concurrencyError = true, id = contract.Id });
+            }
         }
 
         public async Task<IActionResult> CreateDoc(int? id)
@@ -195,8 +302,7 @@ namespace SecurityClean3.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (contract.IsLocked)
             {
-                var errorMessage = "Не удалось создать документ, так как договор заблокирован (документ должен быть уже создан)";
-                return RedirectToAction("SimpleError", "Error", new { errorMessage }); 
+                return RedirectToAction("SimpleError", "Error", new { errorMessage= "Не удалось создать документ, так как договор заблокирован (документ должен быть уже создан)" }); 
             }
             if (contract == null)
             {
@@ -214,9 +320,13 @@ namespace SecurityClean3.Controllers
                 .ThenInclude(cs => cs.Service)
                 .Include(c => c.ContractSecuredItems)
                 .ThenInclude(c => c.SecuredItem)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id);            
             if (contract != null)
             {
+                if (contract.IsLocked)
+                {
+                    return RedirectToAction("SimpleError", "Error", new { errorMessage = "Не удалось создать документ, так как договор заблокирован (документ должен быть уже создан)" });
+                }
                 contract.IsLocked = true;
                 string fileName=DocFiller.FillTemplate(contract.Customer, contract, contract.ContractServices.Select(x => x.Service).ToList(), contract.ContractSecuredItems.Select(x => x.SecuredItem).ToList(), _env);
                 contract.FileName = fileName;
@@ -224,9 +334,11 @@ namespace SecurityClean3.Controllers
             }            
             return RedirectToAction(nameof(Index));
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ClearDoc(int id)
         {
-            var contract = await _context.Contracts.FindAsync(id);
+            var contract = await _context.Contracts.FirstOrDefaultAsync(x=>x.Id==id);
             if (contract != null&&contract.IsLocked)
             {
                 contract.IsLocked = false;           
@@ -276,11 +388,9 @@ namespace SecurityClean3.Controllers
             }
             else
             {
-                return Problem("Не удалось скачать файл, так как договор не заблокирован");
+                return RedirectToAction("SimpleError", "Error", new { errorMessage= "Не удалось скачать файл, так как договор не заблокирован(файл договора может не существовать)" });
             }
-            
-            
-            return Problem("Не удалось скачать файл");
+            return RedirectToAction("SimpleError", "Error", new { errorMessage= "Не удалось скачать файл" });
         }
 
 

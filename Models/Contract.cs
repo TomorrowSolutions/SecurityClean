@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace SecurityClean3.Models
 {
@@ -34,6 +35,10 @@ namespace SecurityClean3.Models
         public bool IsLocked { get; set; }
         [Display(Name = "Путь к файлу договора")]
         public string? FileName { get; set; }
+
+        [Timestamp]
+        [ValidateNever]
+        public byte[] RowVersion { get; set; }
         public ICollection<ContractSecuredItem>? ContractSecuredItems { get; set; }
         public ICollection<ContractService>? ContractServices { get; set; }
     }

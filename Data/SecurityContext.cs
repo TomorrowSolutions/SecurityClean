@@ -265,6 +265,8 @@ namespace SecurityClean3.Data
                     new ContractService { ContractId = 1, ServiceId = 4 }
                     );
             });
+            modelBuilder.Entity<Contract>().Property(p => p.RowVersion).IsConcurrencyToken();
+            modelBuilder.Entity<Employee>().Property(p => p.RowVersion).IsConcurrencyToken();
         }
     }
 }

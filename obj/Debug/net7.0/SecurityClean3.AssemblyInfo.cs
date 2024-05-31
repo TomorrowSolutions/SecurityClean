@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SecurityClean3")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1979d9a51ca49c16079de87acc07e8816943244c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f9996d2cafe4cd54065b68990d7399f3d9c3442d")]
 [assembly: System.Reflection.AssemblyProductAttribute("SecurityClean3")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SecurityClean3")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

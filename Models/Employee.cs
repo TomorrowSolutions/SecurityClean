@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace SecurityClean3.Models
 {
@@ -28,5 +29,9 @@ namespace SecurityClean3.Models
         [ForeignKey("PositionId")]
         [Display(Name = "Должность")]
         public Position? Position { get; set; }
+
+        [Timestamp]
+        [ValidateNever]
+        public byte[] RowVersion { get; set; }
     }
 }

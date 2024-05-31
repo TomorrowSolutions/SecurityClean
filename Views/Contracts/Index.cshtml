@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SecurityClean3.Models.Contract>
+﻿@model PaginatedList<SecurityClean3.Models.Contract>
 
 @{
     ViewData["Title"] = "Index";
@@ -10,57 +10,109 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Customer.ContactPerson)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SignDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsLocked)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.ContactPerson)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SignDate)
-            </td>
-            <td>
-                @if (item.IsLocked)
-                {
-                    <p>Заблокировано</p>
-                }
-                else
-                {
-                    <p>Незаблокировано</p>
-                }
-            </td>
-            <td>
-                @if (item.IsLocked)
-                {
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    <a asp-action="DownloadDoc" asp-route-id="@item.Id">Загрузить документ</a>
-                    <a asp-action="ClearDoc" asp-route-id="@item.Id">Очистка</a>
-                }
-                else
-                {
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    <a asp-action="CreateDoc" asp-route-id="@item.Id">Создать документ</a>
-                }
-            </td>
-        </tr>
+
+
+<form asp-action="Index" method="get">
+    <div class="form-group">
+        <p>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Поиск(ФИО представителя) :</p>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" value="Поиск" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-outline-primary">Отмена</a>
+                </div>
+            </div>
+        </p>
+    </div>
+</form>
+
+
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    ФИО представителя
+                </th>
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["SignDateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Дата подписания</a>
+                </th>
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["LockedSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Заблокирован</a>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Customer.ContactPerson)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SignDate)
+                    </td>
+                    <td>
+                        @if (item.IsLocked)
+                        {
+                            <p>Заблокировано</p>
+                        }
+                        else
+                        {
+                            <p>Незаблокировано</p>
+                        }
+                    </td>
+                    <td>
+                        @if (item.IsLocked)
+                        {
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            <a asp-action="DownloadDoc" asp-route-id="@item.Id">Загрузить документ</a>
+                            <form asp-controller="Contracts" asp-action="ClearDoc" asp-route-id="@item.Id" method="post" class="d-inline-flex">
+                                <input type="hidden" asp-for="@item.Id" />
+                                <input type="submit" value="Очистка" class="btn btn-link" />
+                            </form>
+                            @*  <a asp-action="ClearDoc" asp-route-id="@item.Id">Очистка</a> *@
+                        }
+                        else
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            <a asp-action="CreateDoc" asp-route-id="@item.Id">Создать документ</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
-    </tbody>
-</table>
+<a asp-action="Index"
+    asp-route-sortOrder="@ViewData["CurrentSort"]"
+    asp-route-pageNumber="@(Model.PageIndex-1)"
+    asp-route-currentFilter="@ViewData["CurrentFilter"]"
+    class="btn btn-primary @prevDisabled">
+    Назад
+</a>
+<a asp-action="Index"
+    asp-route-sortOrder="@ViewData["CurrentSort"]"
+    asp-route-pageNumber="@(Model.PageIndex+1)"
+    asp-route-currentFilter="@ViewData["CurrentFilter"]"
+    class="btn btn-primary @nextDisabled">
+    Вперед
+</a>
+
+
