@@ -1,4 +1,4 @@
-﻿@model List<ApplicationUser>
+﻿@model PaginatedList<ApplicationUser>
 
 @{
     ViewData["Title"] = "Index";
@@ -11,19 +11,37 @@
     <a asp-action="Create">Create New</a>
 </p>
 
+<form asp-action="Index" method="get">
+    <div class="form-group">
+        <p>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Поиск(ФИО / Имя пользователя / Email) :</p>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" value="Поиск" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-outline-primary">Отмена</a>
+                </div>
+            </div>
+        </p>
+    </div>
+</form>
 
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Фио</a>
+                Фио
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["WageSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Имя пользователя</a>
+                Имя пользователя
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["WageSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Email</a>
+                Email
             </th>
             <th></th>
         </tr>
@@ -41,15 +59,33 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
-                <td>
+                <td>                    
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="ChangePassword" asp-route-id="@item.Id">Смена пароля</a> |
+                    <a asp-action="ChangeRole" asp-route-id="@item.Id">Смена полномочий</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>                    
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
 
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex-1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-primary @prevDisabled">
+    Назад
+</a>
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex+1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-primary @nextDisabled">
+    Вперед
+</a>
 

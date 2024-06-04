@@ -110,8 +110,8 @@ namespace SecurityClean3.Data
             string AdminGuid = Guid.NewGuid().ToString();
             string ManagerGuid = Guid.NewGuid().ToString();
             modelBuilder.Entity<IdentityRole>().HasData(
-                new IdentityRole { Id = AdminGuid, Name = "admin", NormalizedName = "admin" },
-                new IdentityRole { Id = ManagerGuid, Name = "manager", NormalizedName = "manager" }
+                new IdentityRole { Id = AdminGuid, Name = Utils.Roles.Admin, NormalizedName = Utils.Roles.Admin },
+                new IdentityRole { Id = ManagerGuid, Name = Utils.Roles.Manager, NormalizedName = Utils.Roles.Manager }
                 );
             var hasher = new PasswordHasher<ApplicationUser>();
             modelBuilder.Entity<ApplicationUser>().HasData(
@@ -267,6 +267,7 @@ namespace SecurityClean3.Data
             });
             modelBuilder.Entity<Contract>().Property(p => p.RowVersion).IsConcurrencyToken();
             modelBuilder.Entity<Employee>().Property(p => p.RowVersion).IsConcurrencyToken();
+            modelBuilder.Entity<Service>().Property(p => p.RowVersion).IsConcurrencyToken();
         }
     }
 }

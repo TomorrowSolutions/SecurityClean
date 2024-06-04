@@ -159,14 +159,11 @@ namespace SecurityClean3.Controllers
             {
                 return NotFound();
             }
-            var contractToUpdate = await _context.Contracts.Include(c => c.Customer).AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            //Проблема с навигационным полем может перекинуться сюда
+            var contractToUpdate = await _context.Contracts.FirstOrDefaultAsync(x => x.Id == id);
             if (contractToUpdate == null)
             {
-                Contract deletedContract = new Contract();
-                await TryUpdateModelAsync(deletedContract);
-                ModelState.AddModelError(string.Empty, "Не удалось сохранить изменения. Запись удалена другим пользователем");
-                ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "ContactPerson", deletedContract.CustomerId);
-                return View(deletedContract);
+                return RedirectToAction("SimpleError", "Error", new { errorMessage = "Не удалось сохранить изменения. Запись удалена другим пользователем" });
             }
             _context.Entry(contractToUpdate).Property("RowVersion").OriginalValue=  rowVersion;
             if (await TryUpdateModelAsync<Contract>(

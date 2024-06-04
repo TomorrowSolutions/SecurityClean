@@ -34,11 +34,6 @@
                     <label asp-for="Input.ConfirmPassword">Повтор пароля</label>
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                 </div>
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.AdminKey" class="form-control"  aria-required="true" placeholder="password" />
-                    <label asp-for="Input.AdminKey">Ключ администратора</label>
-                    <span asp-validation-for="Input.AdminKey" class="text-danger"></span>
-                </div>
                 <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Отправить</button>
             </form>
             <hr />

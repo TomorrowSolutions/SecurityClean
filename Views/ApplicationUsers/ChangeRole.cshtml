@@ -1,0 +1,40 @@
+﻿@model SecurityClean3.Models.ViewModels.ChangeRoleVM
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Смена полномочий</h1>
+
+<h4>Пользователь</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ChangeRole">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" type="hidden" />
+            <div class="form-group">
+                <div class="d-flex justify-content-between my-3">
+                    <label class="control-label">Выбор роли</label>
+                    <input asp-for="IsAdmin" type="radio" value="true" /> Администратор
+                    <input asp-for="IsAdmin" type="radio" value="false" /> Менеджер
+                </div>
+                <span asp-validation-for="IsAdmin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

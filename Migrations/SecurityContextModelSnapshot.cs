@@ -17,7 +17,7 @@ namespace SecurityClean3.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.18")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -51,15 +51,15 @@ namespace SecurityClean3.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c5701cbc-97c5-4748-9036-c8d7c074375f",
-                            Name = "admin",
-                            NormalizedName = "admin"
+                            Id = "1a0bc6e3-4579-45f9-9f2a-91600b8d3783",
+                            Name = "Admin",
+                            NormalizedName = "Admin"
                         },
                         new
                         {
-                            Id = "05618107-096b-447d-8758-0c68063cb111",
-                            Name = "manager",
-                            NormalizedName = "manager"
+                            Id = "5720e4c6-1329-432c-ad02-51cc31e2669a",
+                            Name = "Manager",
+                            NormalizedName = "Manager"
                         });
                 });
 
@@ -154,13 +154,13 @@ namespace SecurityClean3.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "c5701cbc-97c5-4748-9036-c8d7c074375f",
-                            RoleId = "c5701cbc-97c5-4748-9036-c8d7c074375f"
+                            UserId = "1a0bc6e3-4579-45f9-9f2a-91600b8d3783",
+                            RoleId = "1a0bc6e3-4579-45f9-9f2a-91600b8d3783"
                         },
                         new
                         {
-                            UserId = "05618107-096b-447d-8758-0c68063cb111",
-                            RoleId = "05618107-096b-447d-8758-0c68063cb111"
+                            UserId = "5720e4c6-1329-432c-ad02-51cc31e2669a",
+                            RoleId = "5720e4c6-1329-432c-ad02-51cc31e2669a"
                         });
                 });
 
@@ -230,6 +230,12 @@ namespace SecurityClean3.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -255,16 +261,16 @@ namespace SecurityClean3.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c5701cbc-97c5-4748-9036-c8d7c074375f",
+                            Id = "1a0bc6e3-4579-45f9-9f2a-91600b8d3783",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8d4fedef-4655-4689-a6f8-910fc459d730",
+                            ConcurrencyStamp = "16005a2f-5f5c-4c07-a63c-0f22ca60718d",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             FullName = "admin",
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@mail.com",
                             NormalizedUserName = "admin@mail.com",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGAB3y5/9qyp6UmfoJDyC0+00WWzitXUBURNy9InGDuyKlVkUgCVAEunJqukQPbmXQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIYKtm2tYgafrgQ5wIXReq/y+0La3eqAuqKXADoWdKx6Y0M5TiDlOotXP9DTV2cGUA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -272,16 +278,16 @@ namespace SecurityClean3.Migrations
                         },
                         new
                         {
-                            Id = "05618107-096b-447d-8758-0c68063cb111",
+                            Id = "5720e4c6-1329-432c-ad02-51cc31e2669a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "15edc2ef-8bc2-4305-a8a5-4c3b26935e7f",
+                            ConcurrencyStamp = "08dc8f9d-bef4-412e-b669-02249e781e18",
                             Email = "manager@mail.com",
                             EmailConfirmed = false,
                             FullName = "manager",
                             LockoutEnabled = false,
                             NormalizedEmail = "manager@mail.com",
                             NormalizedUserName = "manager@mail.com",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGrgn4m7aJEEOQu1Y8e5D3fE2kyuSLBv3IARgPiKQvU+MmfR5gsU/YPOoTE5A8fqpA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGmc2lO10AK9WXdB0LYwnE+i/vvX4tQP1cHfgYiLmwsRE9HoBcXdpzsiGRcjjWbkCg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -325,7 +331,7 @@ namespace SecurityClean3.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Contracts", (string)null);
+                    b.ToTable("Contracts");
 
                     b.HasData(
                         new
@@ -351,7 +357,7 @@ namespace SecurityClean3.Migrations
 
                     b.HasIndex("SecuredItemId");
 
-                    b.ToTable("ContractSecuredItems", (string)null);
+                    b.ToTable("ContractSecuredItems");
 
                     b.HasData(
                         new
@@ -383,7 +389,7 @@ namespace SecurityClean3.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("ContractServices", (string)null);
+                    b.ToTable("ContractServices");
 
                     b.HasData(
                         new
@@ -452,7 +458,7 @@ namespace SecurityClean3.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
 
                     b.HasData(
                         new
@@ -551,7 +557,7 @@ namespace SecurityClean3.Migrations
 
                     b.HasIndex("PositionId");
 
-                    b.ToTable("Employees", (string)null);
+                    b.ToTable("Employees");
 
                     b.HasData(
                         new
@@ -620,7 +626,7 @@ namespace SecurityClean3.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Positions", (string)null);
+                    b.ToTable("Positions");
 
                     b.HasData(
                         new
@@ -675,7 +681,7 @@ namespace SecurityClean3.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SecuredItems", (string)null);
+                    b.ToTable("SecuredItems");
 
                     b.HasData(
                         new
@@ -729,11 +735,17 @@ namespace SecurityClean3.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PositionId");
 
-                    b.ToTable("Services", (string)null);
+                    b.ToTable("Services");
 
                     b.HasData(
                         new

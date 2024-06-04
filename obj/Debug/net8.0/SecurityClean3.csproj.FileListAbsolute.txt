@@ -298,3 +298,5 @@ C:\Instityt\Diplom\SecurityClean3\obj\Debug\net8.0\refint\SecurityClean3.dll
 C:\Instityt\Diplom\SecurityClean3\obj\Debug\net8.0\SecurityClean3.pdb
 C:\Instityt\Diplom\SecurityClean3\obj\Debug\net8.0\SecurityClean3.genruntimeconfig.cache
 C:\Instityt\Diplom\SecurityClean3\obj\Debug\net8.0\ref\SecurityClean3.dll
+C:\Instityt\Diplom\SecurityClean3\obj\Debug\net8.0\SecurityClean3.Resources.Resource.resources
+C:\Instityt\Diplom\SecurityClean3\obj\Debug\net8.0\SecurityClean3.csproj.GenerateResource.cache

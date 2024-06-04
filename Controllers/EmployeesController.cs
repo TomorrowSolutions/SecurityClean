@@ -129,9 +129,9 @@ namespace SecurityClean3.Controllers
             return View(employee);
         }
 
-        [HttpPost, ActionName("Edit")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditPost(int? id, byte[] rowVersion)
+        public async Task<IActionResult> Edit(int? id, byte[] rowVersion)
         {
             if (id == null)
             {
@@ -140,11 +140,7 @@ namespace SecurityClean3.Controllers
             var employeeToUpdate = await _context.Employees.FirstOrDefaultAsync(e => e.Id==id);
             if (employeeToUpdate==null)
             {
-                Employee deletedEmployee = new Employee();
-                await TryUpdateModelAsync(deletedEmployee);
-                ModelState.AddModelError(string.Empty, "Не удалось сохранить изменения. Запись удалена другим пользователем");
-                ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Name", employeeToUpdate.PositionId);
-                return View(deletedEmployee);
+                return RedirectToAction("SimpleError", "Error", new { errorMessage = "Не удалось сохранить изменения. Запись удалена другим пользователем" });
             }
             _context.Entry(employeeToUpdate).Property("RowVersion").OriginalValue = rowVersion;
             if (await TryUpdateModelAsync<Employee>(

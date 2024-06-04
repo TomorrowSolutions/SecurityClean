@@ -126,7 +126,10 @@ namespace SecurityClean3.Controllers
                 return NotFound();
             }
 
-            var service = await _context.Services.FindAsync(id);
+            var service = await _context.Services
+                                        .Include(s=>s.Position)
+                                        .AsNoTracking()
+                                        .FirstOrDefaultAsync(s=>s.Id==id);
             if (service == null)
             {
                 return NotFound();
@@ -135,16 +138,23 @@ namespace SecurityClean3.Controllers
             return View(service);
         }
 
-        [HttpPost,ActionName("Edit")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditPost(int? id)
+        public async Task<IActionResult> Edit(int? id, byte[] rowVersion)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var serviceToUpdate = await _context.Services.FirstOrDefaultAsync(s => s.Id == id);
-            if(await TryUpdateModelAsync<Service>(
+            var serviceToUpdate = await _context.Services
+                                        .Include(s => s.Position)
+                                        .FirstOrDefaultAsync(s => s.Id == id);
+            if (serviceToUpdate==null)
+            {
+                return RedirectToAction("SimpleError", "Error", new { errorMessage = "Не удалось сохранить изменения. Запись удалена другим пользователем" });
+            }
+            _context.Entry(serviceToUpdate).Property("RowVersion").OriginalValue = rowVersion;
+            if (await TryUpdateModelAsync<Service>(
                 serviceToUpdate,
                 "",
                 s=>s.Name,s=>s.Price,s=>s.PositionId)) 
@@ -154,18 +164,46 @@ namespace SecurityClean3.Controllers
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateException)
+                catch (DbUpdateConcurrencyException ex)
                 {
-                    ModelState.AddModelError("", "Не удалось сохранить изменения. " +
-                        "Попробуйте снова, если проблема сохраняется, " +
-                        "обратитесь к системному администратору.");
+                    var exceptionEntry = ex.Entries.Single();
+                    var clientValues = (Service)exceptionEntry.Entity;
+                    var databaseEntry = exceptionEntry.GetDatabaseValues();
+                    if (databaseEntry == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "Не удалось сохранить изменения. Запись удалена другим пользователем");
+                    }
+                    else
+                    {
+                        var databaseValues = (Service)databaseEntry.ToObject();
+                        if (databaseValues.Name != clientValues.Name)
+                        {
+                            ModelState.AddModelError("Name", $"Актуальное значение: {databaseValues.Name}");
+                        }
+
+                        if (databaseValues.Price != clientValues.Price)
+                        {
+                            ModelState.AddModelError("Price", $"Актуальное значение: {databaseValues.Price}");
+                        }
+
+                        if (databaseValues.PositionId != clientValues.PositionId)
+                        {
+                            var positionFromDb = await _context.Positions.FirstOrDefaultAsync(p=>p.Id==databaseValues.PositionId);
+                            ModelState.AddModelError("PositionId", $"Актуальное значение: {positionFromDb?.Name}");
+                        }
+                        ModelState.AddModelError("", "Запись, которую вы хотели изменить, была модифицирована другим пользователем. " +
+                        "Операция была отменена и теперь вы сможете видеть поля которые были изменены. " +
+                        "Если вы все еще хотите внести измененные значения то нажмите 'Отправить' или можете вернуться назад к списку всех записей.");
+                        serviceToUpdate.RowVersion= (byte[])databaseValues.RowVersion;
+                        ModelState.Remove("RowVersion");
+                    }
                 }
             }
             ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Name", serviceToUpdate.PositionId);
             return View(serviceToUpdate);
         }
 
-        public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
+        public async Task<IActionResult> Delete(int? id, bool? concurrencyError)
         {
             if (id == null || _context.Services == null)
             {
@@ -178,36 +216,38 @@ namespace SecurityClean3.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (service == null)
             {
+                if (concurrencyError.GetValueOrDefault())
+                {
+                    return RedirectToAction(nameof(Index));
+                }
                 return NotFound();
             }
-            if (saveChangesError.GetValueOrDefault())
+            if (concurrencyError.GetValueOrDefault())
             {
-                ViewData["ErrorMessage"] = "Не удалось запись. " +
-                    "Попробуйте снова, если проблема сохраняется, " +
-                    "обратитесь к системному администратору.";
+                ViewData["ConcurrencyErrorMessage"] = "Запись, которую вы хотели изменить, была модифицирована другим пользователем. " +
+                         "Операция была отменена и теперь вы сможете видеть поля которые были изменены. " +
+                         "Если вы все еще хотите удалить то нажмите 'Удалить' или можете вернуться назад к списку всех записей.";
             }
             return View(service);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(Service service)
         {
-            var service = await _context.Services.FindAsync(id);
-            if (service == null)
-            {
-                return RedirectToAction(nameof(Index));
-            }
             try
             {
-                _context.Services.Remove(service);
-                await _context.SaveChangesAsync();
+                if (await _context.Services.AnyAsync(x=>x.Id==service.Id))
+                {
+                    _context.Services.Remove(service);
+                    await _context.SaveChangesAsync();
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch (DbUpdateException)
+            catch (DbUpdateConcurrencyException)
             {
-                return RedirectToAction(nameof(Delete), new { id = id, saveChangesError = true });
-            }            
+                return RedirectToAction(nameof(Delete), new { concurrencyError = true, id = service.Id });
+            }         
         }
 
         private bool ServiceExists(int id)

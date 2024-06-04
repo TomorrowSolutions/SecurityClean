@@ -95,7 +95,7 @@ namespace SecurityClean3.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Wage,RowVersion")] Position position)
+        public async Task<IActionResult> Create([Bind("Id,Name,Wage")] Position position)
         {
             try
             {
@@ -124,7 +124,7 @@ namespace SecurityClean3.Controllers
                 return NotFound();
             }
 
-            var position = await _context.Positions.Include(p => p.Employees).AsNoTracking().FirstOrDefaultAsync(p=>p.Id==id);
+            var position = await _context.Positions.Include(p => p.Employees).FirstOrDefaultAsync(p=>p.Id==id);
             if (position == null)
             {
                 return NotFound();
@@ -133,9 +133,9 @@ namespace SecurityClean3.Controllers
         }
 
 
-        [HttpPost, ActionName("Edit")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditPost(int? id, byte[] rowVersion)
+        public async Task<IActionResult> Edit(int? id, byte[] rowVersion)
         {
             if (id == null)
             {
@@ -143,13 +143,11 @@ namespace SecurityClean3.Controllers
             }
             var positionToUpdate = await _context.Positions.FirstOrDefaultAsync(p => p.Id == id);
             if(positionToUpdate == null) {
-                Position deletedPosition = new Position();
-                await TryUpdateModelAsync(deletedPosition);
-                ModelState.AddModelError(string.Empty,"Не удалось сохранить изменения. Запись удалена другим пользователем");
-                return View(deletedPosition);
+                return RedirectToAction("SimpleError", "Error", new { errorMessage = "Не удалось сохранить изменения. Запись удалена другим пользователем" });
             }
+            //var tmp = _context.Entry(positionToUpdate).Property("RowVersion").OriginalValue;
             _context.Entry(positionToUpdate).Property("RowVersion").OriginalValue = rowVersion;
-
+            
             if (await TryUpdateModelAsync<Position>(
                 positionToUpdate,
                 "",
@@ -192,7 +190,7 @@ namespace SecurityClean3.Controllers
         }
 
 
-        public async Task<IActionResult> Delete(int? id,bool? concurencyError)
+        public async Task<IActionResult> Delete(int? id,bool? concurrencyError)
         {
             if (id == null)
             {
@@ -204,15 +202,15 @@ namespace SecurityClean3.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (position == null)
             {
-                if (concurencyError.GetValueOrDefault())
+                if (concurrencyError.GetValueOrDefault())
                 {
                     return RedirectToAction(nameof(Index));
                 }
                 return NotFound();
             }
-            if (concurencyError.GetValueOrDefault())
+            if (concurrencyError.GetValueOrDefault())
             {
-                ViewData["ConcurrencyErrorMessage"] = "Запись, которую вы хотели изменить, была модифицирована другим пользователем. " +
+                ViewData["ConcurrencyErrorMessage"] = "Запись, которую вы хотели удалить, была модифицирована другим пользователем. " +
                         "Операция была отменена и теперь вы сможете видеть поля которые были изменены. " +
                         "Если вы все еще хотите удалить то нажмите 'Удалить' или можете вернуться назад к списку всех записей.";
             }
@@ -220,9 +218,9 @@ namespace SecurityClean3.Controllers
             return View(position);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Position position)
+        public async Task<IActionResult> Delete(Position position)
         {
             try
             {
@@ -235,14 +233,8 @@ namespace SecurityClean3.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                return RedirectToAction(nameof(Delete), new { concurencyError = true, id = position.Id });
-                
+                return RedirectToAction(nameof(Delete), new { concurencyError = true, id = position.Id });                
             }
-        }
-
-        private bool PositionExists(int id)
-        {
-          return (_context.Positions?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
