@@ -8,7 +8,9 @@ namespace SecurityClean3.Utils
     {
         public static string FillTemplate(Customer customer, Contract contract, List<Service> services, List<SecuredItem> securedItems, IWebHostEnvironment env)
         {
-            var priceIntAndFract = GetIntegerAndFractionalParts(services.Sum(x => x.Price));
+            var priceDouble = services.Sum(x => x.Price);
+            var priceInt = Math.Truncate(priceDouble);
+            var priceFract = Math.Abs(priceDouble - priceInt);
             using (var rs = File.OpenRead(GetTemplatePath(env, "template.docx")))
             {
                 var fileName = $"contract_{Guid.NewGuid()}.docx";
@@ -20,11 +22,12 @@ namespace SecurityClean3.Utils
                         doc.FindAndReplaceText("{signDate}", contract.SignDate.ToShortDateString());
                         doc.FindAndReplaceText("{customer_info}", customer.ToString());
                         doc.FindAndReplaceText("{customer_pred}", customer.ContactPerson);
-                        doc.FindAndReplaceText("{price_int}", priceIntAndFract[0].ToString());
-                        doc.FindAndReplaceText("{price_fract}", priceIntAndFract[1].ToString());
+                        doc.FindAndReplaceText("{price_int}", priceInt.ToString());
+                        doc.FindAndReplaceText("{price_fract}", priceFract.ToString());
                         doc.FindAndReplaceText("{startDate}", contract.StartDate.ToShortDateString());
                         doc.FindAndReplaceText("{endDate}", contract.EndDate.ToShortDateString());
                         doc.FindAndReplaceText("{customer_company}", customer.CompanyName);
+                        doc.FindAndReplaceText("{customer_pred_cut}", customer.getShortFio());
                         StringBuilder sb = new StringBuilder();
                         for (int i = 0; i < securedItems.Count; i++)
                         {
@@ -45,18 +48,6 @@ namespace SecurityClean3.Utils
                     }
                 }
             }
-        }
-        private static double[] GetIntegerAndFractionalParts(double number)
-        {
-            double[] parts = new double[2];
-
-            // Получаем целую часть числа
-            parts[0] = Math.Truncate(number);
-
-            // Получаем дробную часть числа
-            parts[1] = Math.Abs(number - parts[0]); // Берем модуль для отрицательных чисел
-
-            return parts;
         }
         public static string GetOutputPath(IWebHostEnvironment env,string fileName) => Path.Combine(env.WebRootPath,GetOutputRelativePath(fileName));
         public static string GetOutputRelativePath(string fileName) =>  Path.Combine("docs", "output", fileName);

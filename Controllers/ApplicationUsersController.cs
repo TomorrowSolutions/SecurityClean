@@ -113,6 +113,10 @@ namespace SecurityClean3.Controllers
                             await SetUserRoleAsync(user, Roles.Manager);
                         }
                     }
+                    else
+                    {
+                        return RedirectToAction("SimpleError", "Error", new { errorMessage = string.Join(", ",result.Errors.Select(x=>x.Description)) });
+                    }
 
                     return RedirectToAction(nameof(Index));
                 }
@@ -172,6 +176,11 @@ namespace SecurityClean3.Controllers
             if (await TryUpdateModelAsync(userToUpdate, "",
                 u => u.FullName,u=>u.Email /* Добавьте здесь другие поля, которые могут быть обновлены */))
             {
+                if (await _userManager.Users.AnyAsync(x => x.Email == userToUpdate.Email))
+                {
+                    ModelState.AddModelError("", "Пользователь с таким email уже существует.");
+                    return View(userToUpdate);
+                }
                 // Обновление данных пользователя и сохранение изменений
                 await _userManager.UpdateAsync(userToUpdate);
 
@@ -334,7 +343,7 @@ namespace SecurityClean3.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                return RedirectToAction(nameof(Delete), new { concurencyError = true, id = userToDelete.Id });
+                return RedirectToAction(nameof(Delete), new { concurrencyError = true, id = userToDelete.Id });
             }
         }
     }

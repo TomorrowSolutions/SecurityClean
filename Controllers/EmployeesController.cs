@@ -17,15 +17,8 @@ namespace SecurityClean3.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(
-            string sortOrder,
-            string searchString,
-            string currentFilter,
-            int? pageNumber
-            )
+        public async Task<IActionResult> Index(string searchString, string currentFilter, int? pageNumber)
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["PositionSortParm"] = string.IsNullOrEmpty(sortOrder) ? "position_desc" : "";
             if (searchString != null)
             {
                 pageNumber = 1;
@@ -43,15 +36,6 @@ namespace SecurityClean3.Controllers
                     e.FullName.Contains(searchString) ||
                     e.Position.Name.Contains(searchString)
                 );
-            }
-            switch (sortOrder)
-            {
-                case "position_desc":
-                    employees = employees.OrderByDescending(e => e.Position.Name);
-                    break;
-                default:
-                    employees = employees.OrderBy(e => e.Position.Name);
-                    break;
             }
             int pageSize = 5;
             return View(await PaginatedList<Employee>.CreateAsync(employees.AsNoTracking(), pageNumber ?? 1, pageSize));

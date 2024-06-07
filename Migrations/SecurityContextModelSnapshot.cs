@@ -51,13 +51,13 @@ namespace SecurityClean3.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1a0bc6e3-4579-45f9-9f2a-91600b8d3783",
+                            Id = "9f7d3436-1e21-4994-82fa-8195058f287b",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
-                            Id = "5720e4c6-1329-432c-ad02-51cc31e2669a",
+                            Id = "3a490d57-30c7-432a-86f5-43ecec4acc08",
                             Name = "Manager",
                             NormalizedName = "Manager"
                         });
@@ -154,13 +154,13 @@ namespace SecurityClean3.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "1a0bc6e3-4579-45f9-9f2a-91600b8d3783",
-                            RoleId = "1a0bc6e3-4579-45f9-9f2a-91600b8d3783"
+                            UserId = "9f7d3436-1e21-4994-82fa-8195058f287b",
+                            RoleId = "9f7d3436-1e21-4994-82fa-8195058f287b"
                         },
                         new
                         {
-                            UserId = "5720e4c6-1329-432c-ad02-51cc31e2669a",
-                            RoleId = "5720e4c6-1329-432c-ad02-51cc31e2669a"
+                            UserId = "3a490d57-30c7-432a-86f5-43ecec4acc08",
+                            RoleId = "3a490d57-30c7-432a-86f5-43ecec4acc08"
                         });
                 });
 
@@ -261,16 +261,16 @@ namespace SecurityClean3.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1a0bc6e3-4579-45f9-9f2a-91600b8d3783",
+                            Id = "9f7d3436-1e21-4994-82fa-8195058f287b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "16005a2f-5f5c-4c07-a63c-0f22ca60718d",
+                            ConcurrencyStamp = "a47e3a78-e9d3-4f51-ac99-a4dc28c9d0c5",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             FullName = "admin",
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@mail.com",
                             NormalizedUserName = "admin@mail.com",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIYKtm2tYgafrgQ5wIXReq/y+0La3eqAuqKXADoWdKx6Y0M5TiDlOotXP9DTV2cGUA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHV90M3S8BCoudgh3AC/950rn1mDJahJ8oJ28Ak0+HB9lw9MjXeNkGASIQ669crnrA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -278,16 +278,16 @@ namespace SecurityClean3.Migrations
                         },
                         new
                         {
-                            Id = "5720e4c6-1329-432c-ad02-51cc31e2669a",
+                            Id = "3a490d57-30c7-432a-86f5-43ecec4acc08",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "08dc8f9d-bef4-412e-b669-02249e781e18",
+                            ConcurrencyStamp = "7a925047-ee9a-4a2a-81bd-234732aa1cda",
                             Email = "manager@mail.com",
                             EmailConfirmed = false,
                             FullName = "manager",
                             LockoutEnabled = false,
                             NormalizedEmail = "manager@mail.com",
                             NormalizedUserName = "manager@mail.com",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGmc2lO10AK9WXdB0LYwnE+i/vvX4tQP1cHfgYiLmwsRE9HoBcXdpzsiGRcjjWbkCg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJf//S6fzW0hKtdGVWt8862im3lcK8CgDV+iUU/NaGU3U64FDd+bjYxEICnt+uB3LA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -456,6 +456,12 @@ namespace SecurityClean3.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
                     b.HasKey("Id");
 
                     b.ToTable("Customers");
@@ -470,7 +476,7 @@ namespace SecurityClean3.Migrations
                             CompanyName = "ООО Рога и копыта",
                             ContactPerson = "Иванов Иван Иванович",
                             CorrespondentAccount = "30101810200000000225",
-                            Inn = "770101001",
+                            Inn = "7701010012",
                             LegalAddress = "123000, г. Москва, ул. Ромашковая, д. 1"
                         },
                         new
@@ -482,7 +488,7 @@ namespace SecurityClean3.Migrations
                             CompanyName = "ПАО ЖЭК",
                             ContactPerson = "Петров Петр Петрович",
                             CorrespondentAccount = "30101810200000000225",
-                            Inn = "770202001",
+                            Inn = "7702020014",
                             LegalAddress = "123000, г. Москва, ул. Клавишная, д. 2"
                         },
                         new
@@ -494,7 +500,7 @@ namespace SecurityClean3.Migrations
                             CompanyName = "ООО МикроАванс",
                             ContactPerson = "Сидоров Сидр Сидрович",
                             CorrespondentAccount = "30101810200000000225",
-                            Inn = "770303001",
+                            Inn = "7703030016",
                             LegalAddress = "123000, г. Москва, ул. Ладожская, д. 3"
                         },
                         new
@@ -506,7 +512,7 @@ namespace SecurityClean3.Migrations
                             CompanyName = "ОАО Гофры",
                             ContactPerson = "Кузнецов Кузьма Кузьмич",
                             CorrespondentAccount = "30101810200000000225",
-                            Inn = "770404001",
+                            Inn = "7704040018",
                             LegalAddress = "123000, г. Москва, ул. Букетиров, д. 4"
                         },
                         new
@@ -518,7 +524,7 @@ namespace SecurityClean3.Migrations
                             CompanyName = "ООО БК Всех и каждого",
                             ContactPerson = "Лебедев Лев Лебедевич",
                             CorrespondentAccount = "30101810200000000225",
-                            Inn = "770505001",
+                            Inn = "7705050011",
                             LegalAddress = "123000, г. Москва, ул. Галошная, д. 5"
                         });
                 });
@@ -678,6 +684,12 @@ namespace SecurityClean3.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
 
                     b.HasKey("Id");
 

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace SecurityClean3.Models
 {
@@ -13,6 +14,9 @@ namespace SecurityClean3.Models
         [Display(Name = "Адрес")]
         [StringLength(150)]
         public string Address { get; set; } = string.Empty;
+        [Timestamp]
+        [ValidateNever]
+        public byte[] RowVersion { get; set; }
         public ICollection<ContractSecuredItem>? ContractSecuredItems { get; set; }
     }
 }

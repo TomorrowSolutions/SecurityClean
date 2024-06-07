@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SecurityClean3.Data;
 using SecurityClean3.Models;
+using System.Data;
 
 namespace SecurityClean3.Controllers
 {
@@ -21,16 +16,8 @@ namespace SecurityClean3.Controllers
         }
 
 
-        public async Task<IActionResult> Index(
-            string sortOrder,
-            string searchString,
-            string currentFilter,
-            int? pageNumber
-            )
+        public async Task<IActionResult> Index(string searchString, string currentFilter, int? pageNumber)
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["WageSortParm"] = sortOrder == "Wage" ? "wage_desc" : "Wage";
             if (searchString != null)
             {
                 pageNumber = 1;
@@ -48,21 +35,6 @@ namespace SecurityClean3.Controllers
                     p.Wage.ToString().Contains(searchString)
                 );
             }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    positions = positions.OrderByDescending(p => p.Name);
-                    break;
-                case "wage_desc":
-                    positions = positions.OrderByDescending(p => p.Wage);
-                    break;
-                case "Wage":
-                    positions = positions.OrderBy(p => p.Wage);
-                    break;
-                default:
-                    positions.OrderBy(p => p.Name);
-                    break;
-            }
             int pageSize = 5;
             return View(await PaginatedList<Position>.CreateAsync(positions.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
@@ -76,7 +48,7 @@ namespace SecurityClean3.Controllers
             }
 
             var position = await _context.Positions
-                .Include(p=>p.Employees)
+                .Include(p => p.Employees)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (position == null)
@@ -124,7 +96,7 @@ namespace SecurityClean3.Controllers
                 return NotFound();
             }
 
-            var position = await _context.Positions.Include(p => p.Employees).FirstOrDefaultAsync(p=>p.Id==id);
+            var position = await _context.Positions.Include(p => p.Employees).FirstOrDefaultAsync(p => p.Id == id);
             if (position == null)
             {
                 return NotFound();
@@ -142,12 +114,12 @@ namespace SecurityClean3.Controllers
                 return NotFound();
             }
             var positionToUpdate = await _context.Positions.FirstOrDefaultAsync(p => p.Id == id);
-            if(positionToUpdate == null) {
+            if (positionToUpdate == null)
+            {
                 return RedirectToAction("SimpleError", "Error", new { errorMessage = "Не удалось сохранить изменения. Запись удалена другим пользователем" });
             }
-            //var tmp = _context.Entry(positionToUpdate).Property("RowVersion").OriginalValue;
             _context.Entry(positionToUpdate).Property("RowVersion").OriginalValue = rowVersion;
-            
+
             if (await TryUpdateModelAsync<Position>(
                 positionToUpdate,
                 "",
@@ -183,14 +155,14 @@ namespace SecurityClean3.Controllers
                         "Если вы все еще хотите внести измененные значения то нажмите 'Отправить' или можете вернуться назад к списку всех записей.");
                         positionToUpdate.RowVersion = (byte[])databaseValues.RowVersion;
                         ModelState.Remove("RowVersion");
-                    }                    
+                    }
                 }
             }
             return View(positionToUpdate);
         }
 
 
-        public async Task<IActionResult> Delete(int? id,bool? concurrencyError)
+        public async Task<IActionResult> Delete(int? id, bool? concurrencyError)
         {
             if (id == null)
             {
@@ -224,7 +196,7 @@ namespace SecurityClean3.Controllers
         {
             try
             {
-                if (await _context.Positions.AnyAsync(p=>p.Id==position.Id))
+                if (await _context.Positions.AnyAsync(p => p.Id == position.Id))
                 {
                     _context.Positions.Remove(position);
                     await _context.SaveChangesAsync();
@@ -233,7 +205,7 @@ namespace SecurityClean3.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                return RedirectToAction(nameof(Delete), new { concurencyError = true, id = position.Id });                
+                return RedirectToAction(nameof(Delete), new { concurrencyError = true, id = position.Id });
             }
         }
     }

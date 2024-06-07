@@ -38,13 +38,13 @@
         <thead>
             <tr>
                 <th>
-                    ФИО представителя
+                    @Html.DisplayNameFor(model => model.First().Customer.ContactPerson)
                 </th>
                 <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["SignDateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Дата подписания</a>
+                    @Html.DisplayNameFor(model => model.First().SignDate)
                 </th>
                 <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["LockedSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Заблокирован</a>
+                    @Html.DisplayNameFor(model => model.First().IsLocked)
                 </th>
                 <th></th>
             </tr>
@@ -100,14 +100,12 @@
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
 <a asp-action="Index"
-    asp-route-sortOrder="@ViewData["CurrentSort"]"
     asp-route-pageNumber="@(Model.PageIndex-1)"
     asp-route-currentFilter="@ViewData["CurrentFilter"]"
     class="btn btn-primary @prevDisabled">
     Назад
 </a>
 <a asp-action="Index"
-    asp-route-sortOrder="@ViewData["CurrentSort"]"
     asp-route-pageNumber="@(Model.PageIndex+1)"
     asp-route-currentFilter="@ViewData["CurrentFilter"]"
     class="btn btn-primary @nextDisabled">

@@ -148,7 +148,7 @@ namespace SecurityClean3.Data
                     Id = 1,
                     CompanyName = "ООО Рога и копыта",
                     LegalAddress = "123000, г. Москва, ул. Ромашковая, д. 1",
-                    Inn = "770101001",
+                    Inn = "7701010012",
                     AccountNumber = "40702810100000000001",
                     Bank = "ПАО Сбербанк",
                     Bik = "044525225",
@@ -160,7 +160,7 @@ namespace SecurityClean3.Data
                     Id = 2,
                     CompanyName = "ПАО ЖЭК",
                     LegalAddress = "123000, г. Москва, ул. Клавишная, д. 2",
-                    Inn = "770202001",
+                    Inn = "7702020014",
                     AccountNumber = "40702810100000000002",
                     Bank = "ПАО Сбербанк",
                     Bik = "044525225",
@@ -172,7 +172,7 @@ namespace SecurityClean3.Data
                     Id = 3,
                     CompanyName = "ООО МикроАванс",
                     LegalAddress = "123000, г. Москва, ул. Ладожская, д. 3",
-                    Inn = "770303001",
+                    Inn = "7703030016",
                     AccountNumber = "40702810100000000003",
                     Bank = "ПАО Сбербанк",
                     Bik = "044525225",
@@ -185,7 +185,7 @@ namespace SecurityClean3.Data
                     Id = 4,
                     CompanyName = "ОАО Гофры",
                     LegalAddress = "123000, г. Москва, ул. Букетиров, д. 4",
-                    Inn = "770404001",
+                    Inn = "7704040018",
                     AccountNumber = "40702810100000000004",
                     Bank = "ПАО Сбербанк",
                     Bik = "044525225",
@@ -197,7 +197,7 @@ namespace SecurityClean3.Data
                     Id = 5,
                     CompanyName = "ООО БК Всех и каждого",
                     LegalAddress = "123000, г. Москва, ул. Галошная, д. 5",
-                    Inn = "770505001",
+                    Inn = "7705050011",
                     AccountNumber = "40702810100000000005",
                     Bank = "ПАО Сбербанк",
                     Bik = "044525225",
@@ -268,6 +268,8 @@ namespace SecurityClean3.Data
             modelBuilder.Entity<Contract>().Property(p => p.RowVersion).IsConcurrencyToken();
             modelBuilder.Entity<Employee>().Property(p => p.RowVersion).IsConcurrencyToken();
             modelBuilder.Entity<Service>().Property(p => p.RowVersion).IsConcurrencyToken();
+            modelBuilder.Entity<Customer>().Property(p => p.RowVersion).IsConcurrencyToken();
+            modelBuilder.Entity<SecuredItem>().Property(p => p.RowVersion).IsConcurrencyToken();
         }
     }
 }

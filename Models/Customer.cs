@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace SecurityClean3.Models
@@ -61,6 +62,26 @@ namespace SecurityClean3.Models
                $"БИК: {Bik}\n";
         }
 
+        [Timestamp]
+        [ValidateNever]
+        public byte[] RowVersion { get; set; }
+
         public ICollection<Contract>? contracts { get; set; }
+
+        public string getShortFio()
+        {
+            var strings = this.ContactPerson.Split(' ');
+            //Stack<string> fioStack = new Stack<string>(strings);
+            Queue<string> fioQueue = new Queue<string>(strings);
+            StringBuilder sb = new StringBuilder();
+            var Family = fioQueue.Dequeue();
+            sb.Append(Family + " ");
+            while (fioQueue.Count > 0)
+            {
+                var tmp = fioQueue.Dequeue().First().ToString().ToUpper();
+                sb.Append(tmp + ".");
+            }
+            return sb.ToString();
+        }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityClean3.Data;
@@ -20,17 +16,9 @@ namespace SecurityClean3.Controllers
         }
 
 
-        public async Task<IActionResult> Index(
-            string sortOrder,
-            string searchString,
-            string currentFilter,
-            int? pageNumber
-            )
+        public async Task<IActionResult> Index(string searchString, string currentFilter, int? pageNumber)
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["PriceSortParm"] = sortOrder == "price" ? "price_desc" : "price";
-            if (searchString!=null)
+            if (searchString != null)
             {
                 pageNumber = 1;
             }
@@ -42,25 +30,10 @@ namespace SecurityClean3.Controllers
             var services = from s in _context.Services select s;
             if (!string.IsNullOrEmpty(searchString))
             {
-                services= services.Where(s=>
-                s.Name.Contains(searchString)||
+                services = services.Where(s =>
+                s.Name.Contains(searchString) ||
                 s.Price.ToString().Contains(searchString)
                 );
-            }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    services = services.OrderByDescending(s => s.Name);
-                    break;
-                case "price_desc":
-                    services = services.OrderByDescending(s => s.Price);
-                    break;
-                case "price":
-                    services = services.OrderBy(s => s.Price);
-                    break;
-                default:
-                    services = services.OrderBy(s => s.Name);
-                    break;
             }
             int pageSize = 5;
             return View(await PaginatedList<Service>.CreateAsync(services.AsNoTracking(), pageNumber ?? 1, pageSize));
@@ -76,7 +49,7 @@ namespace SecurityClean3.Controllers
 
             var service = await _context.Services
                 .Include(s => s.Position)
-                .ThenInclude(p=>p.Employees)
+                .ThenInclude(p => p.Employees)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (service == null)
@@ -113,7 +86,7 @@ namespace SecurityClean3.Controllers
                 ModelState.AddModelError("", "Не удалось сохранить изменения. " +
                     "Попробуйте снова, если проблема сохраняется, " +
                     "обратитесь к системному администратору.");
-            }            
+            }
             ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Name", service.PositionId);
             return View(service);
         }
@@ -127,9 +100,9 @@ namespace SecurityClean3.Controllers
             }
 
             var service = await _context.Services
-                                        .Include(s=>s.Position)
+                                        .Include(s => s.Position)
                                         .AsNoTracking()
-                                        .FirstOrDefaultAsync(s=>s.Id==id);
+                                        .FirstOrDefaultAsync(s => s.Id == id);
             if (service == null)
             {
                 return NotFound();
@@ -149,7 +122,7 @@ namespace SecurityClean3.Controllers
             var serviceToUpdate = await _context.Services
                                         .Include(s => s.Position)
                                         .FirstOrDefaultAsync(s => s.Id == id);
-            if (serviceToUpdate==null)
+            if (serviceToUpdate == null)
             {
                 return RedirectToAction("SimpleError", "Error", new { errorMessage = "Не удалось сохранить изменения. Запись удалена другим пользователем" });
             }
@@ -157,7 +130,7 @@ namespace SecurityClean3.Controllers
             if (await TryUpdateModelAsync<Service>(
                 serviceToUpdate,
                 "",
-                s=>s.Name,s=>s.Price,s=>s.PositionId)) 
+                s => s.Name, s => s.Price, s => s.PositionId))
             {
                 try
                 {
@@ -188,13 +161,13 @@ namespace SecurityClean3.Controllers
 
                         if (databaseValues.PositionId != clientValues.PositionId)
                         {
-                            var positionFromDb = await _context.Positions.FirstOrDefaultAsync(p=>p.Id==databaseValues.PositionId);
+                            var positionFromDb = await _context.Positions.FirstOrDefaultAsync(p => p.Id == databaseValues.PositionId);
                             ModelState.AddModelError("PositionId", $"Актуальное значение: {positionFromDb?.Name}");
                         }
                         ModelState.AddModelError("", "Запись, которую вы хотели изменить, была модифицирована другим пользователем. " +
                         "Операция была отменена и теперь вы сможете видеть поля которые были изменены. " +
                         "Если вы все еще хотите внести измененные значения то нажмите 'Отправить' или можете вернуться назад к списку всех записей.");
-                        serviceToUpdate.RowVersion= (byte[])databaseValues.RowVersion;
+                        serviceToUpdate.RowVersion = (byte[])databaseValues.RowVersion;
                         ModelState.Remove("RowVersion");
                     }
                 }
@@ -237,7 +210,7 @@ namespace SecurityClean3.Controllers
         {
             try
             {
-                if (await _context.Services.AnyAsync(x=>x.Id==service.Id))
+                if (await _context.Services.AnyAsync(x => x.Id == service.Id))
                 {
                     _context.Services.Remove(service);
                     await _context.SaveChangesAsync();
@@ -247,12 +220,12 @@ namespace SecurityClean3.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 return RedirectToAction(nameof(Delete), new { concurrencyError = true, id = service.Id });
-            }         
+            }
         }
 
         private bool ServiceExists(int id)
         {
-          return (_context.Services?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Services?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

@@ -34,10 +34,10 @@
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Название</a>
+               @Html.DisplayNameFor(model=>model.First().Name)
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["WageSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Оклад</a>
+                @Html.DisplayNameFor(model => model.First().Wage)
             </th>
             <th></th>
         </tr>
@@ -67,16 +67,14 @@
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
 <a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
    asp-route-pageNumber="@(Model.PageIndex-1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-outline-primary @prevDisabled">
+   class="btn btn-primary @prevDisabled">
     Назад
 </a>
 <a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
    asp-route-pageNumber="@(Model.PageIndex+1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-outline-primary @nextDisabled">
+   class="btn btn-primary @nextDisabled">
     Вперед
 </a>
