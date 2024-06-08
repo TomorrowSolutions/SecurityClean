@@ -6,7 +6,9 @@ namespace SecurityClean3.Models
 {
     public class ApplicationUser:IdentityUser
     {
-        public string? FullName { get; set; }
+        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
+        [Display(Name = "Дата подписания")]
+        public string FullName { get; set; }
         [Timestamp]
         [ValidateNever]
         public byte[] RowVersion { get; set; }

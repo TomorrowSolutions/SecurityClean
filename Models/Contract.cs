@@ -6,6 +6,7 @@ namespace SecurityClean3.Models
 {
     public class Contract
     {
+        [Key]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]

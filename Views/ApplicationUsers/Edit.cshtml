@@ -1,11 +1,11 @@
 ﻿@model SecurityClean3.Models.ApplicationUser
 
 @{
-    ViewData["Title"] = "Обновление";
+    ViewData["Title"] = "Редактирование";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Обновление</h1>
+<h1>@ViewData["Title"]</h1>
 
 <h4>Пользователь</h4>
 <hr />
@@ -34,7 +34,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Назад</a>
 </div>
 
 @section Scripts {

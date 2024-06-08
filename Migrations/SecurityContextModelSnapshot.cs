@@ -51,13 +51,13 @@ namespace SecurityClean3.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9f7d3436-1e21-4994-82fa-8195058f287b",
+                            Id = "94a89c19-766c-4e4e-94de-e21ab94b9251",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
-                            Id = "3a490d57-30c7-432a-86f5-43ecec4acc08",
+                            Id = "f3966825-4f64-4ef0-ab25-ecc4b0fd3679",
                             Name = "Manager",
                             NormalizedName = "Manager"
                         });
@@ -154,13 +154,13 @@ namespace SecurityClean3.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "9f7d3436-1e21-4994-82fa-8195058f287b",
-                            RoleId = "9f7d3436-1e21-4994-82fa-8195058f287b"
+                            UserId = "94a89c19-766c-4e4e-94de-e21ab94b9251",
+                            RoleId = "94a89c19-766c-4e4e-94de-e21ab94b9251"
                         },
                         new
                         {
-                            UserId = "3a490d57-30c7-432a-86f5-43ecec4acc08",
-                            RoleId = "3a490d57-30c7-432a-86f5-43ecec4acc08"
+                            UserId = "f3966825-4f64-4ef0-ab25-ecc4b0fd3679",
+                            RoleId = "f3966825-4f64-4ef0-ab25-ecc4b0fd3679"
                         });
                 });
 
@@ -205,6 +205,7 @@ namespace SecurityClean3.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FullName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -261,16 +262,16 @@ namespace SecurityClean3.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9f7d3436-1e21-4994-82fa-8195058f287b",
+                            Id = "94a89c19-766c-4e4e-94de-e21ab94b9251",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a47e3a78-e9d3-4f51-ac99-a4dc28c9d0c5",
+                            ConcurrencyStamp = "97388968-6764-40ad-b04f-439b8a1dab19",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             FullName = "admin",
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@mail.com",
                             NormalizedUserName = "admin@mail.com",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHV90M3S8BCoudgh3AC/950rn1mDJahJ8oJ28Ak0+HB9lw9MjXeNkGASIQ669crnrA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEWMRtVF67DVarbrkaIy0+NIrzegGmqqS6J9+aONUt64LhA9wMEJgn/I8Wi6KuYHrQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -278,16 +279,16 @@ namespace SecurityClean3.Migrations
                         },
                         new
                         {
-                            Id = "3a490d57-30c7-432a-86f5-43ecec4acc08",
+                            Id = "f3966825-4f64-4ef0-ab25-ecc4b0fd3679",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7a925047-ee9a-4a2a-81bd-234732aa1cda",
+                            ConcurrencyStamp = "9b000709-fb41-4fbd-af3c-8d18cc8d1ad3",
                             Email = "manager@mail.com",
                             EmailConfirmed = false,
                             FullName = "manager",
                             LockoutEnabled = false,
                             NormalizedEmail = "manager@mail.com",
                             NormalizedUserName = "manager@mail.com",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJf//S6fzW0hKtdGVWt8862im3lcK8CgDV+iUU/NaGU3U64FDd+bjYxEICnt+uB3LA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIIIXJlm679BnOICgWCV/l4WflUzSCvQx+/u1Hi382QeTYvDbp/D2/tOCXwgczh4Fg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -347,13 +348,27 @@ namespace SecurityClean3.Migrations
 
             modelBuilder.Entity("SecurityClean3.Models.ContractSecuredItem", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<int>("ContractId")
                         .HasColumnType("int");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
 
                     b.Property<int>("SecuredItemId")
                         .HasColumnType("int");
 
-                    b.HasKey("ContractId", "SecuredItemId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContractId");
 
                     b.HasIndex("SecuredItemId");
 
@@ -362,16 +377,19 @@ namespace SecurityClean3.Migrations
                     b.HasData(
                         new
                         {
+                            Id = 1,
                             ContractId = 1,
                             SecuredItemId = 1
                         },
                         new
                         {
+                            Id = 2,
                             ContractId = 1,
                             SecuredItemId = 2
                         },
                         new
                         {
+                            Id = 3,
                             ContractId = 1,
                             SecuredItemId = 3
                         });
@@ -379,13 +397,27 @@ namespace SecurityClean3.Migrations
 
             modelBuilder.Entity("SecurityClean3.Models.ContractService", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<int>("ContractId")
                         .HasColumnType("int");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
 
                     b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
-                    b.HasKey("ContractId", "ServiceId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContractId");
 
                     b.HasIndex("ServiceId");
 
@@ -394,16 +426,19 @@ namespace SecurityClean3.Migrations
                     b.HasData(
                         new
                         {
+                            Id = 1,
                             ContractId = 1,
                             ServiceId = 1
                         },
                         new
                         {
+                            Id = 2,
                             ContractId = 1,
                             ServiceId = 2
                         },
                         new
                         {
+                            Id = 3,
                             ContractId = 1,
                             ServiceId = 4
                         });

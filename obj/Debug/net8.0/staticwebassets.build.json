@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "htzedVLja43Wq/jlE+kg88FCIJ/AnLfP+8lSMH4074M=",
+  "Hash": "9tyBhY+864rhU8WpYMSdxykseIiBIhJD7WOJwDMNTqo=",
   "Source": "SecurityClean3",
   "BasePath": "_content/SecurityClean3",
   "Mode": "Default",
@@ -91,6 +91,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\docs\\output\\contract_71832b0a-6119-4b96-9d8f-cbfb78641263.docx"
+    },
+    {
+      "Identity": "C:\\Instityt\\Diplom\\SecurityClean3\\wwwroot\\docs\\output\\contract_aed55150-2043-4a79-a9b5-4aa36f594b42.docx",
+      "SourceId": "SecurityClean3",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Instityt\\Diplom\\SecurityClean3\\wwwroot\\",
+      "BasePath": "_content/SecurityClean3",
+      "RelativePath": "docs/output/contract_aed55150-2043-4a79-a9b5-4aa36f594b42.docx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\docs\\output\\contract_aed55150-2043-4a79-a9b5-4aa36f594b42.docx"
     },
     {
       "Identity": "C:\\Instityt\\Diplom\\SecurityClean3\\wwwroot\\docs\\templates\\template.docx",

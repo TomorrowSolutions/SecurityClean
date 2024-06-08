@@ -101,10 +101,7 @@ namespace SecurityClean3.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.Employees
-                                        .Include(e=>e.Position)
-                                        .AsNoTracking()
-                                        .FirstOrDefaultAsync(e=>e.Id==id);
+            var employee = await _context.Employees.FindAsync(id);
             if (employee == null)
             {
                 return NotFound();
@@ -121,7 +118,7 @@ namespace SecurityClean3.Controllers
             {
                 return NotFound();
             }
-            var employeeToUpdate = await _context.Employees.FirstOrDefaultAsync(e => e.Id==id);
+            var employeeToUpdate = await _context.Employees.FindAsync(id);
             if (employeeToUpdate==null)
             {
                 return RedirectToAction("SimpleError", "Error", new { errorMessage = "Не удалось сохранить изменения. Запись удалена другим пользователем" });

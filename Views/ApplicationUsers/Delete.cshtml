@@ -1,15 +1,15 @@
 ﻿@model SecurityClean3.Models.ApplicationUser
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Удаление";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Удаление</h1>
+<h1>@ViewData["Title"]</h1>
 <p class="text-danger">@ViewData["ConcurrencyErrorMessage"]</p>
 <h3>Удалить запись?</h3>
 <div>
-    <h4>Position</h4>
+    <h4>Пользователь</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -35,8 +35,8 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="RowVersion" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Удалить" class="btn btn-danger" /> |
+        <a asp-action="Index">Назад</a>
     </form>
 </div>
 

@@ -131,7 +131,6 @@ namespace SecurityClean3.Controllers
             {
                 return NotFound();
             }
-            //Проблема с навигационным полем может перекинуться сюда
             var contractToUpdate = await _context.Contracts.FirstOrDefaultAsync(x => x.Id == id);
             if (contractToUpdate == null)
             {
@@ -207,7 +206,10 @@ namespace SecurityClean3.Controllers
             }
 
             var contract = await _context.Contracts
-                .Include(c => c.Customer)
+                 .Include(c => c.Customer)
+                .Include(c => c.ContractServices)
+                .ThenInclude(cs => cs.Service)
+                .Include(c => c.ContractSecuredItems)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (contract == null)

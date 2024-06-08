@@ -1,8 +1,6 @@
-﻿using Azure;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 using SecurityClean3.Models;
 
 namespace SecurityClean3.Data
@@ -213,7 +211,7 @@ namespace SecurityClean3.Data
                     SignDate = new DateTime(2022, 1, 1),
                     StartDate = new DateTime(2022, 1, 1),
                     EndDate = new DateTime(2022, 12, 31),
-                    IsLocked=false
+                    IsLocked = false
                 }
                 );
             modelBuilder.Entity<SecuredItem>().HasData(
@@ -225,7 +223,6 @@ namespace SecurityClean3.Data
                 );
             modelBuilder.Entity<ContractSecuredItem>(e =>
             {
-                e.HasKey(x => new { x.ContractId, x.SecuredItemId });
 
                 e.HasOne(x => x.Contract)
                 .WithMany(y => y.ContractSecuredItems)
@@ -239,14 +236,13 @@ namespace SecurityClean3.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
                 e.HasData(
-                    new ContractSecuredItem { ContractId = 1, SecuredItemId = 1 },
-                    new ContractSecuredItem { ContractId = 1, SecuredItemId = 2 },
-                    new ContractSecuredItem { ContractId = 1, SecuredItemId = 3 }
+                    new ContractSecuredItem { Id = 1, ContractId = 1, SecuredItemId = 1 },
+                    new ContractSecuredItem { Id = 2, ContractId = 1, SecuredItemId = 2 },
+                    new ContractSecuredItem { Id = 3, ContractId = 1, SecuredItemId = 3 }
                     );
             });
             modelBuilder.Entity<ContractService>(e =>
             {
-                e.HasKey(x => new { x.ContractId, x.ServiceId });
 
                 e.HasOne(x => x.Contract)
                 .WithMany(y => y.ContractServices)
@@ -260,9 +256,9 @@ namespace SecurityClean3.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
                 e.HasData(
-                    new ContractService { ContractId = 1, ServiceId = 1 },
-                    new ContractService { ContractId = 1, ServiceId = 2 },
-                    new ContractService { ContractId = 1, ServiceId = 4 }
+                    new ContractService { Id = 1, ContractId = 1, ServiceId = 1 },
+                    new ContractService { Id = 2, ContractId = 1, ServiceId = 2 },
+                    new ContractService { Id = 3, ContractId = 1, ServiceId = 4 }
                     );
             });
             modelBuilder.Entity<Contract>().Property(p => p.RowVersion).IsConcurrencyToken();
@@ -270,6 +266,8 @@ namespace SecurityClean3.Data
             modelBuilder.Entity<Service>().Property(p => p.RowVersion).IsConcurrencyToken();
             modelBuilder.Entity<Customer>().Property(p => p.RowVersion).IsConcurrencyToken();
             modelBuilder.Entity<SecuredItem>().Property(p => p.RowVersion).IsConcurrencyToken();
+            modelBuilder.Entity<ContractSecuredItem>().Property(p => p.RowVersion).IsConcurrencyToken();
+            modelBuilder.Entity<ContractService>().Property(p => p.RowVersion).IsConcurrencyToken();
         }
     }
 }
