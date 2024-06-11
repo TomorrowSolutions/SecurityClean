@@ -1,13 +1,13 @@
 ﻿@model SecurityClean3.Models.Service
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = Crud.CreateTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>@ViewData["Title"]</h1>
 
-<h4>Service</h4>
+<h4>@Crud.Service</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -28,14 +28,14 @@
                 <select asp-for="PositionId" class ="form-control" asp-items="ViewBag.PositionId"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="@Crud.Submit" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">@Crud.Submit</a>
 </div>
 
 @section Scripts {

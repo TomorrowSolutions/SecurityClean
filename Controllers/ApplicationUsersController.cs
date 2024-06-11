@@ -92,7 +92,7 @@ namespace SecurityClean3.Controllers
                 {
                     if (await _userManager.Users.AnyAsync(x=>x.Email==registrationVM.Email))
                     {
-                        ModelState.AddModelError("", "Пользователь с таким email уже существует.");
+                        ModelState.AddModelError("", Resources.General.Errors.EmailExists);
                         return View(registrationVM);
                     }
                     var user = new ApplicationUser()
@@ -123,9 +123,7 @@ namespace SecurityClean3.Controllers
             }
             catch (DbUpdateException)
             {
-                ModelState.AddModelError("", "Не удалось сохранить изменения. " +
-                   "Попробуйте снова, если проблема сохраняется, " +
-                   "обратитесь к системному администратору.");
+                ModelState.AddModelError("", Resources.General.Errors.Generic);
             }
             return View(registrationVM);
         }
@@ -158,14 +156,12 @@ namespace SecurityClean3.Controllers
 
             if (userToUpdate == null)
             {
-                return RedirectToAction("SimpleError", "Error", new { errorMessage = "Не удалось сохранить изменения. Пользователь удален другим пользователем" });
+                return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.AlreadyDeleted });
             }
 
             if (!rowVersion.SequenceEqual(userToUpdate.RowVersion))
             {
-                ModelState.AddModelError("", "Запись, которую вы хотели изменить, была модифицирована другим пользователем. " +
-                              "Операция была отменена и теперь вы сможете видеть актуальные данные. " +
-                              "Если вы все еще хотите обновить запись, то повторите внесенные изменения");
+                ModelState.AddModelError(string.Empty, Resources.General.Errors.Concurrency);
 
                 // Очистка ModelState для поля RowVersion
                 ModelState.Remove("RowVersion");                
@@ -173,14 +169,9 @@ namespace SecurityClean3.Controllers
             }
 
             // Попытка заполнения и обновления модели
-            if (await TryUpdateModelAsync(userToUpdate, "",
-                u => u.FullName,u=>u.Email /* Добавьте здесь другие поля, которые могут быть обновлены */))
+            if (await TryUpdateModelAsync(userToUpdate, string.Empty,
+                u => u.FullName))
             {
-                if (await _userManager.Users.AnyAsync(x => x.Email == userToUpdate.Email))
-                {
-                    ModelState.AddModelError("", "Пользователь с таким email уже существует.");
-                    return View(userToUpdate);
-                }
                 // Обновление данных пользователя и сохранение изменений
                 await _userManager.UpdateAsync(userToUpdate);
 
@@ -220,17 +211,13 @@ namespace SecurityClean3.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Не удалось сохранить изменения. " +
-                           "Попробуйте снова, если проблема сохраняется, " +
-                           "обратитесь к системному администратору.");
+                        ModelState.AddModelError("", Resources.General.Errors.Generic);
                     }                    
                 }
             }
             catch (DbUpdateException)
             {
-                ModelState.AddModelError("", "Не удалось сохранить изменения. " +
-                   "Попробуйте снова, если проблема сохраняется, " +
-                   "обратитесь к системному администратору.");
+                ModelState.AddModelError("", Resources.General.Errors.Generic);
             }
             return View(viewModel);
         }
@@ -282,16 +269,12 @@ namespace SecurityClean3.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Не удалось сохранить изменения. " +
-                       "Попробуйте снова, если проблема сохраняется, " +
-                       "обратитесь к системному администратору.");
+                    ModelState.AddModelError("", Resources.General.Errors.Generic);
                 }
             }
             catch (DbUpdateException)
             {
-                ModelState.AddModelError("", "Не удалось сохранить изменения. " +
-                   "Попробуйте снова, если проблема сохраняется, " +
-                   "обратитесь к системному администратору.");
+                ModelState.AddModelError("", Resources.General.Errors.Generic);
             }
             return View(viewModel);
         }
@@ -313,9 +296,7 @@ namespace SecurityClean3.Controllers
             }
             if (concurrencyError.GetValueOrDefault())
             {
-                ViewData["ConcurrencyErrorMessage"] = "Запись, которую вы хотели удалить, была модифицирована другим пользователем. " +
-                        "Операция была отменена и теперь вы сможете видеть поля которые были изменены. " +
-                        "Если вы все еще хотите удалить то нажмите 'Удалить' или можете вернуться назад к списку всех записей.";
+                ViewData["ConcurrencyErrorMessage"] = Resources.General.Errors.Concurrency;
             }
             return View(user);
         }
@@ -324,27 +305,19 @@ namespace SecurityClean3.Controllers
         public async Task<IActionResult> Delete(string id, byte[] rowVersion)
         {
             var userToDelete = await _userManager.Users.FirstAsync(x => x.Id == id);
-            try
+            if (userToDelete!=null)
             {
-                if (userToDelete!=null)
+                if (!rowVersion.SequenceEqual(userToDelete.RowVersion))
                 {
-                    if (!rowVersion.SequenceEqual(userToDelete.RowVersion))
-                    {
-                        ModelState.AddModelError("", "Запись, которую вы хотели изменить, была модифицирована другим пользователем. " +
-                                      "Операция была отменена и теперь вы сможете видеть актуальные данные. " +
-                                      "Если вы все еще хотите удалить то нажмите 'Удалить' или можете вернуться назад к списку всех записей.");
-                        // Очистка ModelState для поля RowVersion
-                        ModelState.Remove("RowVersion");
-                        return View(userToDelete);
-                    }
-                    await _userManager.DeleteAsync(userToDelete);                    
+                    ModelState.AddModelError("", Resources.General.Errors.Concurrency);
+                    // Очистка ModelState для поля RowVersion
+                    ModelState.Remove("RowVersion");
+                    return RedirectToAction(nameof(Delete), new { concurrencyError = true, id = userToDelete.Id });
                 }
-                return RedirectToAction(nameof(Index));
+                await _userManager.DeleteAsync(userToDelete);                    
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                return RedirectToAction(nameof(Delete), new { concurrencyError = true, id = userToDelete.Id });
-            }
+            return RedirectToAction(nameof(Index));
+
         }
     }
 }

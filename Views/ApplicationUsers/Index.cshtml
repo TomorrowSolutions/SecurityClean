@@ -1,14 +1,14 @@
 ﻿@model PaginatedList<ApplicationUser>
 
 @{
-    ViewData["Title"] = "Главная";
+    ViewData["Title"] = SecurityClean3.Resources.General.Crud.IndexTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-action="Create">Создать запись</a>
+    <a asp-action="Create">@SecurityClean3.Resources.General.Crud.CreateLink</a>
 </p>
 
 <form asp-action="Index" method="get">
@@ -16,60 +16,55 @@
         <p>
             <div class="row">
                 <div class="col-md-4">
-                    <p>Поиск(ФИО / Имя пользователя / Email) :</p>
+                    <p>@SecurityClean3.Resources.General.Crud.SearchAppUser</p>
                 </div>
                 <div class="col-md-6">
                     <input type="text" class="form-control" name="SearchString" value="@ViewData["CurrentFilter"]" />
                 </div>
                 <div class="col-md-2">
-                    <input type="submit" value="Поиск" class="btn btn-primary" />
-                    <a asp-action="Index" class="btn btn-outline-primary">Отмена</a>
+                    <input type="submit" value="@SecurityClean3.Resources.General.Crud.SearchBtn" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-outline-primary">@SecurityClean3.Resources.General.Crud.Cancel</a>
                 </div>
             </div>
         </p>
     </div>
 </form>
 
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Фио
-            </th>
-            <th>
-                Имя пользователя
-            </th>
-            <th>
-                Email
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class="table-responsive">
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>                    
-                    <a asp-action="Edit" asp-route-id="@item.Id">Редактировать</a> |
-                    <a asp-action="ChangePassword" asp-route-id="@item.Id">Смена пароля</a> |
-                    <a asp-action="ChangeRole" asp-route-id="@item.Id">Смена полномочий</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Подробнее</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>                    
-                </td>
+                <th>
+                    @Html.DisplayNameFor(modelItem => modelItem.First().FullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(modelItem => modelItem.First().Email)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">@SecurityClean3.Resources.General.Crud.EditLink</a> |
+                        <a asp-action="ChangePassword" asp-route-id="@item.Id">@SecurityClean3.Resources.General.Crud.PasswordLink</a> |
+                        <a asp-action="ChangeRole" asp-route-id="@item.Id">@SecurityClean3.Resources.General.Crud.RoleLink</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">@SecurityClean3.Resources.General.Crud.DetailsLink</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">@SecurityClean3.Resources.General.Crud.DeleteLink</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
@@ -80,12 +75,12 @@
    asp-route-pageNumber="@(Model.PageIndex-1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
    class="btn btn-primary @prevDisabled">
-    Назад
+    @SecurityClean3.Resources.General.Crud.Previous
 </a>
 <a asp-action="Index"
    asp-route-pageNumber="@(Model.PageIndex+1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
    class="btn btn-primary @nextDisabled">
-    Вперед
+    @SecurityClean3.Resources.General.Crud.Next
 </a>
 

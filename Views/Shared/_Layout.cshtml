@@ -3,10 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - SecurityClean3</title>
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SecurityClean3.styles.css" asp-append-version="true" />
+    <link rel="icon" href="/favicon.ico"  type="image/x-icon"/>
 </head>
 <body>
     <header>
@@ -18,37 +19,56 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
-                        </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Employees" asp-action="Index">Сотрудники</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@SecurityClean3.Resources.General.Nav.Home</a>
                         </li>
+                        <div class="dropdown">
+                            <a class="nav-link text-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span>@SecurityClean3.Resources.General.Nav.Accounting</span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="Employees" asp-action="Index">@SecurityClean3.Resources.General.Nav.Employees</a></li>
+                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="Positions" asp-action="Index">@SecurityClean3.Resources.General.Nav.Positions</a></li>
+                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="Services" asp-action="Index">@SecurityClean3.Resources.General.Nav.Services</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <a class="nav-link text-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span>@SecurityClean3.Resources.General.Nav.Signing</span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="Contracts" asp-action="Index">@SecurityClean3.Resources.General.Nav.Contracts</a></li>
+                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="Customers" asp-action="Index">@SecurityClean3.Resources.General.Nav.Customers</a></li>
+                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="SecuredItems" asp-action="Index">@SecurityClean3.Resources.General.Nav.SecuredItems</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="ContractSecuredItems" asp-action="Index">@SecurityClean3.Resources.General.Nav.ContractSecuredItems</a></li>
+                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="ContractServices" asp-action="Index">@SecurityClean3.Resources.General.Nav.ContractServices</a></li>
+                            </ul>
+                        </div>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Positions" asp-action="Index">Должности</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Services" asp-action="Index">Услуги</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ApplicationUsers" asp-action="Index">Пользователи</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Contracts" asp-action="Index">Договоры</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Customers" asp-action="Index">Заказчики</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="SecuredItems" asp-action="Index">Охраняемые объекты</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ContractSecuredItems" asp-action="Index">Договоры и Охраняемые объекты</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ContractServices" asp-action="Index">Договоры и Услуги</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="ApplicationUsers" asp-action="Index">@SecurityClean3.Resources.General.Nav.ApplicationUsers</a>
                         </li>
                     </ul>
+                    <ul class="navbar-nav text-end">
+                        <div class="dropdown">
+                            <a class="nav-link text-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                @if (Thread.CurrentThread.CurrentCulture.ToString()=="ru")
+                                {
+                                    <span>Русский</span>
+                                }
+                                else
+                                {
+                                    <span>English</span>
+                                }
+
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li><a class="dropdown-item text-dark" asp-controller="Home" asp-action="ChangeLanguage" asp-route-lang="ru">Русский</a></li>
+                                <li><a class="dropdown-item text-dark" asp-controller="Home" asp-action="ChangeLanguage" asp-route-lang="en">English</a></li>
+                            </ul>
+                        </div>
+                    </ul>
+
                     <partial name="_LoginPartial"/>
                 </div>
             </div>
@@ -59,10 +79,6 @@
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted text-center">
-        <a asp-area="" class="text-decoration-none text-muted" asp-controller="Home" asp-action="Privacy">Юридическая информация &raquo;</a>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

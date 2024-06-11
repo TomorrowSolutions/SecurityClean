@@ -1,40 +1,33 @@
 ﻿@model SecurityClean3.Models.ApplicationUser
 
 @{
-    ViewData["Title"] = "Редактирование";
+    ViewData["Title"] = @SecurityClean3.Resources.General.Crud.EditTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>@ViewData["Title"]</h1>
-
-<h4>Пользователь</h4>
+<h4>@SecurityClean3.Resources.General.Crud.ApplicationUser</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="RowVersion" />    
-            <input type="hidden" name="rowVersion" value="@Convert.ToBase64String(Model.RowVersion)" />
+            <input type="hidden" asp-for="RowVersion" />
             <div class="form-group">
                 <label asp-for="FullName" class="control-label"></label>
                 <input asp-for="FullName" class="form-control" />
                 <span asp-validation-for="FullName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" type="email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Отправить" class="btn btn-primary" />
+                <input type="submit" value="@SecurityClean3.Resources.General.Crud.Submit" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Назад</a>
+    <a asp-action="Index">@SecurityClean3.Resources.General.Crud.Back</a>
 </div>
 
 @section Scripts {

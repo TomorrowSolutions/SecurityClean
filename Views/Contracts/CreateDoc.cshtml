@@ -1,15 +1,15 @@
 ﻿@model SecurityClean3.Models.Contract
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = Crud.DocCreateTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Создание документа</h1>
+<h1>@ViewData["Title"]</h1>
 
-<h4>Внимание! После создания документа, последующее редактирование договора будет невозможно.</h4>
+<h4>@Crud.DocCreateWarning</h4>
 <div>
-    <h4>Договор</h4>
+    <h4>@Crud.Contract</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -42,18 +42,18 @@
         <dd class="col-sm-10">
             @if (Model.IsLocked)
             {
-                <p>Заблокировано(записано в pdf)</p>
+                <p>@Crud.Locked</p>
             }
             else
             {
-                <p>Незаблокировано(не записано в pdf)</p>
+                <p>@Crud.Unlocked</p>
             }
         </dd>
     </dl>
 
     <div class="row pt-3">
         <div class="col-6">
-            <h4>Услуги</h4>
+            <h4>@Crud.Services</h4>
             <table class="table table-responsive">
                 <thead>
                     <tr>
@@ -61,7 +61,7 @@
                             @Html.DisplayNameFor(model => model.ContractServices.First().Service.Name)
                         </th>
                         <th>
-                            Стоимость
+                            @Html.DisplayNameFor(model => model.ContractServices.First().Service.Price)
                         </th>
                     </tr>
                 </thead>
@@ -81,7 +81,7 @@
             </table>
         </div>
         <div class="col-6">
-            <h4>Объекты</h4>
+            <h4>@Crud.SecuredItems</h4>
             <table class="table table-responsive">
                 <thead>
                     <tr>
@@ -89,7 +89,7 @@
                             @Html.DisplayNameFor(model => model.ContractSecuredItems.First().SecuredItem.Name)
                         </th>
                         <th>
-                            Стоимость
+                            @Html.DisplayNameFor(model => model.ContractSecuredItems.First().SecuredItem.Address)
                         </th>
                     </tr>
                 </thead>
@@ -112,7 +112,7 @@
 
     <form asp-action="CreateDoc">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Создать документ" class="btn btn-success" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="@Crud.Submit" class="btn btn-success" /> |
+        <a asp-action="Index">@Crud.Back</a>
     </form>
 </div>

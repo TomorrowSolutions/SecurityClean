@@ -76,7 +76,7 @@ namespace SecurityClean3.Controllers
             {
                 if (await _context.ContractSecuredItems.AnyAsync(i => i.ContractId == item.ContractId && i.SecuredItemId == item.SecuredItemId))
                 {
-                    ModelState.AddModelError("", "Такое сочетание договора и объекта уже существует");
+                    ModelState.AddModelError(string.Empty, Resources.General.Errors.CombinationExists);
 
                 }
                 if (ModelState.IsValid)
@@ -88,9 +88,7 @@ namespace SecurityClean3.Controllers
             }
             catch (DbUpdateException)
             {
-                ModelState.AddModelError("", "Не удалось сохранить изменения. " +
-                                   "Попробуйте снова, если проблема сохраняется, " +
-                                   "обратитесь к системному администратору.");
+                ModelState.AddModelError(string.Empty, Resources.General.Errors.Generic);
             }           
             ViewData["ContractId"] = new SelectList(_context.Contracts.Where(x => x.IsLocked == false), "Id", "Id", item.ContractId);
             ViewData["SecuredItemId"] = new SelectList(_context.SecuredItems, "Id", "Address", item.SecuredItemId);
@@ -112,7 +110,7 @@ namespace SecurityClean3.Controllers
             }
             if (contractSecuredItem.Contract.IsLocked)
             {
-                return RedirectToAction("SimpleError", "Error", new { errorMessage = "Договор заблокирован и соотношения связанные с ним не могут быть изменены" });
+                return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.LockedDetails });
             }
             ViewData["ContractId"] = new SelectList(_context.Contracts.Where(x => x.IsLocked == false), "Id", "Id", contractSecuredItem.ContractId);
             ViewData["SecuredItemId"] = new SelectList(_context.SecuredItems, "Id", "Address", contractSecuredItem.SecuredItemId);
@@ -130,7 +128,7 @@ namespace SecurityClean3.Controllers
             var itemToUpdate = await _context.ContractSecuredItems.FindAsync(id);
             if (itemToUpdate==null)
             {
-                return RedirectToAction("SimpleError", "Error", new { errorMessage = "Не удалось сохранить изменения. Запись удалена другим пользователем" });
+                return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.AlreadyDeleted });
             }
             _context.Entry(itemToUpdate).Property("RowVersion").OriginalValue = rowVersion;
             if (await TryUpdateModelAsync<ContractSecuredItem>(
@@ -140,7 +138,7 @@ namespace SecurityClean3.Controllers
             {
                 if (await _context.ContractSecuredItems.AnyAsync(i => i.ContractId == itemToUpdate.ContractId && i.SecuredItemId == itemToUpdate.SecuredItemId))
                 {
-                    ModelState.AddModelError("", "Такое сочетание договора и объекта уже существует");
+                    ModelState.AddModelError(string.Empty, Resources.General.Errors.CombinationExists);
                     ViewData["ContractId"] = new SelectList(_context.Contracts, "Id", "Id", itemToUpdate.ContractId);
                     ViewData["SecuredItemId"] = new SelectList(_context.SecuredItems, "Id", "Address", itemToUpdate.SecuredItemId);
                     return View(itemToUpdate);
@@ -157,7 +155,7 @@ namespace SecurityClean3.Controllers
                     var databaseEntry = exceptionEntry.GetDatabaseValues();
                     if (databaseEntry == null)
                     {
-                        ModelState.AddModelError(string.Empty, "Не удалось сохранить изменения. Запись удалена другим пользователем");
+                        return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.AlreadyDeleted });
                     }
                     else
                     {
@@ -172,9 +170,7 @@ namespace SecurityClean3.Controllers
                             var securedItemFromDb = await _context.SecuredItems.FirstOrDefaultAsync(x => x.Id == databaseValues.SecuredItemId);
                             ModelState.AddModelError("SecuredItemId", $"Актуальное значение: {securedItemFromDb?.Address}");
                         }
-                        ModelState.AddModelError("", "Запись, которую вы хотели изменить, была модифицирована другим пользователем. " +
-                       "Операция была отменена и теперь вы сможете видеть поля которые были изменены. " +
-                       "Если вы все еще хотите внести измененные значения то нажмите 'Отправить' или можете вернуться назад к списку всех записей.");
+                        ModelState.AddModelError(string.Empty,Resources.General.Errors.Concurrency);
                         itemToUpdate.RowVersion = (byte[])databaseValues.RowVersion;
                         ModelState.Remove("RowVersion");
                     }
@@ -207,13 +203,11 @@ namespace SecurityClean3.Controllers
             }
             if (contractSecuredItem.Contract.IsLocked)
             {
-                return RedirectToAction("SimpleError", "Error", new { errorMessage = "Договор заблокирован и соотношения связанные с ним не могут быть изменены" });
+                return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.LockedDetails });
             }
             if (concurrencyError.GetValueOrDefault())
             {
-                ViewData["ConcurrencyErrorMessage"] = "Запись, которую вы хотели изменить, была модифицирована другим пользователем. " +
-                        "Операция была отменена и теперь вы сможете видеть поля которые были изменены. " +
-                        "Если вы все еще хотите удалить то нажмите 'Удалить' или можете вернуться назад к списку всех записей.";
+                ViewData["ConcurrencyErrorMessage"] = Resources.General.Errors.Concurrency;
             }
             return View(contractSecuredItem);
         }

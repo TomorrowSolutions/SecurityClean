@@ -7,13 +7,13 @@ namespace SecurityClean3.Models
     {
         [Key]
         public int Id { get; set; }
-        [Display(Name = "Название")]
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [StringLength(50, ErrorMessage = "Поле {0} не должно превышать {1} символов.")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "Name", ResourceType = typeof(Resources.Models.Position))]
+        [StringLength(50)]
         public string Name { get; set; } = string.Empty;
-        [Range(0, 3000000.00)]
-        [Display(Name = "Оклад")]
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
+        [Range(0, 3000000.00,ErrorMessageResourceType = typeof(Resources.General.Errors),ErrorMessageResourceName = "NumberBetween")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "Wage", ResourceType = typeof(Resources.Models.Position))]
         public double Wage { get; set; }
         public ICollection<Employee>? Employees { get; set; }
         public ICollection<Service>? Services { get; set; }

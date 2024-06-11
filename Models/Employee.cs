@@ -8,26 +8,26 @@ namespace SecurityClean3.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [Display(Name = "ФИО")]
-        [StringLength(100, ErrorMessage = "Поле {0} не должно превышать {1} символов.")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "FullName", ResourceType = typeof(Resources.Models.Employee))]
+        [StringLength(100)]
         public string FullName { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [Display(Name = "Дата поступления на работу")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "HireDate", ResourceType = typeof(Resources.Models.Employee))]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime HireDate { get; set; }
 
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [Display(Name = "Образование")]
-        [StringLength(100, ErrorMessage = "Поле {0} не должно превышать {1} символов.")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "Education", ResourceType = typeof(Resources.Models.Employee))]
+        [StringLength(100)]
         public string Education { get; set; } = string.Empty;
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [Display(Name = "Должность")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "Position", ResourceType = typeof(Resources.Models.Employee))]
         public int PositionId { get; set; }
         [ForeignKey("PositionId")]
-        [Display(Name = "Должность")]
+        [Display(Name = "Position", ResourceType = typeof(Resources.Models.Employee))]
         public Position? Position { get; set; }
 
         [Timestamp]

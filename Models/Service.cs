@@ -8,19 +8,19 @@ namespace SecurityClean3.Models
     {
         [Key]
         public int Id { get; set; }
-        [Display(Name = "Наименование")]
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [StringLength(50, ErrorMessage = "Поле {0} не должно превышать {1} символов.")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "Name", ResourceType = typeof(Resources.Models.Service))]
+        [StringLength(50)]
         public string Name { get; set; } = string.Empty;
-        [Range(0, 3000000.00)]
-        [Display(Name = "Стоимость")]
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
+        [Range(0, 3000000.00, ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "NumberBetween")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "Price", ResourceType = typeof(Resources.Models.Service))]
         public double Price { get; set; }
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [Display(Name = "Должность")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "Position", ResourceType = typeof(Resources.Models.Service))]
         public int PositionId { get; set; }
         [ForeignKey("PositionId")]
-        [Display(Name = "Должность")]
+        [Display(Name = "Position", ResourceType = typeof(Resources.Models.Service))]
         public Position? Position { get; set; }
 
         [Timestamp]

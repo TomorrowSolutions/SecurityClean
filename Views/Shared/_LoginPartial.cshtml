@@ -10,19 +10,19 @@
 {
     @if (User.IsInRole(Roles.Admin))
     {
-        <p class="me-3 mb-0">Полномочия: Администратор</p>
+            <p class="me-3 mb-0">@SecurityClean3.Resources.General.Nav.Admin</p>
         <a asp-area="Identity" asp-page="/Account/Logout">Выйти</a>
     }
     else if (User.IsInRole(Roles.Manager))
     {
-        <p class="me-3 mb-0">Полномочия: Менеджер</p>
+            <p class="me-3 mb-0">@SecurityClean3.Resources.General.Nav.Manager</p>
         <a asp-area="Identity" asp-page="/Account/Logout">Выйти</a>
     }
 }
 else
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Войти</a>
+            <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">@SecurityClean3.Resources.General.Nav.Login</a>
     </li>
 }
 </ul>

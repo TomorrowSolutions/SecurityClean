@@ -9,18 +9,18 @@ namespace SecurityClean3.Models
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [Display(Name = "Номер договора")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "Contract", ResourceType = typeof(Resources.Models.ContractDetails))]
         public int ContractId { get; set; }
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [Display(Name = "Номер объекта")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "SecuredItem", ResourceType = typeof(Resources.Models.ContractDetails))]
         public int SecuredItemId { get; set; }
 
         [ForeignKey("ContractId")]
-        [Display(Name = "Договор")]
+        [Display(Name = "Contract", ResourceType = typeof(Resources.Models.ContractDetails))]
         public Contract? Contract { get; set; }
         [ForeignKey("SecuredItemId")]
-        [Display(Name = "Объект")]
+        [Display(Name = "SecuredItem", ResourceType = typeof(Resources.Models.ContractDetails))]
         public SecuredItem? SecuredItem { get; set; }
         [Timestamp]
         [ValidateNever]

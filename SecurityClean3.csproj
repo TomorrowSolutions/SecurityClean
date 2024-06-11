@@ -25,4 +25,130 @@
     <Folder Include="wwwroot\docs\output\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Resources\General\Errors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Errors.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Models\Contract.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Contract.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Models\ContractDetails.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ContractDetails.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Models\Customer.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Customer.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Models\Employee.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Employee.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Models\Position.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Position.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Models\SecuredItem.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SecuredItem.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Models\Service.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Service.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Models\User.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>User.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\General\Crud.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Crud.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\General\Home.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Home.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\General\Login.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Login.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\General\Nav.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Nav.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\General\Errors.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Errors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Models\Contract.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Contract.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Models\ContractDetails.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ContractDetails.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Models\Customer.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Customer.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Models\Employee.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Employee.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Models\Position.en.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Models\Position.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Position.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Models\SecuredItem.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SecuredItem.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Models\Service.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Service.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Models\User.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>User.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\General\Crud.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Crud.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\General\Home.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Home.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\General\Login.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Login.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\General\Nav.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Nav.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

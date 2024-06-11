@@ -9,32 +9,31 @@ namespace SecurityClean3.Models
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [Display(Name = "Номер заказчика")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "Customer", ResourceType = typeof(Resources.Models.Contract))]
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
-        [Display(Name = "Заказчик")]
+        [Display(Name = "Customer", ResourceType = typeof(Resources.Models.Contract))]
         public Customer? Customer { get; set; }
 
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [Display(Name = "Дата подписания")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "SignDate", ResourceType = typeof(Resources.Models.Contract))]
         [DataType(DataType.Date)]
         public DateTime SignDate { get; set; }
 
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [Display(Name = "Дата начала действия")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "StartDate", ResourceType = typeof(Resources.Models.Contract))]
         [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
 
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [Display(Name = "Дата окончания действия")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "EndDate", ResourceType = typeof(Resources.Models.Contract))]
         [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
 
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [Display(Name = "Заблокирован")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "IsLocked", ResourceType = typeof(Resources.Models.Contract))]
         public bool IsLocked { get; set; }
-        [Display(Name = "Путь к файлу договора")]
         public string? FileName { get; set; }
 
         [Timestamp]

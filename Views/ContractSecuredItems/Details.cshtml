@@ -1,14 +1,14 @@
 ﻿@model SecurityClean3.Models.ContractSecuredItem
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = @Crud.DetailsTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>@ViewData["Title"]</h1>
 
 <div>
-    <h4>ContractSecuredItem</h4>
+    <h4>@Crud.ContractSecuredItem</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -18,13 +18,13 @@
             @Html.DisplayFor(model => model.Contract.Id)
         </dd>        
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SecuredItem.Name) объекта
+            @Html.DisplayNameFor(model => model.SecuredItem.Name)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.SecuredItem.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SecuredItem.Address) объекта
+            @Html.DisplayNameFor(model => model.SecuredItem.Address)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.SecuredItem.Address)
@@ -32,6 +32,5 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">@Crud.Back</a>
 </div>

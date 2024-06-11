@@ -1,14 +1,14 @@
 ﻿@model SecurityClean3.Models.Employee
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Crud.DetailsTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>@ViewData["Title"]</h1>
 
 <div>
-    <h4>Employee</h4>
+    <h4>@Crud.Employee</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -38,19 +38,18 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">@Crud.Back</a>
 </div>
 
-<h4>Услуги, услуги выполняемые сотрудником</h4>
+<h4>@Crud.Services</h4>
 <table class="table">
     <thead>
         <tr>
             <th>
-                Наименование
+                @Html.DisplayNameFor(modelItem => modelItem.Position.Services.First().Name)
             </th>
             <th>
-                Стоимость
+                @Html.DisplayNameFor(modelItem => modelItem.Position.Services.First().Price)
             </th>
         </tr>
     </thead>

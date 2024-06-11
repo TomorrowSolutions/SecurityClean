@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using SecurityClean3.Models;
+using SecurityClean3.Resources;
+using SecurityClean3.Resources.General;
 
 namespace SecurityClean3.Areas.Identity.Pages.Account
 {
@@ -32,8 +34,6 @@ namespace SecurityClean3.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public IList<AuthenticationScheme> ExternalLogins { get; set; }
-
 
         public string ReturnUrl { get; set; }
 
@@ -46,14 +46,16 @@ namespace SecurityClean3.Areas.Identity.Pages.Account
 
             [Required]
             [EmailAddress]
+            [Display(Name = "Email", ResourceType = typeof(Login))]
             public string Email { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
+            [Display(Name = "Password", ResourceType = typeof(Login))]
             public string Password { get; set; }
 
 
-            [Display(Name = "Запомнить данные авторизации(вход в аккаунт будет выполнен автоматически)")]
+            [Display(Name = "RememberMe", ResourceType = typeof(Login))]
             public bool RememberMe { get; set; }
         }
 
@@ -69,16 +71,12 @@ namespace SecurityClean3.Areas.Identity.Pages.Account
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
             ReturnUrl = returnUrl;
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
-
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             if (ModelState.IsValid)
             {
@@ -90,18 +88,9 @@ namespace SecurityClean3.Areas.Identity.Pages.Account
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-                }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
-                }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, Resources.General.Errors.LoginFailed);
                     return Page();
                 }
             }

@@ -1,15 +1,15 @@
 ﻿@model SecurityClean3.Models.ContractSecuredItem
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = Crud.DeleteTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Delete</h1>
+<h1>@ViewData["Title"]</h1>
 <p class="text-danger">@ViewData["ConcurrencyErrorMessage"]</p>
-<h3>Are you sure you want to delete this?</h3>
+<h3>@Crud.SureDelete</h3>
 <div>
-    <h4>ContractSecuredItem</h4>
+    <h4>@Crud.ContractSecuredItem</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -19,13 +19,13 @@
             @Html.DisplayFor(model => model.Contract.Id)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SecuredItem.Name) объекта
+            @Html.DisplayNameFor(model => model.SecuredItem.Name) 
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.SecuredItem.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SecuredItem.Address) объекта
+            @Html.DisplayNameFor(model => model.SecuredItem.Address)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.SecuredItem.Address)
@@ -35,7 +35,7 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="RowVersion" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="@Crud.Submit" class="btn btn-danger" /> |
+        <a asp-action="Index">@Crud.Back</a>
     </form>
 </div>

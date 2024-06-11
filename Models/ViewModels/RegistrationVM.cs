@@ -4,20 +4,23 @@ namespace SecurityClean3.Models.ViewModels
 {
     public class RegistrationVM
     {
-        [Required]
+        [Required( ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
         [EmailAddress]
-        [Display(Name = "Эл. почта")]
+        [Display(Name = "Email",ResourceType =typeof(Resources.Models.User))]
         public string Email { get; set; }
-        [Required]
-        [Display(Name = "ФИО")]
+
+        [Required( ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "FullName", ResourceType = typeof(Resources.Models.User))]
         public string FullName { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 8)]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [StringLength(100, MinimumLength = 8,ErrorMessageResourceType =typeof(Resources.General.Errors),ErrorMessageResourceName = "LengthBetween")]
         [DataType(DataType.Password)]
-        [Display(Name = "Пароль")]
+        [Display(Name = "Password", ResourceType = typeof(Resources.Models.User))]
         public string Password { get; set; }
-        [Required]
+
+        [Required( ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "ChooseRole", ResourceType = typeof(Resources.General.Crud))]
         public bool IsAdmin { get; set; }
     }
 }

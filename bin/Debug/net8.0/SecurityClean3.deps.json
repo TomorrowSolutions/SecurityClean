@@ -20,6 +20,11 @@
         },
         "runtime": {
           "SecurityClean3.dll": {}
+        },
+        "resources": {
+          "en/SecurityClean3.resources.dll": {
+            "locale": "en"
+          }
         }
       },
       "Azure.Core/1.35.0": {

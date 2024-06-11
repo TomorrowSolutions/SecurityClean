@@ -7,12 +7,12 @@ namespace SecurityClean3.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [Display(Name = "Название")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "Name", ResourceType = typeof(Resources.Models.SecuredItem))]
         [StringLength(100)]
         public string Name { get; set; } = string.Empty;
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [Display(Name = "Адрес")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "Address", ResourceType = typeof(Resources.Models.SecuredItem))]
         [StringLength(150)]
         public string Address { get; set; } = string.Empty;
         [Timestamp]

@@ -6,16 +6,16 @@ namespace SecurityClean3.Models.ViewModels
     {
         [Required]
         public string Id { get; set; }
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 8)]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [StringLength(100, MinimumLength = 8, ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "LengthBetween")]
         [DataType(DataType.Password)]
-        [Display(Name = "Пароль")]
+        [Display(Name = "Password", ResourceType = typeof(Resources.Models.User))]
         public string Password { get; set; }
 
-
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
         [DataType(DataType.Password)]
-        [Display(Name = "Повторите пароль")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "ConfirmPassword", ResourceType = typeof(Resources.Models.User))]
+        [Compare("Password", ErrorMessageResourceType =typeof(Resources.General.Errors),ErrorMessageResourceName ="PasswordMatch")]
         public string ConfirmPassword { get; set; }
     }
 }

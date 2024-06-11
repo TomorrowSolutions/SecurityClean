@@ -1,14 +1,14 @@
 ﻿@model SecurityClean3.Models.ViewModels.UserRolesVM
 
 @{
-    ViewData["Title"] = "Подробности";
+    ViewData["Title"] = @SecurityClean3.Resources.General.Crud.DetailsTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>@ViewData["Title"]</h1>
 
 <div>
-    <h4>Пользователь</h4>
+    <h4>@SecurityClean3.Resources.General.Crud.ApplicationUser</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -30,7 +30,7 @@
             @Html.DisplayFor(model => model.User.UserName)
         </dd>
         <dt class="col-sm-2">
-            Полномочия
+            @SecurityClean3.Resources.General.Crud.Roles
         </dt>
         <dd class="col-sm-10">
             @string.Join(',',Model.Roles)
@@ -38,6 +38,5 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.User.Id">Редактировать</a> |
-    <a asp-action="Index">Назад</a>
+    <a asp-action="Index">@SecurityClean3.Resources.General.Crud.Back</a>
 </div>

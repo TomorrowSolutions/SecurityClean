@@ -1,14 +1,14 @@
 ﻿@model PaginatedList<SecurityClean3.Models.ContractSecuredItem>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = Crud.IndexTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">@Crud.CreateLink</a>
 </p>
 
 <form asp-action="Index" method="get">
@@ -16,57 +16,60 @@
         <p>
             <div class="row">
                 <div class="col-md-4">
-                    <p>Поиск(Номер договора) :</p>
+                    <p>@Crud.SearchContractDetails</p>
                 </div>
                 <div class="col-md-6">
                     <input type="text" class="form-control" name="SearchString" value="@ViewData["CurrentFilter"]" />
                 </div>
                 <div class="col-md-2">
-                    <input type="submit" value="Поиск" class="btn btn-primary" />
-                    <a asp-action="Index" class="btn btn-outline-primary">Отмена</a>
+                    <input type="submit" value="@Crud.SearchBtn" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-outline-primary">@Crud.Back</a>
                 </div>
             </div>
         </p>
     </div>
 </form>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Contract)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().SecuredItem)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Contract.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SecuredItem.Address)
+                    </td>
+                    <td>
+                        @if (item.Contract.IsLocked)
+                        {
+                            <a asp-action="Details" asp-route-id="@item.Id">@Crud.DetailsLink</a>
+                        }
+                        else
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.Id">@Crud.EditLink</a>
+                            <a asp-action="Details" asp-route-id="@item.Id">@Crud.DetailsLink</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id">@Crud.DeleteLink</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.First().Contract)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().SecuredItem)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Contract.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SecuredItem.Address)
-            </td>
-            <td>
-                @if (item.Contract.IsLocked)
-                {
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                }
-                else
-                {
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>                    
-                }                
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
 
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
@@ -76,11 +79,11 @@
    asp-route-pageNumber="@(Model.PageIndex-1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
    class="btn btn-primary @prevDisabled">
-    Назад
+    @Crud.Previous
 </a>
 <a asp-action="Index"
    asp-route-pageNumber="@(Model.PageIndex+1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
    class="btn btn-primary @nextDisabled">
-    Вперед
+    @Crud.Next
 </a>

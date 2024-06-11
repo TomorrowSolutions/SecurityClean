@@ -92,9 +92,7 @@ namespace SecurityClean3.Controllers
             }
             catch (DbUpdateException)
             {
-                ModelState.AddModelError("", "Не удалось сохранить изменения. " +
-                   "Попробуйте снова, если проблема сохраняется, " +
-                   "обратитесь к системному администратору.");
+                ModelState.AddModelError(string.Empty, Resources.General.Errors.Generic);
             }
 
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "ContactPerson", contract.CustomerId);
@@ -116,7 +114,7 @@ namespace SecurityClean3.Controllers
             }
             if (contract.IsLocked)
             {
-                return RedirectToAction("SimpleError", "Error", new { errorMessage = "Договор заблокирован(не может быть изменен)" });
+                return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.ContractLocked });
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "ContactPerson", contract.CustomerId);
             return View(contract);
@@ -134,7 +132,7 @@ namespace SecurityClean3.Controllers
             var contractToUpdate = await _context.Contracts.FirstOrDefaultAsync(x => x.Id == id);
             if (contractToUpdate == null)
             {
-                return RedirectToAction("SimpleError", "Error", new { errorMessage = "Не удалось сохранить изменения. Запись удалена другим пользователем" });
+                return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.AlreadyDeleted });
             }
             _context.Entry(contractToUpdate).Property("RowVersion").OriginalValue = rowVersion;
             if (await TryUpdateModelAsync<Contract>(
@@ -155,7 +153,7 @@ namespace SecurityClean3.Controllers
                     var databaseEntry = exceptionEntry.GetDatabaseValues();
                     if (databaseEntry == null)
                     {
-                        ModelState.AddModelError(string.Empty, "Не удалось сохранить изменения. Запись удалена другим пользователем");
+                        return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.AlreadyDeleted });
                     }
                     else
                     {
@@ -186,9 +184,7 @@ namespace SecurityClean3.Controllers
                         {
                             ModelState.AddModelError("IsLocked", $"Актуальное значение: {databaseValues.IsLocked}");
                         }
-                        ModelState.AddModelError("", "Запись, которую вы хотели изменить, была модифицирована другим пользователем. " +
-                      "Операция была отменена и теперь вы сможете видеть поля которые были изменены. " +
-                      "Если вы все еще хотите внести измененные значения то нажмите 'Отправить' или можете вернуться назад к списку всех записей.");
+                        ModelState.AddModelError("", Resources.General.Errors.Concurrency);
                         contractToUpdate.RowVersion = (byte[])databaseValues.RowVersion;
                         ModelState.Remove("RowVersion");
                     }
@@ -222,16 +218,14 @@ namespace SecurityClean3.Controllers
             }
             if (concurrencyError.GetValueOrDefault())
             {
-                ViewData["ConcurrencyErrorMessage"] = "Запись, которую вы хотели изменить, была модифицирована другим пользователем. " +
-                        "Операция была отменена и теперь вы сможете видеть поля которые были изменены. " +
-                        "Если вы все еще хотите удалить то нажмите 'Удалить' или можете вернуться назад к списку всех записей.";
+                ViewData["ConcurrencyErrorMessage"] = Resources.General.Errors.Concurrency;
             }
             return View(contract);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Contract contract)
+        public async Task<IActionResult> Delete(Contract contract)
         {
             try
             {
@@ -273,7 +267,7 @@ namespace SecurityClean3.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (contract.IsLocked)
             {
-                return RedirectToAction("SimpleError", "Error", new { errorMessage = "Не удалось создать документ, так как договор заблокирован (документ должен быть уже создан)" });
+                return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.DocumentAlready });
             }
             if (contract == null)
             {
@@ -296,7 +290,7 @@ namespace SecurityClean3.Controllers
             {
                 if (contract.IsLocked)
                 {
-                    return RedirectToAction("SimpleError", "Error", new { errorMessage = "Не удалось создать документ, так как договор заблокирован (документ должен быть уже создан)" });
+                    return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.DocumentAlready });
                 }
                 contract.IsLocked = true;
                 string fileName = DocFiller.FillTemplate(contract.Customer, contract, contract.ContractServices.Select(x => x.Service).ToList(), contract.ContractSecuredItems.Select(x => x.SecuredItem).ToList(), _env);
@@ -359,15 +353,9 @@ namespace SecurityClean3.Controllers
             }
             else
             {
-                return RedirectToAction("SimpleError", "Error", new { errorMessage = "Не удалось скачать файл, так как договор не заблокирован(файл договора может не существовать)" });
+                return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.ContractUnlocked });
             }
-            return RedirectToAction("SimpleError", "Error", new { errorMessage = "Не удалось скачать файл" });
-        }
-
-
-        private bool ContractExists(int id)
-        {
-            return (_context.Contracts?.Any(e => e.Id == id)).GetValueOrDefault();
+            return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.Download });
         }
     }
 }

@@ -9,46 +9,43 @@ namespace SecurityClean3.Models
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [Display(Name = "Название организации")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "CompanyName", ResourceType = typeof(Resources.Models.Customer))]
         [StringLength(100)]
         public string CompanyName { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [Display(Name = "Юридический адрес")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "LegalAddress", ResourceType = typeof(Resources.Models.Customer))]
         [StringLength(100)]
         public string LegalAddress { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [Display(Name = "ИНН")]
-        [StringLength(12, MinimumLength = 10)]
-        [RegularExpression(@"^\d+$")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "Inn", ResourceType = typeof(Resources.Models.Customer))]
+        [StringLength(12, MinimumLength = 10, ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "LengthBetween")]
         public string Inn { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [Display(Name = "Рассчетный счет")]
-        [StringLength(20, MinimumLength = 20)]
-        [RegularExpression(@"^\d+$")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "AccountNumber", ResourceType = typeof(Resources.Models.Customer))]
+        [StringLength(20, MinimumLength = 20, ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "LengthBetween")]
         public string AccountNumber { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [Display(Name = "Банк")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "Bank", ResourceType = typeof(Resources.Models.Customer))]
         [StringLength(100)]
         public string Bank { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [Display(Name = "БИК")]
-        [StringLength(9, MinimumLength = 9)]
-        [RegularExpression(@"^\d+$")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "Bik", ResourceType = typeof(Resources.Models.Customer))]
+        [StringLength(9, MinimumLength = 9, ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "LengthBetween")]
         public string Bik { get; set; } = string.Empty;
 
-        [Display(Name = "Корреспондентный счет")]
-        [StringLength(20, MinimumLength = 20)]
-        [RegularExpression(@"^\d+$")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "CorrespondentAccount", ResourceType = typeof(Resources.Models.Customer))]
+        [StringLength(20, MinimumLength = 20, ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "LengthBetween")]
         public string? CorrespondentAccount { get; set; }
 
-        [Required(ErrorMessage = "Поле {0} обязательно для заполнения.")]
-        [Display(Name = "ФИО представителя")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "ContactPerson", ResourceType = typeof(Resources.Models.Customer))]
         [StringLength(100)]
         public string ContactPerson { get; set; } = string.Empty;
 
@@ -72,7 +69,6 @@ namespace SecurityClean3.Models
         public string getShortFio()
         {
             var strings = this.ContactPerson.Split(' ');
-            //Stack<string> fioStack = new Stack<string>(strings);
             Queue<string> fioQueue = new Queue<string>(strings);
             StringBuilder sb = new StringBuilder();
             var Family = fioQueue.Dequeue();

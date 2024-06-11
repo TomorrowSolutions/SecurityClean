@@ -6,7 +6,8 @@ namespace SecurityClean3.Models.ViewModels
     {
         [Required]
         public string Id { get; set; }
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(Resources.General.Errors), ErrorMessageResourceName = "Fill")]
+        [Display(Name = "ChooseRole", ResourceType = typeof(Resources.General.Crud))]
         public bool IsAdmin { get; set; }
     }
 }

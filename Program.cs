@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using SecurityClean3.Data;
 using Microsoft.AspNetCore.Identity;
 using SecurityClean3.Models;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,22 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.Use(async (context, next) =>
+{
+    string cookie = string.Empty;
+    if (context.Request.Cookies.TryGetValue("Language",out cookie))
+    {
+        Thread.CurrentThread.CurrentCulture = new CultureInfo(cookie);
+        Thread.CurrentThread.CurrentUICulture = new CultureInfo(cookie);
+    }
+    else
+    {
+        Thread.CurrentThread.CurrentCulture = new CultureInfo("ru");
+        Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru");        
+    }
+    await next.Invoke();
+});
 
 app.UseAuthorization();
 app.MapRazorPages();

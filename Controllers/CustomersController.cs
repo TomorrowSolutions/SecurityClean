@@ -85,9 +85,7 @@ namespace SecurityClean3.Controllers
             }
             catch (Exception)
             {
-                ModelState.AddModelError("", "Не удалось сохранить изменения. " +
-                    "Попробуйте снова, если проблема сохраняется, " +
-                    "обратитесь к системному администратору.");
+                ModelState.AddModelError(string.Empty, Resources.General.Errors.Generic);
             }           
             return View(customer);
         }
@@ -119,7 +117,7 @@ namespace SecurityClean3.Controllers
             var customerToUpdate = await _context.Customers.FindAsync(id);
             if (customerToUpdate==null)
             {
-                return RedirectToAction("SimpleError", "Error", new { errorMessage = "Не удалось сохранить изменения. Запись удалена другим пользователем" });
+                return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.AlreadyDeleted });
             }
 
             _context.Entry(customerToUpdate).Property("RowVersion").OriginalValue = rowVersion;
@@ -142,7 +140,7 @@ namespace SecurityClean3.Controllers
                     var databaseEntry = exceptionEntry.GetDatabaseValues();
                     if (databaseEntry == null)
                     {
-                        ModelState.AddModelError(string.Empty, "Не удалось сохранить изменения. Запись удалена другим пользователем");
+                        return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.AlreadyDeleted });
                     }
                     else
                     {
@@ -186,9 +184,7 @@ namespace SecurityClean3.Controllers
                         {
                             ModelState.AddModelError("ContactPerson", $"Актуальное значение: {databaseValues.ContactPerson}");
                         }
-                        ModelState.AddModelError("", "Запись, которую вы хотели изменить, была модифицирована другим пользователем. " +
-                        "Операция была отменена и теперь вы сможете видеть поля которые были изменены. " +
-                        "Если вы все еще хотите внести измененные значения то нажмите 'Отправить' или можете вернуться назад к списку всех записей.");
+                        ModelState.AddModelError(string.Empty, Resources.General.Errors.Concurrency);
                         customerToUpdate.RowVersion = (byte[])databaseValues.RowVersion;
                         ModelState.Remove("RowVersion");
                     }
@@ -217,9 +213,7 @@ namespace SecurityClean3.Controllers
             }
             if (concurrencyError.GetValueOrDefault())
             {
-                ViewData["ConcurrencyErrorMessage"] = "Запись, которую вы хотели удалить, была модифицирована другим пользователем. " +
-                        "Операция была отменена и теперь вы сможете видеть поля которые были изменены. " +
-                        "Если вы все еще хотите удалить то нажмите 'Удалить' или можете вернуться назад к списку всех записей.";
+                ViewData["ConcurrencyErrorMessage"] = Resources.General.Errors.Concurrency;
             }
 
             return View(customer);
