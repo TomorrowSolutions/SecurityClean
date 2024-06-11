@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityClean3.Data;
 using SecurityClean3.Models;
+using SecurityClean3.Utils;
 
 namespace SecurityClean3.Controllers
 {
+    [Authorize(Roles = $"{Roles.Admin}")]
     public class ServicesController : Controller
     {
         private readonly SecurityContext _context;
@@ -105,6 +108,13 @@ namespace SecurityClean3.Controllers
             {
                 return NotFound();
             }
+            bool isContractLocked = await _context.Contracts
+                                   .Include(c => c.ContractServices)
+                                   .AnyAsync(c => c.IsLocked && c.ContractServices.Any(csi => csi.ServiceId == id));
+            if (isContractLocked)
+            {
+                return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.LockedDetails });
+            }
             ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Name", service.PositionId);
             return View(service);
         }
@@ -194,6 +204,13 @@ namespace SecurityClean3.Controllers
             if (concurrencyError.GetValueOrDefault())
             {
                 ViewData["ConcurrencyErrorMessage"] = Resources.General.Errors.Concurrency;
+            }
+            bool isContractLocked = await _context.Contracts
+                                   .Include(c => c.ContractServices)
+                                   .AnyAsync(c => c.IsLocked && c.ContractServices.Any(csi => csi.ServiceId == id));
+            if (isContractLocked)
+            {
+                return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.LockedDetails });
             }
             return View(service);
         }

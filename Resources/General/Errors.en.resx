@@ -154,7 +154,7 @@
     <value>The {0} field must contain a minimum of {2} and a maximum of {1} characters.</value>
   </data>
   <data name="LockedDetails" xml:space="preserve">
-    <value>The Contract is locked and the combinations associated with it cannot be changed.</value>
+    <value>The Contract is locked and the entities associated with it cannot be changed.</value>
   </data>
   <data name="LoginFailed" xml:space="preserve">
     <value>Authorization failed. Check the correctness of the entered data.</value>

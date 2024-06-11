@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityClean3.Data;
@@ -7,6 +8,7 @@ using SecurityClean3.Utils;
 
 namespace SecurityClean3.Controllers
 {
+    [Authorize(Roles = $"{Roles.Admin},{Roles.Manager}")]
     public class ContractsController : Controller
     {
         private readonly SecurityContext _context;
@@ -193,7 +195,7 @@ namespace SecurityClean3.Controllers
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "ContactPerson", contractToUpdate.CustomerId);
             return View(contractToUpdate);
         }
-
+        [Authorize(Roles = $"{Roles.Admin}")]
         public async Task<IActionResult> Delete(int? id, bool? concurrencyError)
         {
             if (id == null || _context.Contracts == null)
@@ -222,7 +224,7 @@ namespace SecurityClean3.Controllers
             }
             return View(contract);
         }
-
+        [Authorize(Roles = $"{Roles.Admin}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Contract contract)
@@ -299,6 +301,7 @@ namespace SecurityClean3.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+        [Authorize(Roles = $"{Roles.Admin}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ClearDoc(int id)

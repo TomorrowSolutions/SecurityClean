@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using SecurityClean3.Data;
 using SecurityClean3.Models;
+using SecurityClean3.Utils;
 
 namespace SecurityClean3.Controllers
 {
+    [Authorize(Roles = $"{Roles.Admin},{Roles.Manager}")]
     public class CustomersController : Controller
     {
         private readonly SecurityContext _context;
@@ -192,7 +195,7 @@ namespace SecurityClean3.Controllers
             }
             return View(customerToUpdate);
         }
-
+        [Authorize(Roles = $"{Roles.Admin}")]
         public async Task<IActionResult> Delete(int? id, bool? concurrencyError)
         {
             if (id == null)
@@ -218,7 +221,7 @@ namespace SecurityClean3.Controllers
 
             return View(customer);
         }
-
+        [Authorize(Roles = $"{Roles.Admin}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Customer customer)

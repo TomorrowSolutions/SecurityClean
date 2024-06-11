@@ -10,12 +10,12 @@
 {
     @if (User.IsInRole(Roles.Admin))
     {
-            <p class="me-3 mb-0">@SecurityClean3.Resources.General.Nav.Admin</p>
+            <p class="me-1 mb-0">@SecurityClean3.Resources.General.Nav.Admin</p>
         <a asp-area="Identity" asp-page="/Account/Logout">Выйти</a>
     }
     else if (User.IsInRole(Roles.Manager))
     {
-            <p class="me-3 mb-0">@SecurityClean3.Resources.General.Nav.Manager</p>
+            <p class="me-1 mb-0">@SecurityClean3.Resources.General.Nav.Manager</p>
         <a asp-area="Identity" asp-page="/Account/Logout">Выйти</a>
     }
 }

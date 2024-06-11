@@ -73,19 +73,31 @@
                         @if (item.IsLocked)
                         {
                             <a asp-action="Details" asp-route-id="@item.Id">@Crud.DetailsLink</a>
-                            <a asp-action="Delete" asp-route-id="@item.Id">@Crud.DeleteLink</a>
+                            <span class="separator">|</span>
                             <a asp-action="DownloadDoc" asp-route-id="@item.Id">@Crud.DownloadLink</a>
-                            <form asp-controller="Contracts" asp-action="ClearDoc" asp-route-id="@item.Id" method="post" class="d-inline-flex">
-                                <input type="hidden" asp-for="@item.Id" />
-                                <input type="submit" value="@Crud.ClearDocLink" class="btn btn-link" />
-                            </form>
+                            <span class="separator">|</span>
+                            @if (User.IsInRole(Roles.Admin))
+                            {
+                                <a asp-action="Delete" asp-route-id="@item.Id">@Crud.DeleteLink</a>
+                                <span class="separator">|</span>
+                                <form asp-controller="Contracts" asp-action="ClearDoc" asp-route-id="@item.Id" method="post" class="d-inline-flex">
+                                    <input type="hidden" asp-for="@item.Id" />
+                                    <input type="submit" value="@Crud.ClearDocLink" class="btn btn-link px-0" />
+                                </form>
+                            }                            
                         }
                         else
                         {
                             <a asp-action="Edit" asp-route-id="@item.Id">@Crud.EditLink</a>
+                            <span class="separator">|</span>
                             <a asp-action="Details" asp-route-id="@item.Id">@Crud.DetailsLink</a>
-                            <a asp-action="Delete" asp-route-id="@item.Id">@Crud.DeleteLink</a>
+                            <span class="separator">|</span>
                             <a asp-action="CreateDoc" asp-route-id="@item.Id">@Crud.CreateDocLink</a>
+                            <span class="separator">|</span>
+                            @if (User.IsInRole(Roles.Admin))
+                            {
+                                <a asp-action="Delete" asp-route-id="@item.Id">@Crud.DeleteLink</a>
+                            }
                         }
                     </td>
                 </tr>

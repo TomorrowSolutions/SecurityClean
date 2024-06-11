@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityClean3.Data;
 using SecurityClean3.Models;
+using SecurityClean3.Utils;
 
 namespace SecurityClean3.Controllers
 {
+    [Authorize(Roles = $"{Roles.Admin},{Roles.Manager}")]
     public class ContractSecuredItemsController : Controller
     {
         private readonly SecurityContext _context;
@@ -181,7 +184,6 @@ namespace SecurityClean3.Controllers
             ViewData["SecuredItemId"] = new SelectList(_context.SecuredItems, "Id", "Address", itemToUpdate.SecuredItemId);
             return View(itemToUpdate);
         }
-
         public async Task<IActionResult> Delete(int? id, bool? concurrencyError)
         {
             if (id == null)
@@ -211,7 +213,6 @@ namespace SecurityClean3.Controllers
             }
             return View(contractSecuredItem);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(ContractSecuredItem item)
@@ -229,11 +230,6 @@ namespace SecurityClean3.Controllers
             {
                 return RedirectToAction(nameof(Delete), new { concurrencyError = true, id = item.Id });
             }
-        }
-
-        private bool ContractSecuredItemExists(int id)
-        {
-            return _context.ContractSecuredItems.Any(e => e.Id == id);
         }
     }
 }

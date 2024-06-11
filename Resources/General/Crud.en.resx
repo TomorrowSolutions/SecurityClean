@@ -189,6 +189,9 @@
   <data name="Employee" xml:space="preserve">
     <value>Employee</value>
   </data>
+  <data name="Employees" xml:space="preserve">
+    <value>Employees</value>
+  </data>
   <data name="IndexTitle" xml:space="preserve">
     <value>List</value>
   </data>
@@ -220,7 +223,7 @@
     <value>Change role</value>
   </data>
   <data name="SearchAppUser" xml:space="preserve">
-    <value>Search(Full Name / Username / Email) :</value>
+    <value>Search(Full Name/ Email) :</value>
   </data>
   <data name="SearchBtn" xml:space="preserve">
     <value>Search</value>
@@ -232,7 +235,7 @@
     <value>Search(Contract number) :</value>
   </data>
   <data name="SearchCustomer" xml:space="preserve">
-    <value>Search(Company name/Address/Contact person) :</value>
+    <value>Search(Name/Address/Contact person) :</value>
   </data>
   <data name="SearchEmployee" xml:space="preserve">
     <value>Search(Full name or position) :</value>

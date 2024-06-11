@@ -60,7 +60,9 @@
                         else
                         {
                             <a asp-action="Edit" asp-route-id="@item.Id">@Crud.EditLink</a>
+                            <span class="separator">|</span>
                             <a asp-action="Details" asp-route-id="@item.Id">@Crud.DetailsLink</a>
+                            <span class="separator">|</span>
                             <a asp-action="Delete" asp-route-id="@item.Id">@Crud.DeleteLink</a>
                         }
                     </td>

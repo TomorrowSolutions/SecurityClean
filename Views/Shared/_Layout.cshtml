@@ -22,32 +22,39 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@SecurityClean3.Resources.General.Nav.Home</a>
                         </li>
-                        <div class="dropdown">
-                            <a class="nav-link text-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span>@SecurityClean3.Resources.General.Nav.Accounting</span>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="Employees" asp-action="Index">@SecurityClean3.Resources.General.Nav.Employees</a></li>
-                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="Positions" asp-action="Index">@SecurityClean3.Resources.General.Nav.Positions</a></li>
-                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="Services" asp-action="Index">@SecurityClean3.Resources.General.Nav.Services</a></li>
-                            </ul>
-                        </div>
-                        <div class="dropdown">
-                            <a class="nav-link text-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span>@SecurityClean3.Resources.General.Nav.Signing</span>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="Contracts" asp-action="Index">@SecurityClean3.Resources.General.Nav.Contracts</a></li>
-                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="Customers" asp-action="Index">@SecurityClean3.Resources.General.Nav.Customers</a></li>
-                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="SecuredItems" asp-action="Index">@SecurityClean3.Resources.General.Nav.SecuredItems</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="ContractSecuredItems" asp-action="Index">@SecurityClean3.Resources.General.Nav.ContractSecuredItems</a></li>
-                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="ContractServices" asp-action="Index">@SecurityClean3.Resources.General.Nav.ContractServices</a></li>
-                            </ul>
-                        </div>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ApplicationUsers" asp-action="Index">@SecurityClean3.Resources.General.Nav.ApplicationUsers</a>
-                        </li>
+                        @if (User.IsInRole(Roles.Admin))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="ApplicationUsers" asp-action="Index">@SecurityClean3.Resources.General.Nav.ApplicationUsers</a>
+                            </li>
+
+                            <div class="dropdown">
+                                <a class="nav-link text-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span>@SecurityClean3.Resources.General.Nav.Accounting</span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <li><a class="dropdown-item text-dark" asp-area="" asp-controller="Employees" asp-action="Index">@SecurityClean3.Resources.General.Nav.Employees</a></li>
+                                    <li><a class="dropdown-item text-dark" asp-area="" asp-controller="Positions" asp-action="Index">@SecurityClean3.Resources.General.Nav.Positions</a></li>
+                                    <li><a class="dropdown-item text-dark" asp-area="" asp-controller="Services" asp-action="Index">@SecurityClean3.Resources.General.Nav.Services</a></li>
+                                    <li><a class="dropdown-item text-dark" asp-area="" asp-controller="SecuredItems" asp-action="Index">@SecurityClean3.Resources.General.Nav.SecuredItems</a></li>
+                                </ul>
+                            </div>
+                        }
+                        @if (User.IsInRole(Roles.Manager) || User.IsInRole(Roles.Admin))
+                        {
+                            <div class="dropdown">
+                                <a class="nav-link text-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span>@SecurityClean3.Resources.General.Nav.Signing</span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <li><a class="dropdown-item text-dark" asp-area="" asp-controller="Contracts" asp-action="Index">@SecurityClean3.Resources.General.Nav.Contracts</a></li>
+                                    <li><a class="dropdown-item text-dark" asp-area="" asp-controller="Customers" asp-action="Index">@SecurityClean3.Resources.General.Nav.Customers</a></li>                                    
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-dark" asp-area="" asp-controller="ContractSecuredItems" asp-action="Index">@SecurityClean3.Resources.General.Nav.ContractSecuredItems</a></li>
+                                    <li><a class="dropdown-item text-dark" asp-area="" asp-controller="ContractServices" asp-action="Index">@SecurityClean3.Resources.General.Nav.ContractServices</a></li>
+                                </ul>
+                            </div>
+                        }                                              
                     </ul>
                     <ul class="navbar-nav text-end">
                         <div class="dropdown">

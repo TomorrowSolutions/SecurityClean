@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-md-2">
                     <input type="submit" value="@Crud.SearchBtn" class="btn btn-primary" />
-                    <a asp-action="Index" class="btn btn-outline-primary">@Crud.Back</a>
+                    <a asp-action="Index" class="btn btn-outline-primary">@Crud.Cancel</a>
                 </div>
             </div>
         </p>
@@ -60,7 +60,9 @@
                         else
                         {
                             <a asp-action="Edit" asp-route-id="@item.Id">@Crud.EditLink</a>
+                            <span class="separator">|</span>
                             <a asp-action="Details" asp-route-id="@item.Id">@Crud.DetailsLink</a>
+                            <span class="separator">|</span>
                             <a asp-action="Delete" asp-route-id="@item.Id">@Crud.DeleteLink</a>
                         }
                     </td>

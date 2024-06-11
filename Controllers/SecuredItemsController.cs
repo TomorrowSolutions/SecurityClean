@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using SecurityClean3.Data;
 using SecurityClean3.Models;
+using SecurityClean3.Utils;
 
 namespace SecurityClean3.Controllers
 {
+    [Authorize(Roles = $"{Roles.Admin}")]
     public class SecuredItemsController : Controller
     {
         private readonly SecurityContext _context;
@@ -98,6 +101,14 @@ namespace SecurityClean3.Controllers
             {
                 return NotFound();
             }
+            bool isContractLocked = await _context.Contracts
+                                    .Include(c=>c.ContractSecuredItems)
+                                    .AnyAsync(c => c.IsLocked && c.ContractSecuredItems.Any(csi => csi.SecuredItemId == id));
+            if (isContractLocked)
+            {
+                return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.LockedDetails });
+            }
+
             return View(securedItem);
         }
 
@@ -176,6 +187,13 @@ namespace SecurityClean3.Controllers
             if (concurrencyError.GetValueOrDefault())
             {
                 ViewData["ConcurrencyErrorMessage"] = Resources.General.Errors.Concurrency;
+            }
+            bool isContractLocked = await _context.Contracts
+                                   .Include(c => c.ContractSecuredItems)
+                                   .AnyAsync(c => c.IsLocked && c.ContractSecuredItems.Any(csi => csi.SecuredItemId == id));
+            if (isContractLocked)
+            {
+                return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.LockedDetails });
             }
 
             return View(securedItem);

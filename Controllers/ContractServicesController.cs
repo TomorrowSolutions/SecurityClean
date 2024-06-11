@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityClean3.Data;
 using SecurityClean3.Models;
+using SecurityClean3.Utils;
 
 namespace SecurityClean3.Controllers
 {
+    [Authorize(Roles = $"{Roles.Admin},{Roles.Manager}")]
     public class ContractServicesController : Controller
     {
         private readonly SecurityContext _context;
@@ -173,7 +176,6 @@ namespace SecurityClean3.Controllers
             ViewData["ServiceId"] = new SelectList(_context.Services, "Id", "Name", itemToUpdate.ServiceId);
             return View(itemToUpdate);
         }
-
         public async Task<IActionResult> Delete(int? id, bool? concurrencyError)
         {
             if (id == null)
@@ -204,7 +206,6 @@ namespace SecurityClean3.Controllers
 
             return View(contractService);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(ContractService item)
@@ -222,11 +223,6 @@ namespace SecurityClean3.Controllers
             {
                 return RedirectToAction(nameof(Delete), new { concurrencyError = true, id = item.Id });
             }
-        }
-
-        private bool ContractServiceExists(int id)
-        {
-            return _context.ContractServices.Any(e => e.Id == id);
         }
     }
 }

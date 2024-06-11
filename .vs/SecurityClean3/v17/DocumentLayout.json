@@ -1,20 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Instityt\\Diplom\\SecurityClean3\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|c:\\instityt\\diplom\\securityclean3\\views\\error\\simpleerror.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|solutionrelative:views\\error\\simpleerror.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|c:\\instityt\\diplom\\securityclean3\\resources\\general\\errors.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}",
-      "RelativeMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|solutionrelative:resources\\general\\errors.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|c:\\instityt\\diplom\\securityclean3\\resources\\general\\errors.en.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}",
-      "RelativeMoniker": "D:0:0:{A50CEED6-E383-4335-8435-0B15C137C7CD}|SecurityClean3.csproj|solutionrelative:resources\\general\\errors.en.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -22,48 +9,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "SimpleError.cshtml",
-              "DocumentMoniker": "C:\\Instityt\\Diplom\\SecurityClean3\\Views\\Error\\SimpleError.cshtml",
-              "RelativeDocumentMoniker": "Views\\Error\\SimpleError.cshtml",
-              "ToolTip": "C:\\Instityt\\Diplom\\SecurityClean3\\Views\\Error\\SimpleError.cshtml",
-              "RelativeToolTip": "Views\\Error\\SimpleError.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAkAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-06-10T19:14:48.131Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Errors.en.resx",
-              "DocumentMoniker": "C:\\Instityt\\Diplom\\SecurityClean3\\Resources\\General\\Errors.en.resx",
-              "RelativeDocumentMoniker": "Resources\\General\\Errors.en.resx",
-              "ToolTip": "C:\\Instityt\\Diplom\\SecurityClean3\\Resources\\General\\Errors.en.resx",
-              "RelativeToolTip": "Resources\\General\\Errors.en.resx",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2024-06-10T19:14:35.58Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Errors.resx",
-              "DocumentMoniker": "C:\\Instityt\\Diplom\\SecurityClean3\\Resources\\General\\Errors.resx",
-              "RelativeDocumentMoniker": "Resources\\General\\Errors.resx",
-              "ToolTip": "C:\\Instityt\\Diplom\\SecurityClean3\\Resources\\General\\Errors.resx",
-              "RelativeToolTip": "Resources\\General\\Errors.resx",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2024-06-10T19:14:21.353Z",
-              "EditorCaption": ""
             }
           ]
         }

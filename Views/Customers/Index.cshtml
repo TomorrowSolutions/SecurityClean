@@ -59,9 +59,12 @@
                         @Html.DisplayFor(modelItem => item.ContactPerson)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">@Crud.EditLink</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">@Crud.DetailsLink</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">@Crud.DeleteLink</a>
+                        <a asp-action="Edit" asp-route-id="@item.Id">@Crud.EditLink</a>| 
+                        <a asp-action="Details" asp-route-id="@item.Id">@Crud.DetailsLink</a>|
+                        @if (User.IsInRole(Roles.Admin))
+                        {
+                            <a asp-action="Delete" asp-route-id="@item.Id">@Crud.DeleteLink</a>
+                        }                        
                     </td>
                 </tr>
             }

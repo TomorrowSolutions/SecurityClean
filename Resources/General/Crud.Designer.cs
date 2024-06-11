@@ -385,7 +385,7 @@ namespace SecurityClean3.Resources.General {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Поиск(ФИО / Имя пользователя / Email) :.
+        ///   Ищет локализованную строку, похожую на Поиск(ФИО/Email) :.
         /// </summary>
         public static string SearchAppUser {
             get {
@@ -421,7 +421,7 @@ namespace SecurityClean3.Resources.General {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Поиск(Название организации/Адрес/Представитель) :.
+        ///   Ищет локализованную строку, похожую на Поиск(Название/Адрес/Представитель) :.
         /// </summary>
         public static string SearchCustomer {
             get {

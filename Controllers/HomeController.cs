@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SecurityClean3.Models;
+using SecurityClean3.Utils;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -22,12 +23,7 @@ namespace SecurityClean3.Controllers
         public IActionResult Index()
         {
             return View();
-        }
-        [Authorize(Roles ="admin")]
-        public async Task<IActionResult> Privacy()
-        {
-            return View();
-        }
+        }        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

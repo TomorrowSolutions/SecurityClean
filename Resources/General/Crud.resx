@@ -226,7 +226,7 @@
     <value>Смена полномочий</value>
   </data>
   <data name="SearchAppUser" xml:space="preserve">
-    <value>Поиск(ФИО / Имя пользователя / Email) :</value>
+    <value>Поиск(ФИО/Email) :</value>
   </data>
   <data name="SearchBtn" xml:space="preserve">
     <value>Поиск</value>
@@ -238,7 +238,7 @@
     <value>Поиск(Номер договора) :</value>
   </data>
   <data name="SearchCustomer" xml:space="preserve">
-    <value>Поиск(Название организации/Адрес/Представитель) :</value>
+    <value>Поиск(Название/Адрес/Представитель) :</value>
   </data>
   <data name="SearchEmployee" xml:space="preserve">
     <value>Поиск(ФИО или должность) :</value>
