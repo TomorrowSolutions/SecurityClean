@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>@ViewData["Title"] @Crud.ListContract</h1>
 
 <p>
     <a asp-action="Create">@Crud.CreateLink</a>
@@ -37,6 +37,7 @@
     <table class="table">
         <thead>
             <tr>
+                <th>№</th>
                 <th>
                     @Html.DisplayNameFor(model => model.First().Customer.ContactPerson)
                 </th>
@@ -53,6 +54,9 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Customer.ContactPerson)
                     </td>
@@ -76,15 +80,12 @@
                             <span class="separator">|</span>
                             <a asp-action="DownloadDoc" asp-route-id="@item.Id">@Crud.DownloadLink</a>
                             <span class="separator">|</span>
-                            @if (User.IsInRole(Roles.Admin))
-                            {
-                                <a asp-action="Delete" asp-route-id="@item.Id">@Crud.DeleteLink</a>
-                                <span class="separator">|</span>
-                                <form asp-controller="Contracts" asp-action="ClearDoc" asp-route-id="@item.Id" method="post" class="d-inline-flex">
-                                    <input type="hidden" asp-for="@item.Id" />
-                                    <input type="submit" value="@Crud.ClearDocLink" class="btn btn-link px-0" />
-                                </form>
-                            }                            
+                            <a asp-action="Delete" asp-route-id="@item.Id">@Crud.DeleteLink</a>
+                            <span class="separator">|</span>
+                            <form asp-controller="Contracts" asp-action="ClearDoc" asp-route-id="@item.Id" method="post" class="d-inline-flex">
+                                <input type="hidden" asp-for="@item.Id" />
+                                <input type="submit" value="@Crud.ClearDocLink" class="btn btn-link px-0" />
+                            </form>
                         }
                         else
                         {
@@ -94,10 +95,7 @@
                             <span class="separator">|</span>
                             <a asp-action="CreateDoc" asp-route-id="@item.Id">@Crud.CreateDocLink</a>
                             <span class="separator">|</span>
-                            @if (User.IsInRole(Roles.Admin))
-                            {
-                                <a asp-action="Delete" asp-route-id="@item.Id">@Crud.DeleteLink</a>
-                            }
+                            <a asp-action="Delete" asp-route-id="@item.Id">@Crud.DeleteLink</a>
                         }
                     </td>
                 </tr>

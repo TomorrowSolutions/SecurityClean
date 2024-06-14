@@ -76,6 +76,7 @@ namespace SecurityClean3.Controllers
         }
         public async Task SetUserRoleAsync(ApplicationUser user, string role)
         {
+            //Получаем список ролей
             var existingRoles = await _userManager.GetRolesAsync(user);
 
             // Удаляем все текущие роли пользователя
@@ -92,20 +93,25 @@ namespace SecurityClean3.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    //Проверка на то является ли адрес электронной почты уникальной
                     if (await _userManager.Users.AnyAsync(x=>x.Email==registrationVM.Email))
                     {
+                        //Вывод сообщения об ошибке
                         ModelState.AddModelError("", Resources.General.Errors.EmailExists);
                         return View(registrationVM);
                     }
+                    //Заполнение модели пользователя
                     var user = new ApplicationUser()
                     {
                         FullName = registrationVM.FullName,
                         UserName = registrationVM.Email,
                         Email = registrationVM.Email
                     };
+                    //Создание записи пользователя
                     var result = await _userManager.CreateAsync(user, registrationVM.Password);
                     if (result.Succeeded)
                     {
+                        //Проверка какую роль присвоить пользователю
                         if (registrationVM.IsAdmin)
                         {
                             await SetUserRoleAsync(user, Roles.Admin);

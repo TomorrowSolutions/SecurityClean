@@ -195,6 +195,33 @@
   <data name="IndexTitle" xml:space="preserve">
     <value>List</value>
   </data>
+  <data name="ListContract" xml:space="preserve">
+    <value>of Contracts</value>
+  </data>
+  <data name="ListCS" xml:space="preserve">
+    <value>of Attachments: Service</value>
+  </data>
+  <data name="ListCSI" xml:space="preserve">
+    <value>of Attachments: Secured item</value>
+  </data>
+  <data name="ListCustomer" xml:space="preserve">
+    <value>of Customers</value>
+  </data>
+  <data name="ListEmployee" xml:space="preserve">
+    <value>of Employees</value>
+  </data>
+  <data name="ListPosition" xml:space="preserve">
+    <value>of Positions</value>
+  </data>
+  <data name="ListService" xml:space="preserve">
+    <value>of Services</value>
+  </data>
+  <data name="ListSI" xml:space="preserve">
+    <value>of Secured items</value>
+  </data>
+  <data name="ListUser" xml:space="preserve">
+    <value>of Users</value>
+  </data>
   <data name="Locked" xml:space="preserve">
     <value>Locked (recorded in the doc)</value>
   </data>

@@ -195,6 +195,33 @@
   <data name="IndexTitle" xml:space="preserve">
     <value>Список записей</value>
   </data>
+  <data name="ListContract" xml:space="preserve">
+    <value>Договоров</value>
+  </data>
+  <data name="ListCS" xml:space="preserve">
+    <value>Приложений: Услуг</value>
+  </data>
+  <data name="ListCSI" xml:space="preserve">
+    <value>Приложений: Объект</value>
+  </data>
+  <data name="ListCustomer" xml:space="preserve">
+    <value>Заказчиков</value>
+  </data>
+  <data name="ListEmployee" xml:space="preserve">
+    <value>Сотрудников</value>
+  </data>
+  <data name="ListPosition" xml:space="preserve">
+    <value>Должностей</value>
+  </data>
+  <data name="ListService" xml:space="preserve">
+    <value>Услуг</value>
+  </data>
+  <data name="ListSI" xml:space="preserve">
+    <value>Объектов</value>
+  </data>
+  <data name="ListUser" xml:space="preserve">
+    <value>Пользователей</value>
+  </data>
   <data name="Locked" xml:space="preserve">
     <value>Заблокировано(записано в doc)</value>
   </data>

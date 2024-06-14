@@ -260,25 +260,32 @@ namespace SecurityClean3.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                //Название таблицы
                 name: "Services",
                 columns: table => new
                 {
+                    //Создание поля первичного ключа
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    //Создание поля название и присвоение ему максимальной длины
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     PositionId = table.Column<int>(type: "int", nullable: false),
+                    //Создание поля типа rowversion
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
+                //Ограничения налагаемые на таблицу
                 constraints: table =>
                 {
+                    //Поле Id является первичным ключом
                     table.PrimaryKey("PK_Services", x => x.Id);
+                    //Внешний ключ отсылающий к первичному ключу из таблицы Должностей
                     table.ForeignKey(
                         name: "FK_Services_Positions_PositionId",
                         column: x => x.PositionId,
                         principalTable: "Positions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade);//При удалении родительского элемента из таблицы должностей, записи, связанные с ней тоже будут удалены
                 });
 
             migrationBuilder.CreateTable(
@@ -416,10 +423,15 @@ namespace SecurityClean3.Migrations
                 });
 
             migrationBuilder.InsertData(
+                //Название таблицы
                 table: "Services",
+                //Столбцы
                 columns: new[] { "Id", "Name", "PositionId", "Price" },
+                //Значения
                 values: new object[,]
                 {
+                    //Каждый объект переносится в такий вид в соответсвтвии
+                    //с порядком столбцов выше
                     { 1, "Установка видеонаблюдения", 1, 50000.0 },
                     { 2, "Обслуживание системы видеонаблюдения", 5, 70000.0 },
                     { 3, "Перевозка грузов", 4, 60000.0 },

@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>@ViewData["Title"] @Crud.ListService</h1>
 
 <p>
     <a asp-action="Create">@Crud.CreateLink</a>

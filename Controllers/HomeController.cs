@@ -33,8 +33,11 @@ namespace SecurityClean3.Controllers
 
         public IActionResult ChangeLanguage(string lang)
         {
+            //В качестве параметра получаем языка
+            //Проверка на null и пустоту
             if (!string.IsNullOrEmpty(lang))
             {
+                //Установка новой культуры потока
                 Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(lang);
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(lang);
             }
@@ -44,6 +47,7 @@ namespace SecurityClean3.Controllers
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru");
                 lang = "ru";
             }
+            //Установка нового языка в куках
             Response.Cookies.Append("Language", lang);
             return Redirect(Request.GetTypedHeaders().Referer.ToString());
         }

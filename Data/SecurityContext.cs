@@ -98,7 +98,9 @@ namespace SecurityClean3.Data
                         PositionId = 2
                     }
                 );
+                //Метод позволяет заполнить таблицу данными
             modelBuilder.Entity<Service>().HasData(
+                //Каждый объект будет преобразован в строку таблицы
                new Service { Id = 1, Name = "Установка видеонаблюдения", Price = 50000.00, PositionId = 1 },
                 new Service { Id = 2, Name = "Обслуживание системы видеонаблюдения", Price = 70000.00, PositionId = 5 },
                 new Service { Id = 3, Name = "Перевозка грузов", Price = 60000.00, PositionId = 4 },

@@ -195,7 +195,6 @@ namespace SecurityClean3.Controllers
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "ContactPerson", contractToUpdate.CustomerId);
             return View(contractToUpdate);
         }
-        [Authorize(Roles = $"{Roles.Admin}")]
         public async Task<IActionResult> Delete(int? id, bool? concurrencyError)
         {
             if (id == null || _context.Contracts == null)
@@ -203,11 +202,12 @@ namespace SecurityClean3.Controllers
                 return NotFound();
             }
 
-            var contract = await _context.Contracts
-                 .Include(c => c.Customer)
+            var contract =  await _context.Contracts
+                .Include(c => c.Customer)
                 .Include(c => c.ContractServices)
                 .ThenInclude(cs => cs.Service)
                 .Include(c => c.ContractSecuredItems)
+                .ThenInclude(c => c.SecuredItem)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (contract == null)
@@ -224,7 +224,6 @@ namespace SecurityClean3.Controllers
             }
             return View(contract);
         }
-        [Authorize(Roles = $"{Roles.Admin}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Contract contract)
@@ -281,6 +280,7 @@ namespace SecurityClean3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateDocConfirmed(int id)
         {
+            //получение записи договора со всеми приложениями
             var contract = await _context.Contracts
                 .Include(c => c.Customer)
                 .Include(c => c.ContractServices)
@@ -288,65 +288,80 @@ namespace SecurityClean3.Controllers
                 .Include(c => c.ContractSecuredItems)
                 .ThenInclude(c => c.SecuredItem)
                 .FirstOrDefaultAsync(m => m.Id == id);
+            //Проверка на null
             if (contract != null)
             {
+                //Проверка на блокировку
                 if (contract.IsLocked)
                 {
                     return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.DocumentAlready });
                 }
+                //Блокировка договора
                 contract.IsLocked = true;
+                //Запись в документ
                 string fileName = DocFiller.FillTemplate(contract.Customer, contract, contract.ContractServices.Select(x => x.Service).ToList(), contract.ContractSecuredItems.Select(x => x.SecuredItem).ToList(), _env);
+                //Добавление имени файла в модель
                 contract.FileName = fileName;
+                //Сохранение изменений
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
         }
-        [Authorize(Roles = $"{Roles.Admin}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ClearDoc(int id)
         {
+            //Получение договора
             var contract = await _context.Contracts.FirstOrDefaultAsync(x => x.Id == id);
+            //Проверка на null и блокировку
             if (contract != null && contract.IsLocked)
             {
+                //Разблокировка договора
                 contract.IsLocked = false;
                 try
                 {
+                    //Удаление документа
                     System.IO.File.Delete(DocFiller.GetOutputPath(_env, contract.FileName));
                 }
                 catch (Exception ex)
                 {
                     await Console.Out.WriteLineAsync(ex.Message);
                 }
+                //Удаления имени документа из модели
                 contract.FileName = null;
+                //Сохранение изменений
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
         }
         public async Task<IActionResult> DownloadDoc(int? id)
         {
+            //Проверка на null и заполненность контекста
             if (id == null || _context.Contracts == null)
             {
                 return NotFound();
             }
+            //Получение записи
             var contract = await _context.Contracts
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id);
+            //Проверка на null
             if (contract == null)
             {
                 return NotFound();
             }
+            //Проверка на блокировку
             if (contract.IsLocked)
             {
                 try
                 {
-                    if (contract.IsLocked)
+                    //Проверка на имя файла
+                    if (!string.IsNullOrEmpty(contract.FileName))
                     {
-                        if (!string.IsNullOrEmpty(contract.FileName))
-                        {
-                            string contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-                            return File(DocFiller.GetOutputRelativePath(contract.FileName), contentType, contract.FileName);
-                        }
+                        //Тип возвращаемого файла
+                        string contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+                        //Возврат файла
+                        return File(DocFiller.GetOutputRelativePath(contract.FileName), contentType, contract.FileName);
                     }
                 }
                 catch (Exception ex)
@@ -356,8 +371,10 @@ namespace SecurityClean3.Controllers
             }
             else
             {
+                //При отсутсвии блокировки контракта перенаправление в контроллер ошибки
                 return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.ContractUnlocked });
             }
+            //При ошибке загрузки перенаправление в контроллер ошибки
             return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.Download });
         }
     }

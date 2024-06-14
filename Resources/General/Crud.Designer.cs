@@ -295,6 +295,87 @@ namespace SecurityClean3.Resources.General {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Договоров.
+        /// </summary>
+        public static string ListContract {
+            get {
+                return ResourceManager.GetString("ListContract", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Приложений: Услуг.
+        /// </summary>
+        public static string ListCS {
+            get {
+                return ResourceManager.GetString("ListCS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Приложений: Объект.
+        /// </summary>
+        public static string ListCSI {
+            get {
+                return ResourceManager.GetString("ListCSI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Заказчиков.
+        /// </summary>
+        public static string ListCustomer {
+            get {
+                return ResourceManager.GetString("ListCustomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Сотрудников.
+        /// </summary>
+        public static string ListEmployee {
+            get {
+                return ResourceManager.GetString("ListEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Должностей.
+        /// </summary>
+        public static string ListPosition {
+            get {
+                return ResourceManager.GetString("ListPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Услуг.
+        /// </summary>
+        public static string ListService {
+            get {
+                return ResourceManager.GetString("ListService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Объектов.
+        /// </summary>
+        public static string ListSI {
+            get {
+                return ResourceManager.GetString("ListSI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Пользователей.
+        /// </summary>
+        public static string ListUser {
+            get {
+                return ResourceManager.GetString("ListUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Заблокировано(записано в doc).
         /// </summary>
         public static string Locked {

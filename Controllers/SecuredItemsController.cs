@@ -104,10 +104,6 @@ namespace SecurityClean3.Controllers
             bool isContractLocked = await _context.Contracts
                                     .Include(c=>c.ContractSecuredItems)
                                     .AnyAsync(c => c.IsLocked && c.ContractSecuredItems.Any(csi => csi.SecuredItemId == id));
-            if (isContractLocked)
-            {
-                return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.LockedDetails });
-            }
 
             return View(securedItem);
         }
