@@ -70,6 +70,15 @@ namespace SecurityClean3.Resources.General {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Заказчик с таким номером счета уже существует.
+        /// </summary>
+        public static string AccountNumberExists {
+            get {
+                return ResourceManager.GetString("AccountNumberExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Не удалось сохранить изменения. Запись удалена другим пользователем..
         /// </summary>
         public static string AlreadyDeleted {
@@ -156,6 +165,15 @@ namespace SecurityClean3.Resources.General {
         public static string Generic {
             get {
                 return ResourceManager.GetString("Generic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Заказчик с таким ИНН уже существует.
+        /// </summary>
+        public static string InnExists {
+            get {
+                return ResourceManager.GetString("InnExists", resourceCulture);
             }
         }
         

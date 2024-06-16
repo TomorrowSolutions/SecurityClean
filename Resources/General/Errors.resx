@@ -120,6 +120,9 @@
   <data name="AccessDenied" xml:space="preserve">
     <value>У вас нет прав доступа к этой странице.</value>
   </data>
+  <data name="AccountNumberExists" xml:space="preserve">
+    <value>Заказчик с таким номером счета уже существует</value>
+  </data>
   <data name="AlreadyDeleted" xml:space="preserve">
     <value>Не удалось сохранить изменения. Запись удалена другим пользователем.</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="Generic" xml:space="preserve">
     <value>Не удалось сохранить изменения. Попробуйте снова, если проблема сохраняется, обратитесь к системному администратору.</value>
+  </data>
+  <data name="InnExists" xml:space="preserve">
+    <value>Заказчик с таким ИНН уже существует</value>
   </data>
   <data name="LengthBetween" xml:space="preserve">
     <value>Поле {0} должно содержать минимум {2} и максимум {1} символов.</value>

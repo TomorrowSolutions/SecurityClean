@@ -9,6 +9,7 @@ using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using SecurityClean3.Data;
 using SecurityClean3.Models;
+using SecurityClean3.Models.ViewModels;
 using SecurityClean3.Utils;
 
 namespace SecurityClean3.Controllers
@@ -79,6 +80,14 @@ namespace SecurityClean3.Controllers
         {
             try
             {
+                if (await _context.Customers.AnyAsync(x=>x.Inn==customer.Inn))
+                {
+                    ModelState.AddModelError("Inn", Resources.General.Errors.InnExists);
+                }
+                if (await _context.Customers.AnyAsync(x => x.AccountNumber == customer.AccountNumber))
+                {
+                    ModelState.AddModelError("AccountNumber", Resources.General.Errors.AccountNumberExists);
+                }
                 if (ModelState.IsValid)
                 {
                     _context.Add(customer);
@@ -131,10 +140,21 @@ namespace SecurityClean3.Controllers
                 c=>c.CompanyName,c=>c.LegalAddress, c => c.Inn, c => c.AccountNumber, c => c.Bank, c => c.Bik, c => c.CorrespondentAccount, c => c.ContactPerson
                 ))
             {
+                if (await _context.Customers.Where(x=>x.Id!=customerToUpdate.Id).AnyAsync(x => x.Inn == customerToUpdate.Inn))
+                {
+                    ModelState.AddModelError("Inn", Resources.General.Errors.InnExists);
+                }
+                if (await _context.Customers.Where(x => x.Id != customerToUpdate.Id).AnyAsync(x => x.AccountNumber == customerToUpdate.AccountNumber))
+                {
+                    ModelState.AddModelError("AccountNumber", Resources.General.Errors.AccountNumberExists);
+                }
                 try
                 {
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    if (ModelState.IsValid)
+                    {
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }                    
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {
@@ -195,7 +215,6 @@ namespace SecurityClean3.Controllers
             }
             return View(customerToUpdate);
         }
-        [Authorize(Roles = $"{Roles.Admin}")]
         public async Task<IActionResult> Delete(int? id, bool? concurrencyError)
         {
             if (id == null)
@@ -221,7 +240,6 @@ namespace SecurityClean3.Controllers
 
             return View(customer);
         }
-        [Authorize(Roles = $"{Roles.Admin}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Customer customer)
