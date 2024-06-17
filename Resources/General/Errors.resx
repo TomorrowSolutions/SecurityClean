@@ -147,6 +147,9 @@
   <data name="EmailExists" xml:space="preserve">
     <value>Пользователь с таким email уже существует.</value>
   </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>Документ не найден</value>
+  </data>
   <data name="Fill" xml:space="preserve">
     <value>Поле {0} обязательно для заполнения.</value>
   </data>

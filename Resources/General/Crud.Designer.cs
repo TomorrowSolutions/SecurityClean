@@ -484,7 +484,7 @@ namespace SecurityClean3.Resources.General {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Поиск(ФИО представителя) :.
+        ///   Ищет локализованную строку, похожую на Поиск(Номер) :.
         /// </summary>
         public static string SearchContract {
             get {
@@ -493,11 +493,20 @@ namespace SecurityClean3.Resources.General {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Поиск(Номер договора) :.
+        ///   Ищет локализованную строку, похожую на Поиск(Номер договора или адрес) :.
         /// </summary>
-        public static string SearchContractDetails {
+        public static string SearchContractSecuredItem {
             get {
-                return ResourceManager.GetString("SearchContractDetails", resourceCulture);
+                return ResourceManager.GetString("SearchContractSecuredItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Поиск(Номер договора или наименование) :.
+        /// </summary>
+        public static string SearchContractService {
+            get {
+                return ResourceManager.GetString("SearchContractService", resourceCulture);
             }
         }
         

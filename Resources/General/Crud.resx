@@ -259,10 +259,13 @@
     <value>Поиск</value>
   </data>
   <data name="SearchContract" xml:space="preserve">
-    <value>Поиск(ФИО представителя) :</value>
+    <value>Поиск(Номер) :</value>
   </data>
-  <data name="SearchContractDetails" xml:space="preserve">
-    <value>Поиск(Номер договора) :</value>
+  <data name="SearchContractSecuredItem" xml:space="preserve">
+    <value>Поиск(Номер договора или адрес) :</value>
+  </data>
+  <data name="SearchContractService" xml:space="preserve">
+    <value>Поиск(Номер договора или наименование) :</value>
   </data>
   <data name="SearchCustomer" xml:space="preserve">
     <value>Поиск(Название/Адрес/Представитель) :</value>

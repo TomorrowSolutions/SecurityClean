@@ -41,7 +41,7 @@ namespace SecurityClean3.Controllers
             var contracts = from c in tmp select c;
             if (!string.IsNullOrEmpty(searchString))
             {
-                contracts = contracts.Where(c => c.Customer.ContactPerson.Contains(searchString));
+                contracts = contracts.Where(c => c.Customer.Id.ToString().Contains(searchString));
             }
             int pageSize = 5;
             return View(await PaginatedList<Contract>.CreateAsync(contracts.AsNoTracking(), pageNumber ?? 1, pageSize));
@@ -355,13 +355,18 @@ namespace SecurityClean3.Controllers
             {
                 try
                 {
+                    
                     //Проверка на имя файла
                     if (!string.IsNullOrEmpty(contract.FileName))
                     {
-                        //Тип возвращаемого файла
-                        string contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-                        //Возврат файла
-                        return File(DocFiller.GetOutputRelativePath(contract.FileName), contentType, contract.FileName);
+                        if (System.IO.File.Exists(DocFiller.GetOutputPath(_env, contract.FileName)))
+                        {
+                            //Тип возвращаемого файла
+                            string contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+                            //Возврат файла
+                            return File(DocFiller.GetOutputRelativePath(contract.FileName), contentType, contract.FileName);
+                        }
+                        return RedirectToAction("SimpleError", "Error", new { errorMessage = Resources.General.Errors.FileNotFound });
                     }
                 }
                 catch (Exception ex)

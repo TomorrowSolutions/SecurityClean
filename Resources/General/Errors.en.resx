@@ -147,6 +147,9 @@
   <data name="EmailExists" xml:space="preserve">
     <value>A user with this email already exists.</value>
   </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>File not found</value>
+  </data>
   <data name="Fill" xml:space="preserve">
     <value>The {0} field is required.</value>
   </data>

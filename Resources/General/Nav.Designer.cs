@@ -151,6 +151,15 @@ namespace SecurityClean3.Resources.General {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Выйти.
+        /// </summary>
+        public static string Logout {
+            get {
+                return ResourceManager.GetString("Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Полномочия: Менеджер.
         /// </summary>
         public static string Manager {

@@ -39,7 +39,10 @@ namespace SecurityClean3.Controllers
             var items = from i in tmp select i;
             if (!string.IsNullOrEmpty(searchString))
             {
-                items = items.Where(i => i.ContractId.ToString().Contains(searchString));
+                items = items.Where(i => 
+                i.ContractId.ToString().Contains(searchString)||
+                i.SecuredItem.Address.Contains(searchString)
+                );
             }
             int pageSize = 5;
             return View(await PaginatedList<ContractSecuredItem>.CreateAsync(items.AsNoTracking(), pageNumber ?? 1, pageSize));

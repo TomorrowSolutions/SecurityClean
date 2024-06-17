@@ -147,6 +147,9 @@
   <data name="Login" xml:space="preserve">
     <value>Log in</value>
   </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
   <data name="Manager" xml:space="preserve">
     <value>Role: Manager</value>
   </data>

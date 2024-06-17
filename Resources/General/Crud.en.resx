@@ -256,10 +256,13 @@
     <value>Search</value>
   </data>
   <data name="SearchContract" xml:space="preserve">
-    <value>Search(Contact person)</value>
+    <value>Search(Number)</value>
   </data>
-  <data name="SearchContractDetails" xml:space="preserve">
-    <value>Search(Contract number) :</value>
+  <data name="SearchContractSecuredItem" xml:space="preserve">
+    <value>Search(Number or address) :</value>
+  </data>
+  <data name="SearchContractService" xml:space="preserve">
+    <value>Search(Number or name) :</value>
   </data>
   <data name="SearchCustomer" xml:space="preserve">
     <value>Search(Name/Address/Contact person) :</value>

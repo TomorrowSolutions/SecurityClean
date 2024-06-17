@@ -151,6 +151,15 @@ namespace SecurityClean3.Resources.General {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Документ не найден.
+        /// </summary>
+        public static string FileNotFound {
+            get {
+                return ResourceManager.GetString("FileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Поле {0} обязательно для заполнения..
         /// </summary>
         public static string Fill {

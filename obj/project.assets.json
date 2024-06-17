@@ -9033,11 +9033,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Instityt\\Diplom\\SecurityClean3\\SecurityClean3.csproj",
+      "projectUniqueName": "C:\\Projects\\SecurityClean\\SecurityClean3.csproj",
       "projectName": "SecurityClean3",
-      "projectPath": "C:\\Instityt\\Diplom\\SecurityClean3\\SecurityClean3.csproj",
+      "projectPath": "C:\\Projects\\SecurityClean\\SecurityClean3.csproj",
       "packagesPath": "C:\\Users\\shino\\.nuget\\packages\\",
-      "outputPath": "C:\\Instityt\\Diplom\\SecurityClean3\\obj\\",
+      "outputPath": "C:\\Projects\\SecurityClean\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\shino\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -9060,11 +9060,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -9129,7 +9124,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

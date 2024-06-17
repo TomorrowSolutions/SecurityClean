@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ZmxWc0SGg3ENtvRM3TZs0KRw8gHwWPRZVL75TAEyjZeSdlq42TIKIgphEzNjBpmVA2NNiEjm2kuL3uZosGEyaw==",
+  "dgSpecHash": "5IADiRzvQb751O1zC8is1CjA+NZDq8Ra7kBwQt39s2IuefnP2e8W/vA234kawCU3tg3dVOh75CcHCHg73I3v9A==",
   "success": true,
-  "projectFilePath": "C:\\Instityt\\Diplom\\SecurityClean3\\SecurityClean3.csproj",
+  "projectFilePath": "C:\\Projects\\SecurityClean\\SecurityClean3.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\shino\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\shino\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
